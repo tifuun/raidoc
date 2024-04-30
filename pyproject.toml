@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "raidoc"
+version = "0.0.0"
+description = """\
+Documentation for RAIMAD
+"""
+authors = [
+	{name = "maybetree", email = "no@email.com"}
+	]
+license = { text = "I haven't decided yet" }
+readme = "README.md"
+classifiers = [
+	'Programming Language :: Python :: 3',
+	]
+requires-python = ">=3"
+dependencies = [
+	'jinja2',
+	'marko[codehilite]',
+	]
+
+#[tool.setuptools.packages.find]
+#include = [ "pycif", "pycif.*" ]
