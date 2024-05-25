@@ -37,9 +37,7 @@ class CalloutMixin(object):
         # Remove the tag from rendered outout
         element.children[0].children[0].children = ''
 
-        print(callout_tag)
         match = re_callout_class.match(callout_tag)
-        print(match)
         if not match:
             return super().render_quote(element)
 
@@ -53,6 +51,21 @@ class CalloutMixin(object):
             f'<blockquote class="{callout_class}">',
             *rendered_children,
             '</blockquote>',
+            ))
+
+
+class EmphasisMixin(object):
+
+    def render_emphasis(self, element):
+
+        rendered_children = []
+        for i, child in enumerate(element.children):
+            rendered_children.append(super().render(child))
+
+        return ''.join((
+            '<span class="deemphasis">',
+            *rendered_children,
+            '</span>',
             ))
 
 
@@ -170,6 +183,6 @@ class CodeBlockMixin(object):
 
 
 RaimarkExt = marko.helpers.MarkoExtension(
-    renderer_mixins=[LinkMixin, CodeBlockMixin, CalloutMixin]
+    renderer_mixins=[LinkMixin, CodeBlockMixin, CalloutMixin, EmphasisMixin]
 )
 
