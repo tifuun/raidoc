@@ -7,6 +7,15 @@ It can be installed with pip:
 pip install raimad
 ```
 
-> [!NOTE]  
+> [DANGER]
+> Highlights information that users should take into account, even when skimming.
+
+> [ DANGER ]
+> Highlights information that users should take into account, even when skimming.
+
+> [INFO]
+> Highlights information that users should take into account, even when skimming.
+
+> [SEEALSO]
 > Highlights information that users should take into account, even when skimming.
 

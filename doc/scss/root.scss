@@ -194,5 +194,17 @@ blockquote {
 	border-left: 5px solid black;
 	padding-left: 15px;
 	border-radius: 10px 10px 10px 10px;
+
+    &.danger {
+        border-color: red;
+    }
+
+    &.info {
+        border-color: lightblue;
+    }
+
+    &.seealso {
+        border-color: green;
+    }
 }
 

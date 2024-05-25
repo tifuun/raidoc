@@ -1,11 +1,14 @@
 import subprocess
+import re
 
 import marko
+
 
 class CodeCTX:
     def __init__(self):
         self.globs = {}
         self.locs = {}
+
 
 class LinkMixin(object):
     """
@@ -16,9 +19,42 @@ class LinkMixin(object):
 
     def render_link(self, element):
         return '<a href="{}">{}</a>'.format(
-            self.escape_url(element.dest.replace('.md','.html')),
+            self.escape_url(element.dest.replace('.md', '.html')),
             self.render_children(element)
             )
+
+
+re_callout_class = re.compile(r'\s*\[\s*(\w+)\s*\]\s*')
+
+
+class CalloutMixin(object):
+    """
+    """
+
+    def render_quote(self, element):
+        callout_tag = element.children[0].children[0].children
+
+        # Remove the tag from rendered outout
+        element.children[0].children[0].children = ''
+
+        print(callout_tag)
+        match = re_callout_class.match(callout_tag)
+        print(match)
+        if not match:
+            return super().render_quote(element)
+
+        callout_class = match.groups()[0].lower()
+
+        rendered_children = []
+        for i, child in enumerate(element.children):
+            rendered_children.append(super().render(child))
+
+        return ''.join((
+            f'<blockquote class="{callout_class}">',
+            *rendered_children,
+            '</blockquote>',
+            ))
+
 
 codeblock_preamble = """
 __raimark_output__ = []
@@ -132,7 +168,8 @@ class CodeBlockMixin(object):
         return stdout.decode('utf-8')
 
 
+
 RaimarkExt = marko.helpers.MarkoExtension(
-    renderer_mixins=[LinkMixin, CodeBlockMixin]
+    renderer_mixins=[LinkMixin, CodeBlockMixin, CalloutMixin]
 )
 
