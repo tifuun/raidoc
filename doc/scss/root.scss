@@ -27,6 +27,16 @@ body * {
   --color-shadow-dark: rgba(90, 90, 90, 0.8);
 }
 
+$color-danger-1: rgba(0, 0, 0, 0);
+$color-danger-2: rgba(255, 0, 0, 1);
+$color-info-1: rgba(0, 0, 0, 0);
+$color-info-2: rgba(0, 166, 214, 1);
+$color-seealso-1: rgba(0, 0, 0, 0);
+$color-seealso-2: rgba(0, 214, 70, 1);
+$color-workinprogress-1: rgba(0, 0, 0, 1);
+$color-workinprogress-2: rgba(255, 255, 0, 1);
+$bricksize: 1.2em;
+
 .pad>* {
 	margin: 15px;
 }
@@ -190,26 +200,53 @@ tbody > tr:last-child > td:last-child {
 	border-radius: 0px 0px 10px 0px;
 }
 
+@mixin blockquote-before {
+	content: "";
+	display: block;
+	width: 20px;
+	height: 100%;
+	float: left;
+}
+
+@mixin stripes($color1, $color2, $angle) {
+	background: repeating-linear-gradient(
+		$angle,
+		$color1,
+		$color1 10px,
+		$color2 10px,
+		$color2 20px
+	);
+}
+
+
 blockquote {
-	border-left: 5px solid black;
-	padding-left: 15px;
-	border-radius: 10px 10px 10px 10px;
+	//border-left: 5px solid black;
+	//padding-left: 15px;
+	//border-radius: 10px 10px 10px 10px;
 
-    &.danger {
-        border-color: red;
-    }
+	& > * {
+		margin-left: 40px;
+	}
 
-    &.info {
-        border-color: blue;
-    }
+	&.danger::before {
+		@include blockquote-before;
+		@include stripes($color-danger-1, $color-danger-2, 45deg);
+	}
 
-    &.seealso {
-        border-color: green;
-    }
+	&.info::before {
+		@include blockquote-before;
+		background: $color-info-2;
+	}
 
-    &.workinprogress {
-        border-color: yellow;
-    }
+	&.seealso::before {
+		@include blockquote-before;
+		background: $color-seealso-2;
+	}
+
+	&.workinprogress::before {
+		@include blockquote-before;
+		@include stripes($color-workinprogress-1, $color-workinprogress-2, 45deg);
+	}
 }
 
 
@@ -224,25 +261,6 @@ blockquote > p::before {
 }
 */
 
-
-/*
-blockquote > p::before {
-    content: "";
-    display: inline-block;
-    width: 100px;
-    height: 100px;
-    float: left;
-
-    background: repeating-linear-gradient(
-      45deg,
-      #606dbc,
-      #606dbc 30px,
-      #465298 30px,
-      #465298 60px
-    );
-}
-*/
-
 .deemphasis {
     color: gray;
 }
@@ -251,8 +269,8 @@ h1, h2, h3, h4 {
 	&::before {
 		content: " ";
 		display: inline-block;
-		width: 1.1em;
-		height: 1.1em;
+		width: $bricksize;
+		height: $bricksize;
 		background-color: black;
 		margin-right: 5px;
 	}
