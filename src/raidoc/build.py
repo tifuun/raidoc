@@ -45,7 +45,14 @@ def build(source='./doc', dest='./build'):
             continue
 
         markdown = path.read_text()
-        content = md(markdown)
+
+        try:
+            content = md(markdown)
+        except Exception as e:
+            raise Exception(
+                f'Error rendering markdown file {str(path)}'
+                ) from e
+
         html = template.render({
             'content': content
             })
