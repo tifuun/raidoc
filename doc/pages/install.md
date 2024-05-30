@@ -1,7 +1,7 @@
 # Installing RAIMAD
 
 RAIMAD is a Python package.
-It is available under the name `raimad`
+It is available under the name `raimad` (lowercase)
 on [PyPI](https://pypi.org/project/raimad/).
 You should install it like any other Python package.
 

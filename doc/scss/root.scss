@@ -200,11 +200,15 @@ blockquote {
     }
 
     &.info {
-        border-color: lightblue;
+        border-color: blue;
     }
 
     &.seealso {
         border-color: green;
+    }
+
+    &.workinprogress {
+        border-color: yellow;
     }
 }
 
@@ -239,5 +243,16 @@ blockquote > p::before {
 
 .deemphasis {
     color: gray;
+}
+
+h1, h2, h3, h4 {
+	&::before {
+		content: " ";
+		display: inline-block;
+		width: 1.1em;
+		height: 1.1em;
+		background-color: black;
+		margin-right: 5px;
+	}
 }
 
