@@ -17,9 +17,16 @@ class LinkMixin(object):
     TODO don't touch non-local links, also validate links
     """
 
+    links_to = []
+
     def render_link(self, element):
+        # TODO reject xx:// type links
+        if not element.dest.endswith('.md'):
+            return super().render_link(element)
+
+        self.links_to.append(element.dest)
         return '<a href="{}">{}</a>'.format(
-            self.escape_url(element.dest.replace('.md', '.html')),
+            self.escape_url(element.dest.rstrip('.md') + '.html'),
             self.render_children(element)
             )
 

@@ -79,4 +79,5 @@ show(rai.Snowman())
 > Don't know how to open CIF files?
 > [KLayout](https://www.klayout.de/) is highly recommended.
 
+Next up: [The Basics of RAIMAD](basics.md)
 

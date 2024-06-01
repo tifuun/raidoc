@@ -1,10 +1,8 @@
 # Welcome to RAIMAD!
 
+Start reading at [Installing RAIMAD](install.md)
+or [browse the map of all pages](map.md).
 
-
-See also [beta](beta.md)
-
-See also [cif-export-deepdive](cif-export-deepdive.md)
 
 <!--
 
