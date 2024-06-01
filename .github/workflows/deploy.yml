@@ -13,10 +13,10 @@ jobs:
       - name: checkout repo
         uses: actions/checkout@v2
 
-      - name: get graphviz and python
-        run: |
-          apk update
-          apk add graphviz python3
+#      - name: get graphviz and python
+#        run: |
+#          apk update
+#          apk add graphviz python3
 
       - name: install raidoc
         run: |
