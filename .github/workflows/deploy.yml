@@ -7,7 +7,8 @@ on:
 
 jobs:
   build:
-    runs-on: alpine-latest
+    # runs-on: alpine-latest
+    runs-on: self-hosted
     steps:
       - name: checkout repo
         uses: actions/checkout@v2
@@ -34,7 +35,8 @@ jobs:
           path: ./build
 
   deploy:
-    runs-on: alpine-latest
+    #runs-on: alpine-latest
+    runs-on: self-hosted
     needs: build
     steps:
       - name: Deploy to GitHub Pages
