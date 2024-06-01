@@ -13,10 +13,10 @@ jobs:
       - name: checkout repo
         uses: actions/checkout@v2
 
-      - name: get graphviz and python
-        run: |
-          xbps-install -Syu
-          xbps-install -Syu graphviz python3
+#      - name: get graphviz and python
+#        run: |
+#          xbps-install -Syu
+#          xbps-install -Syu graphviz python3
 
       - name: create venv
         run: |
@@ -45,6 +45,11 @@ jobs:
   deploy:
     #runs-on: alpine-latest
     runs-on: self-hosted
+
+    permissions:
+      pages: write
+      id-token: write
+
     needs: build
     steps:
       - name: Deploy to GitHub Pages
