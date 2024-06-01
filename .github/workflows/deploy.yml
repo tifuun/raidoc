@@ -18,11 +18,19 @@ jobs:
 #          apk update
 #          apk add graphviz python3
 
-      - name: install raidoc
+      - name: create venv
         run: |
           python -m venv venv
+
+      - name: install raidoc
+        run: |
           source venv/bin/activate
           python -m pip install -e .
+
+      - name: install raimad
+        run: |
+          source venv/bin/activate
+          python -m pip install raimad
 
       - name: build raidoc
         run: |
