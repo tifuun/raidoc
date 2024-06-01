@@ -1,0 +1,43 @@
+name: Deploy Github Pages
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: alpine-latest
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v2
+
+      - name: get graphviz and python
+        run: |
+          apk update
+          apk add graphviz python3
+
+      - name: install raidoc
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          python -m pip install -e .
+
+      - name: build raidoc
+        run: |
+          source venv/bin/activate
+          python -m raidoc build
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./build
+
+  deploy:
+    runs-on: alpine-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
