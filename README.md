@@ -45,3 +45,28 @@ the above command rebuilds EVERYTHING.
     - [ ] "next" link through frontmatter
     - [ ] "previous" link automatic
 
+## License
+
+Copyright 2024 maybetree
+
+### Documentation
+
+The documentation files in this repository
+(i.e. files ending with `.md` under the `doc/pages` directory)
+are licensed under the
+[GNU Free Documentation License (FDL)](./LICENSE-FDL.txt).
+
+### Code
+
+The code files in this repository,
+including all Python code,
+CSS and HTML templates, are licensed under the
+[GNU General Public License (GPL)](./LICENSE-GPL.txt).
+
+### Code snippets
+
+The code snippets presented in the documentation pages
+are licensed under the [CC0 License](./LICENSE-CC0.txt),
+allowing you to freely use them in your own projects.
+
+
