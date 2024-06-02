@@ -1,12 +1,12 @@
 # Github Pages
 
 > [INFO]
->
 > This page is about maintaining RAIDOC.
+> It is intended to be useful to anyone who may take over the
+> project after me in the future.
 
 > [DANGER]
->
-> This page contains elevated quantities of salt
+> This page contains elevated quantities of sodium
 
 RAIDOC is hosted with github pages.
 Github pages is a service for hosting static HTML sites.
@@ -87,7 +87,5 @@ If it is not obvious from the dockerfile,
 I am upset with github somehow needing full glibc, gnu coreutils,
 and dotnet to make a program whose only purpose is to download code,
 run it, and upload artifacts.
-This wouldn't've been an issue with gitlab,
-since their runner software is made by intelligent people,
-not microsoft employees.
+This wouldn't've been an issue with gitlab.
 
