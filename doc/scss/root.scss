@@ -5,9 +5,14 @@
 }
 
 body {
-	margin: 0;
+	margin: 0px;
 	display: flex;
-	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+
+	gap: 40px;
+	padding-top: 40px;
+
 	font-family: Sans-Serif;
 }
 
@@ -49,6 +54,7 @@ $bricksize: 1.2em;
 	@extend .pad;
 	background-color: var(--color-panel);
 	border-radius: 10px;
+	overflow-x: auto;
 }
 
 .convex {
@@ -61,20 +67,38 @@ $bricksize: 1.2em;
 
 /* STYLING */
 
+@mixin mwidth {
+	width: var(--content-width);
+	max-width: var(--content-max-width);
+}
+
 body {
 	background-color: var(--color-panel);
+}
+
+header {
+	@extend .panel;
+	@extend .convex;
+	@include mwidth;
+	& > h1 {
+		font-size: 5em;
+		&::before {
+			font-size: 0.6em;
+		}
+		margin-bottom: 0px;
+	}
+	display:  flex;
+	align-items: flex-end;
 }
 
 
 #content {
 	@extend .panel;
 	@extend .convex;
-	width: var(--content-width);
-	max-width: var(--content-max-width);
+	@include mwidth;
 	display: flex;
 	flex-direction: column;
 	flex-wrap: nowrap;
-	margin-top: 30px;
 	margin-bottom: 50px;
 }
 
@@ -200,14 +224,6 @@ tbody > tr:last-child > td:last-child {
 	border-radius: 0px 0px 10px 0px;
 }
 
-@mixin blockquote-before {
-	content: "";
-	display: block;
-	width: 20px;
-	height: 100%;
-	float: left;
-}
-
 @mixin stripes($color1, $color2, $angle) {
 	background: repeating-linear-gradient(
 		$angle,
@@ -218,35 +234,38 @@ tbody > tr:last-child > td:last-child {
 	);
 }
 
+.blockquote-wrap {
+	display: flex;
+	flex-direction: row;
+
+	& > .blockquote-before {
+		display: block;
+		min-width: 20px;
+		min-height: 100%;
+	}
+
+	&.danger > .blockquote-before {
+		@include stripes($color-danger-1, $color-danger-2, 45deg);
+	}
+
+	&.info > .blockquote-before {
+		background: $color-info-2;
+	}
+
+	&.seealso > .blockquote-before {
+		background: $color-seealso-2;
+	}
+
+	&.workinprogress > .blockquote-before {
+		@include stripes($color-workinprogress-1, $color-workinprogress-2, 45deg);
+	}
+}
 
 blockquote {
 	//border-left: 5px solid black;
 	//padding-left: 15px;
 	//border-radius: 10px 10px 10px 10px;
-
-	& > * {
-		margin-left: 40px;
-	}
-
-	&.danger::before {
-		@include blockquote-before;
-		@include stripes($color-danger-1, $color-danger-2, 45deg);
-	}
-
-	&.info::before {
-		@include blockquote-before;
-		background: $color-info-2;
-	}
-
-	&.seealso::before {
-		@include blockquote-before;
-		background: $color-seealso-2;
-	}
-
-	&.workinprogress::before {
-		@include blockquote-before;
-		@include stripes($color-workinprogress-1, $color-workinprogress-2, 45deg);
-	}
+	flex-grow: 1;
 }
 
 

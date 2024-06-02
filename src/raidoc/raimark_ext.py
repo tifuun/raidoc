@@ -55,9 +55,11 @@ class CalloutMixin(object):
             rendered_children.append(super().render(child))
 
         return ''.join((
-            f'<blockquote class="{callout_class}">',
+            f'<div class="blockquote-wrap {callout_class}">'
+            '<div class="blockquote-before"></div>'
+            '<blockquote>',
             *rendered_children,
-            '</blockquote>',
+            '</blockquote></div>',
             ))
 
 
