@@ -25,7 +25,8 @@ cd raidoc
 python -m pip install -e .
 ```
 
-You can then build the documentation like this:
+You can then build the documentation like this.
+The command MUST be run from the root of the repo.
 
 ```sh
 python -m raidoc build
