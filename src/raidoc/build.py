@@ -9,6 +9,11 @@ from pygments.formatters import HtmlFormatter
 
 from raidoc.raimark_ext import RaimarkExt, LinkMixin
 
+dot_sanitizer = str.maketrans({
+    '-': '_',
+    '.': '_',
+    })
+
 
 def build(source='./doc', dest='./build'):
     source = Path(source)
@@ -46,7 +51,7 @@ def build(source='./doc', dest='./build'):
     pyg_style = HtmlFormatter(style='default').get_style_defs()
     (dest / 'pyg.css').write_text(pyg_style)
 
-    for path in (source / 'pages').rglob('*'):
+    for path in (source).rglob('*'):
         if path.suffix != '.md':
             continue
 
@@ -62,10 +67,19 @@ def build(source='./doc', dest='./build'):
 
         for link_dest in LinkMixin.links_to:
             dest_stem = Path(link_dest).stem
-            graph.append(f"\t{path.stem.replace('-','_')} -> {dest_stem.replace('-','_')};")
+            graph.append(
+                f"\t{path.stem.translate(dot_sanitizer)} -> "
+                f"{dest_stem.translate(dot_sanitizer)};"
+                )
+
+        graph.append(
+            f'''\t{path.stem.translate(dot_sanitizer)} '''
+            f'''[URL="{path.relative_to(source).with_suffix('.html')}"];'''
+            )
 
         html = template.render({
-            'content': content
+            'content': content,
+            'webroot': '../' * len(path.relative_to(source).parent.parts)
             })
 
         destparent = dest / path.parent.relative_to(source)
@@ -77,18 +91,37 @@ def build(source='./doc', dest='./build'):
 
     map_gv = Path(dest / 'map.gv')
     map_svg = Path(dest / 'map.svg')
+    map_cmap = Path(dest / 'map-cmap.html')
     map_gv.write_text('\n'.join(graph))
 
     # TODO copypasta
-    dot = subprocess.Popen(
+    subprocess.Popen(
         [
             'dot',  # Call the DOT compiler...
             '-Tsvg',  # tell it to produce an SVG file...
             '-Gbgcolor=none',  # ...with a transparent background
             '-Nfontsize=10',  # ... with a smaller than usual font size
-            '-Nfontname="Courier New"',  # ... with a smaller than usual font size
+            '-Nfontname=Courier New',  # ... with a smaller than usual font size
             f'-o{str(map_svg)}',
             f'{str(map_gv)}',
             ],
-        )
+        ).wait()
+    subprocess.Popen(
+        [
+            'dot',  # Call the DOT compiler...
+            '-Tcmapx',  # tell it to produce an SVG file...
+            '-Gbgcolor=none',  # ...with a transparent background
+            '-Nfontsize=10',  # ... with a smaller than usual font size
+            '-Nfontname=Courier New',  # ... with a smaller than usual font size
+            f'-o{str(map_cmap)}',
+            f'{str(map_gv)}',
+            ],
+        ).wait()
+
+    template = env.from_string((source / 'templ/map.html').read_text())
+    html = template.render({
+        'webroot': '',
+        'map_cmap': map_cmap.read_text()
+        })
+    (dest / 'map.html').write_text(html)
 

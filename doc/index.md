@@ -1,6 +1,6 @@
 # Welcome to RAIMAD!
 
-Start reading at [Installing RAIMAD](install.md)
+Start reading at [Installing RAIMAD](pages/install.md)
 or [browse the map of all pages](map.md).
 
 
