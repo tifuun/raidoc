@@ -1,7 +1,7 @@
 # Builtin Compos
 
-You've already seen `RectWH` in [The Basics of RAIMAD](basics.md),
-a compo that represents a rectangle defined by width and height.
+You've already seen `RectLW` in [The Basics of RAIMAD](basics.md),
+a compo that represents a rectangle defined by length and width.
 RAIMAD offers four more built-in compos for you to use in your
 designs:
 
@@ -9,7 +9,7 @@ designs:
 import raimad as rai
 import numpy as np
 
-rectwh = rai.RectWH(100, 50)
+RectLW = rai.RectLW(100, 50)
 
 circle = rai.Circle(radius=40)
 
@@ -24,7 +24,7 @@ ansec = rai.AnSec(
 rectwire = rai.RectWire(
     (0, 0),              # start point
     (80, 80),            # end point
-    10                   # thickness
+    10                   # width
     )
 
 triangle = rai.CustomPoly([
@@ -33,7 +33,7 @@ triangle = rai.CustomPoly([
     (40, 80)
     ])
 
-show(rectwh)
+show(RectLW)
 show(circle)
 show(ansec)
 show(rectwire)
@@ -95,6 +95,10 @@ go read it's source code.
 > We will soon have documentation pages for all RAIMAD classes and functions.
 > But for now, if you want to learn more about a class or function,
 > you should go read its docstring.
+
+<!--
+    TODO more rectwire examples (polar)
+    -->
 
 Next up: [Coordinates and Transformations](coords-transforms.md)
 

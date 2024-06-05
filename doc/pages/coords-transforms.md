@@ -6,6 +6,9 @@ RAIMAD's coordinate system works like this:
 - the Y axis goes from bottom to top
 - Positive angles go counterclockwise
 - Negative angles go clockwise
+- When talking about rectangles:
+    - "length" is the measure on the X axis
+    - "width" is the measure on the Y axis
 
 If you are a mathematician,
 this should make sense.
@@ -22,9 +25,9 @@ import numpy as np
 
 class IShapedFilter(rai.Compo):
     def _make(self, beam_length: float = 10.5):
-        beam = rai.RectWH(2, beam_length).proxy()
-        coup_top = rai.RectWH(10, 2).proxy()
-        coup_bot = rai.RectWH(12, 2).proxy()
+        beam = rai.RectLW(2, beam_length).proxy()
+        coup_top = rai.RectLW(10, 2).proxy()
+        coup_bot = rai.RectLW(12, 2).proxy()
 
         coup_top.snap_above(beam)
         coup_bot.snap_below(beam)

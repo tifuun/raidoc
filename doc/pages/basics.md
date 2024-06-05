@@ -7,9 +7,9 @@ import raimad as rai
 
 class IShapedFilter(rai.Compo):
     def _make(self, beam_length: float = 10.5):
-        beam = rai.RectWH(2, beam_length).proxy()
-        coup_top = rai.RectWH(10, 2).proxy()
-        coup_bot = rai.RectWH(12, 2).proxy()
+        beam = rai.RectLW(2, beam_length).proxy()
+        coup_top = rai.RectLW(10, 2).proxy()
+        coup_bot = rai.RectLW(12, 2).proxy()
 
         coup_top.snap_above(beam)
         coup_bot.snap_below(beam)
@@ -38,7 +38,7 @@ class Filterbank(rai.Compo):
         thz_line = rai.RectWire(
             self.subcompos.filt_0.bbox.bot_left,
             self.subcompos.filt_2.bbox.bot_right,
-            thickness=2
+            width=2
             ).proxy()
 
         thz_line.move(0, -4)
