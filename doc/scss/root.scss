@@ -293,7 +293,8 @@ blockquote > p::before {
 }
 
 h1, h2, h3, h4 {
-    margin-top: 0px;
+    padding: 0px;
+    margin: 0px;
 
 	&::before {
 		content: " ";
@@ -303,6 +304,11 @@ h1, h2, h3, h4 {
 		background-color: black;
 		margin-right: 5px;
 	}
+}
+
+#content > p {
+    margin: 0px;
+    padding: 0px;
 }
 
 #navgrid {

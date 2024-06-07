@@ -65,6 +65,5 @@ You can also access the bbox directly with the `.bbox` attribute:
 # TODO example
 ```
 
-The tutorial ends here for now.
-
+Next up: [Layers](layers.md)
 
