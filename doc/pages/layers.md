@@ -62,9 +62,20 @@ class MySpectrometer(rai.Compo):
             'gnd': 'al',
             })
 
+        diel_rect = antenna.subcompos.active.bbox.pad(5)
+
+        antenna_diel = rai.RectLW(
+            diel_rect.width,
+            diel_rect.height,
+            ).proxy().map('ox')
+
+        antenna_diel.bbox.mid.to(
+            antenna.bbox.mid)
+
         # Add other subcomponents...
 
         self.subcompos.antenna = antenna
+        self.subcompos.antenna_diel = antenna_diel
 
 spec = MySpectrometer()
 show(spec)
@@ -86,7 +97,10 @@ show(spec)
 You should declare which layers your component will have
 by creating a nested class called `Layers` within your component class.
 Please include the layer's name and a brief description of what it is.
-You will learn later why this is important to include.
+You should do this because:
+
+- It makes your code easier for others to understand
+- It sets a concrete order for the layers
 
 ```exec python hide-output
 class Antenna(rai.Compo):
@@ -96,37 +110,19 @@ class Antenna(rai.Compo):
         conductor = rai.Layer('Conductor layer for antenna's active element')
 
     def _make(self):
-        reflector = rai.Circle(20).proxy().map('gnd')
-        active = rai.CustomPoly((
-            (0, 5),
-            (10, -5),
-            (10, 5),
-            (0, -5),
-            )).proxy().map('conductor')
-
-        active.bbox.mid.to(
-            reflector.bbox.mid)
-
-        self.subcompos.reflector = reflector
-        self.subcompos.active = active
+        ...
 
 class MySpectrometer(rai.Compo):
 
     class Layers:
-        al = rai.Layer('Aluminium ground plane')
         nbtin = rai.Layer(
             'Niobium-titanium-nitride layer deposited by electrobeam'
             )
+        ox = rai.Layer('Dielectric silicon oxide layer')
+        al = rai.Layer('Aluminium ground plane')
 
     def _make(self):
-        antenna = Antenna().proxy().map({
-            'conductor': 'nbtin',
-            'gnd': 'al',
-            })
-
-        # Add other subcomponents...
-
-        self.subcompos.antenna = antenna
+        ...
 ```
 
 The tutorial ends here for now.
