@@ -5,6 +5,36 @@ or [browse the map of all pages](map.md).
 
 
 <!--
+<nav id="navgrid">
+    <a href="pages/tutorial.html">
+        <h3>Tutorial</h3>
+        <img
+            src="img/doc/tutorial.png"
+            alt="tutorial icon"
+            >
+        Learn RAIMAD step-by-step
+    </a>
+    <a href="pages/packaging.html">
+        <h3>Packaging</h3>
+        <img
+            src="img/doc/tutorial.png"
+            alt="tutorial icon"
+            >
+        Learn RAIMAD step-by-step
+    </a>
+    <a href="map.html">
+        <h3>Map</h3>
+        <img
+            src="img/doc/tutorial.png"
+            alt="tutorial icon"
+            >
+        Browse the map of all RAIDOC pages
+    </a>
+</nav>
+
+-->
+<!--
+
 
 ```dot exec hide-input
 digraph D {

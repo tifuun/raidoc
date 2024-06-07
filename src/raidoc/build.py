@@ -21,7 +21,11 @@ def build(source='./doc', dest='./build'):
 
     graph = [
         'digraph D {',
-        '\tlayout=twopi; graph [ranksep=2];'
+        '\tlayout=neato;',
+        '\toverlap=false;',
+        '\tsplines=true;',
+        '\tnodesep=0.8;',
+        '\tranksep=1.0;',
         ]
 
     md = marko.Markdown(extensions=['gfm', 'codehilite', RaimarkExt])
