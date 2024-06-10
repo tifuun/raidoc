@@ -4,7 +4,7 @@ Notebook-based markdown-powered documentation pages for RAIMAD.
 
 This repository contains the source code for RAIDOC.
 If you just want to read the docs,
-please visit <https://exp-ast.github.io/raidoc/>.
+please visit <https://tifuun.github.io/raidoc/>.
 
 ## Building
 
