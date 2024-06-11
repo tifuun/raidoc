@@ -48,8 +48,7 @@ jobs:
       - name: build raidoc
         run: |
           source venv/bin/activate
-          python -m raidoc build \
-            raimad
+          python -m raidoc build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
