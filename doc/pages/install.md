@@ -5,6 +5,9 @@ It is available under the name `raimad` (lowercase)
 on [PyPI](https://pypi.org/project/raimad/).
 You should install it like any other Python package.
 
+RAIMAD requires *Python 3.12, 3.11, or 3.10*.
+Python 3.9 and lower are not supported.
+
 - If you are using (ana)conda, follow the
 [official documentation](https://docs.anaconda.com/free/working-with-conda/packages/install-packages/)
 for installing packages.
