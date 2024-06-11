@@ -7,17 +7,15 @@ on:
 
 jobs:
   build:
-    # runs-on: alpine-latest
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: checkout repo
         uses: actions/checkout@v2
 
-#      - name: get graphviz and python
-#        run: |
-#          xbps-install -Syu
-#          xbps-install -Syu graphviz python3
-#
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
 
       - name: create venv
         run: |
@@ -36,7 +34,8 @@ jobs:
       - name: build raidoc
         run: |
           source venv/bin/activate
-          python -m raidoc build
+          python -m raidoc build \
+            raimad
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
@@ -44,8 +43,7 @@ jobs:
           path: ./build
 
   deploy:
-    #runs-on: alpine-latest
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     permissions:
       pages: write
