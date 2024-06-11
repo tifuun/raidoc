@@ -17,11 +17,25 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: get graphviz
+        run: |
+          sudo apt install graphviz
+        # do NOT run apt update && apt upgrade here!
+        # Micros*ft, in their infinite wisdom, decided
+        # to include "other tools" in the virtual machine,
+        # so unless you want to wait for the crappy azure VM
+        # to update vim, dotnet, aspnet, the kernel, snap,
+        # firefox, and half the X11 stack
+        # every time you push to main,
+        # do NOT do apt update && apt update
+        #
+        # And y'all thought docker was bloat lol
+
       - name: create venv
         run: |
           python -m venv venv
 
-      - name: install raidoc
+      - name: install raidex
         run: |
           source venv/bin/activate
           python -m pip install -e .
@@ -31,10 +45,10 @@ jobs:
           source venv/bin/activate
           python -m pip install raimad
 
-      - name: build raidoc
+      - name: build raidex
         run: |
           source venv/bin/activate
-          python -m raidoc build \
+          python -m raidex build \
             raimad
 
       - name: Upload artifact
