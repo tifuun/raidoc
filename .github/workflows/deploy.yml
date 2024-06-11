@@ -35,7 +35,7 @@ jobs:
         run: |
           python -m venv venv
 
-      - name: install raidex
+      - name: install raidoc
         run: |
           source venv/bin/activate
           python -m pip install -e .
@@ -45,10 +45,10 @@ jobs:
           source venv/bin/activate
           python -m pip install raimad
 
-      - name: build raidex
+      - name: build raidoc
         run: |
           source venv/bin/activate
-          python -m raidex build \
+          python -m raidoc build \
             raimad
 
       - name: Upload artifact
