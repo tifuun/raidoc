@@ -70,13 +70,10 @@ class CalloutMixin(object):
         # then line skip with a single `>`
         # then the callout body
 
-        if not element.children:
+        rendered = super().render_paragraph(element)
+        if rendered.strip() == '<p></p>':
             return ''
-        if not element.children[0].children:
-            return ''
-        if not element.children[0].children[0]:
-            return ''
-        return super().render_paragraph(element)
+        return rendered
 
 
 class EmphasisMixin(object):
