@@ -62,6 +62,22 @@ class CalloutMixin(object):
             '</blockquote></div>',
             ))
 
+    def render_paragraph(self, element):
+
+        # TODO fix this monstrosity
+        # this was added to prevent empty paragraph
+        # when you do a callout label,
+        # then line skip with a single `>`
+        # then the callout body
+
+        if not element.children:
+            return ''
+        if not element.children[0].children:
+            return ''
+        if not element.children[0].children[0]:
+            return ''
+        return super().render_paragraph(element)
+
 
 class EmphasisMixin(object):
 

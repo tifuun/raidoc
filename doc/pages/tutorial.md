@@ -11,4 +11,6 @@ or jump to any part of the tutorial using the table of contents below.
 1. [Builtin components](builtin-compos.md)
 1. [Coordinates and Transformations](coords-transforms.md)
 1. [Layers](layers.md)
+1. [Packaging](packaging.md)
+
 
