@@ -65,8 +65,8 @@ class MySpectrometer(rai.Compo):
         diel_rect = antenna.subcompos.active.bbox.pad(5)
 
         antenna_diel = rai.RectLW(
+            diel_rect.length,
             diel_rect.width,
-            diel_rect.height,
             ).proxy().map('ox')
 
         antenna_diel.bbox.mid.to(
