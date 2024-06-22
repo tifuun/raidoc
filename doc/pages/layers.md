@@ -106,8 +106,8 @@ You should do this because:
 class Antenna(rai.Compo):
 
     class Layers:
-        gnd = rai.Layer('Ground plane')
-        conductor = rai.Layer('Conductor layer for antenna's active element')
+        gnd = rai.Layer("Ground plane")
+        conductor = rai.Layer("Conductor layer for antenna's active element")
 
     def _make(self):
         ...
@@ -116,14 +116,16 @@ class MySpectrometer(rai.Compo):
 
     class Layers:
         nbtin = rai.Layer(
-            'Niobium-titanium-nitride layer deposited by electrobeam'
+            "Niobium-titanium-nitride layer deposited by electrobeam"
             )
-        ox = rai.Layer('Dielectric silicon oxide layer')
-        al = rai.Layer('Aluminium ground plane')
+        ox = rai.Layer("Dielectric silicon oxide layer")
+        al = rai.Layer("Aluminium ground plane")
 
     def _make(self):
         ...
 ```
 
 The tutorial ends here for now.
+Once you've made some components with RAIMAD,
+you might want to learn about [packaging](packaging.md).
 

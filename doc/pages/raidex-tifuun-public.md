@@ -14,6 +14,11 @@
 > to read.
 > Do you have a private github repo? Then go to the guide for
 > [private packages](raidex-tifuun-private.md)
+>
+> Are your components part of the `rai_compos_pub` or `rai_compos_priv`
+> packages? Then you do not need to do anything; those repos are already
+> configured for RAIDEX.
+> Check the README files for more info.
 
 So, you've
 [set up your package](packaging.md)

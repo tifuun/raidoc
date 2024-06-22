@@ -1,6 +1,18 @@
 # Packaging
 
 Packaging your components allows others to easily use them.
+
+> [ INFO ]
+>
+> Are you a TIFUUN collaborator?
+> Instead of creating your own package,
+> we recommend contributing to one of the two
+> existing packages instead.
+> Read more on the [TIFUUN collaborator welcome page](tifuun.md).
+>
+> If you're not a TIFUUN collaborator or if you have a good reason
+> to make your own package, read on.
+
 RAIMAD packages are just Python packages,
 so if you already know how to make Python packages,
 you have a good headstart.
