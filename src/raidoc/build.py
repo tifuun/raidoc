@@ -39,6 +39,7 @@ def build(source='./doc', dest='./build'):
     if dest.exists():
         shutil.rmtree(dest)
 
+    shutil.copytree(source / 'fontawesome', dest / 'fontawesome')
     shutil.copytree(source / 'img', dest / 'img')
     shutil.copytree(source / 'js', dest / 'js')
     for path in (source / 'scss').rglob('*'):

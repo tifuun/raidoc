@@ -355,7 +355,8 @@ h1, h2, h3, h4 {
 					display: none;
 				}
 
-        & > img {
+        & > .icon {
+						font-size: 90px;  // TODO hack for font-awesome
             height: 55%;
         }
     }

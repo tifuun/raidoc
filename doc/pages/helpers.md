@@ -11,7 +11,7 @@ import raimad as rai
 import numpy as np
 
 print( rai.midpoint( np.array((-10, -10)), np.array((12, 12)) ))
-print( rai.polar( np.deg2rad(90), 5 ).round())
+print( rai.polar( np.deg2rad(90), 5 ))
 print( np.rad2deg(
     rai.angle_between( np.array((0, 10)), np.array((2, 2)) )
     ))
@@ -72,33 +72,6 @@ print( rai.iters.is_rotated(
     [3, '1', 2],
     comparison=lambda a, b: list(map(str, a)) == list(map(str, b))
     ))
-```
-
-## Generator decorators
-Sometimes you don't care about the lazy-loading aspect of generators
-and you just want to use them for the nice `yield` syntax.
-In these cases,
-`preload_generator` and `join_generator`
-come in handy.
-
-```python exec
-@rai.preload_generator()
-def mygen():
-    yield 1
-    yield 2
-    yield 4
-
-print(mygen()[2])
-
-@rai.join_generator('\n and ')
-def mygen():
-    yield 'hello'
-    yield 'world'
-    for x in range(3):
-        yield 'foo'
-        yield 'bar'
-
-print(mygen())
 ```
 
 ## Other helpers

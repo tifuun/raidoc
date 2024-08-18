@@ -25,6 +25,17 @@ cd raidoc
 python -m pip install -e .
 ```
 
+Next, you need to download Font Awesome icons and place
+them under `doc/fontawesome`
+```sh
+# From the root of the repo
+cd doc
+wget https://use.fontawesome.com/releases/v6.6.0/fontawesome-free-6.
+6.0-web.zip
+unzip fontawesome-free-6.6.0-web.zip
+mv fontawesome-free-6.6.0-web.zip fontawesome
+```
+
 You can then build the documentation like this.
 The command MUST be run from the root of the repo.
 

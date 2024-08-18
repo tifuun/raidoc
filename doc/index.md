@@ -8,17 +8,15 @@ Visit the [TIFUUN collaborator welcome page](pages/tifuun.md)!
 
 <nav id="navgrid">
     <a href="pages/tutorial.html">
-        <img
-            src="img/doc/tutorial.png"
-            alt="tutorial icon"
-            >
+        <i class="fa-solid fa-graduation-cap icon"></i>
         <h3>Tutorial</h3>
         Learn RAIMAD step-by-step
     </a>
     <a href="map.html">
         <img
             src="img/doc/map-traced.svg"
-            alt="tutorial icon"
+            alt="map icon"
+            class="icon"
             >
         <h3>Map</h3>
         Browse the map of all RAIDOC pages
@@ -26,7 +24,8 @@ Visit the [TIFUUN collaborator welcome page](pages/tifuun.md)!
     <a href="pages/tifuun.html">
         <img
             src="img/doc/tifuun-mono.svg"
-            alt="tutorial icon"
+            alt="tifuun icon"
+            class="icon"
             >
         <h3>TIFUUN</h3>
         Are you a TIFUUN collaborator?

@@ -18,7 +18,6 @@ ansec = rai.AnSec(
     theta2=np.deg2rad(180),
     r1=50,
     r2=80,
-    orientation=rai.Orientation.POS,
     )
 
 rectwire = rai.RectWire(
@@ -55,7 +54,6 @@ ansec = rai.AnSec(
     theta2=np.deg2rad(180),
     r1=50,
     r2=80,
-    orientation=rai.Orientation.POS,
     )
 show(ansec)
 ```
@@ -68,7 +66,6 @@ ansec = rai.AnSec(
     theta2=np.deg2rad(180),
     r1=50,
     r2=80,
-    orientation=rai.Orientation.NEG,
     )
 show(ansec)
 ```
@@ -83,7 +80,6 @@ for x in (10, 40, 60):
         dtheta=np.deg2rad(x * 3),
         r1=50,
         dr=x,
-        orientation=rai.Orientation.POS,
         )
     show(ansec)
 ```

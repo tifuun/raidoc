@@ -31,3 +31,5 @@ module_browser
 *.ipynb
 venv
 
+fontawesome*
+
