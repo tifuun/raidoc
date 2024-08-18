@@ -14,7 +14,12 @@
 > so that only people of your choosing can view your
 > source code.
 > Do you have a public github repo? Then go to the guide for
-> [public packages](raidex-tifuun-public.md)
+> [public packages](raidex-tifuun-public.md).
+>
+> Are your components part of the `rai_compos_pub` or `rai_compos_priv`
+> packages? Then you do not need to do anything; those repos are already
+> configured for RAIDEX.
+> Check the README files for more info.
 
 
 So, you've

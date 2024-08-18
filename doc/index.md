@@ -6,35 +6,34 @@ Are you a TIFUUN collaborator?
 Visit the [TIFUUN collaborator welcome page](pages/tifuun.md)!
 
 
-<!--
 <nav id="navgrid">
     <a href="pages/tutorial.html">
+        <img
+            src="img/doc/tutorial.png"
+            alt="tutorial icon"
+            >
         <h3>Tutorial</h3>
-        <img
-            src="img/doc/tutorial.png"
-            alt="tutorial icon"
-            >
-        Learn RAIMAD step-by-step
-    </a>
-    <a href="pages/packaging.html">
-        <h3>Packaging</h3>
-        <img
-            src="img/doc/tutorial.png"
-            alt="tutorial icon"
-            >
         Learn RAIMAD step-by-step
     </a>
     <a href="map.html">
-        <h3>Map</h3>
         <img
-            src="img/doc/tutorial.png"
+            src="img/doc/map-traced.svg"
             alt="tutorial icon"
             >
+        <h3>Map</h3>
         Browse the map of all RAIDOC pages
+    </a>
+    <a href="pages/tifuun.html">
+        <img
+            src="img/doc/tifuun-mono.svg"
+            alt="tutorial icon"
+            >
+        <h3>TIFUUN</h3>
+        Are you a TIFUUN collaborator?
+        Read the welcome page!
     </a>
 </nav>
 
--->
 <!--
 
 
