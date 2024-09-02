@@ -23,3 +23,17 @@ dependencies = [
 
 #[tool.setuptools.packages.find]
 #include = [ "pycif", "pycif.*" ]
+
+[tool.ruff.lint]
+exclude = [
+    ]
+select = [
+    "E",
+    "F",
+    "D",
+    ]
+ignore = [
+    "D401",  # don't complain about "imperative mood"
+    ]
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"

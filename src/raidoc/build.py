@@ -8,6 +8,9 @@ import marko
 from pygments.formatters import HtmlFormatter
 
 from raidoc.raimark_ext import RaimarkExt, LinkMixin
+from raidoc.autogen import FilesystemScanner
+
+import raimad
 
 dot_sanitizer = str.maketrans({
     '-': '_',
@@ -18,6 +21,17 @@ dot_sanitizer = str.maketrans({
 def build(source='./doc', dest='./build'):
     source = Path(source)
     dest = Path(dest)
+
+    scanner = FilesystemScanner()
+    scanner.use_module(raimad)
+    scanner.scan()
+    for file_scanner in scanner.file_scanners:
+        md_path = (
+            source / 'pages' / 'autogen' / file_scanner.relpath
+            .with_suffix('.md')
+            )
+        (md_path.parent).mkdir(parents = True, exist_ok = True)
+        md_path.write_text(file_scanner.get_md())
 
     graph = [
         'digraph D {',

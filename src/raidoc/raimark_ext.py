@@ -39,14 +39,22 @@ class CalloutMixin(object):
     """
 
     def render_quote(self, element):
-        callout_tag = element.children[0].children[0].children
+        try:
+            callout_tag = element.children[0].children[0].children
+        except IndexError:
+            # TODO huh?
+            return super().render_quote(element)
 
-        # Remove the tag from rendered outout
-        element.children[0].children[0].children = ''
+        if not isinstance(callout_tag, str):
+            # TODO huh?
+            return super().render_quote(element)
 
         match = re_callout_class.match(callout_tag)
         if not match:
             return super().render_quote(element)
+
+        # Remove the tag from rendered outout
+        element.children[0].children[0].children = ''
 
         callout_class = match.groups()[0].lower()
 
