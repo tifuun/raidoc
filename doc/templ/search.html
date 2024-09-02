@@ -4,7 +4,9 @@
 		<meta charset="UTF-8"> 
 		<link rel="stylesheet" href="{{webroot}}css/root.css">
 		<link rel="stylesheet" href="{{webroot}}pyg.css">
-		<!--<script src="browser.js"></script>-->
+
+		<script src="{{webroot}}search_index.js"></script>
+		<script src="{{webroot}}js/search.js"></script>
 
 		<link href="{{webroot}}fontawesome/css/fontawesome.css" rel="stylesheet" />
 		<link href="{{webroot}}fontawesome/css/brands.css" rel="stylesheet" />
@@ -20,7 +22,12 @@
 			</header>
 
 			<div id="content">
-				{{content}}
+				<input type="text" id="searchbox">
+				<button id="searchbutton" onclick="do_search();">
+					Search
+				</button>
+				<div id="search-results">
+				</div>
 			</div>
 		</div>
 	</body>

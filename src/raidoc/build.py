@@ -1,13 +1,14 @@
 from pathlib import Path
 import shutil
 import subprocess
+import json
 
 import sass
 import jinja2
 import marko
 from pygments.formatters import HtmlFormatter
 
-from raidoc.raimark_ext import RaimarkExt, LinkMixin
+from raidoc.raimark_ext import RaimarkExt, LinkMixin, IndexerMixin
 from raidoc.autogen import FilesystemScanner
 
 import raimad
@@ -44,6 +45,8 @@ def build(source='./doc', dest='./build'):
 
     md = marko.Markdown(extensions=['gfm', 'codehilite', RaimarkExt])
 
+    search_index = []
+
     env = jinja2.Environment(
         autoescape=False,
         undefined=jinja2.StrictUndefined,
@@ -77,6 +80,8 @@ def build(source='./doc', dest='./build'):
         markdown = path.read_text()
 
         LinkMixin.links_to = []
+        IndexerMixin.init()
+
         try:
             content = md(markdown)
         except Exception as e:
@@ -105,6 +110,11 @@ def build(source='./doc', dest='./build'):
         destparent.mkdir(parents=True, exist_ok=True)
         destpath = destparent / f"{path.stem}.html"
         destpath.write_text(html)
+
+        search_index.append((
+            str(path.relative_to(source).with_suffix('.html')),
+            IndexerMixin.get_index_entry()
+            ))
 
     graph.append('}')
 
@@ -137,10 +147,23 @@ def build(source='./doc', dest='./build'):
             ],
         ).wait()
 
+
     template = env.from_string((source / 'templ/map.html').read_text())
     html = template.render({
         'webroot': '',
         'map_cmap': map_cmap.read_text()
         })
     (dest / 'map.html').write_text(html)
+
+    with (dest / 'search_index.js').open('w') as file:
+        file.write('var search_index = ')
+        json.dump(search_index, file)
+        file.write(';\n')
+
+    template = env.from_string((source / 'templ/search.html').read_text())
+    html = template.render({
+        'webroot': '',
+        })
+    (dest / 'search.html').write_text(html)
+
 

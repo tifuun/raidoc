@@ -1,5 +1,6 @@
 import subprocess
 import re
+import copy
 
 import marko
 
@@ -98,6 +99,28 @@ class EmphasisMixin(object):
             '</span>',
             ))
 
+
+class IndexerMixin(object):
+
+    index_entry = None
+
+    @classmethod
+    def init(cls):
+        cls.index_entry = tuple([] for _ in range(10))
+
+    def render_heading(self, element):
+
+        html_text = super().render_heading(element)
+        plain_text = re.sub('<[^>]*>', '', html_text).strip()
+        # TODO horrible inefficient
+
+        self.index_entry[element.level - 1].append(plain_text)
+
+        return html_text
+
+    @classmethod
+    def get_index_entry(cls):
+        return copy.deepcopy(cls.index_entry)
 
 codeblock_preamble = """
 __raimark_output__ = []
@@ -213,6 +236,12 @@ class CodeBlockMixin(object):
 
 
 RaimarkExt = marko.helpers.MarkoExtension(
-    renderer_mixins=[LinkMixin, CodeBlockMixin, CalloutMixin, EmphasisMixin]
+    renderer_mixins=[
+        LinkMixin,
+        CodeBlockMixin,
+        CalloutMixin,
+        EmphasisMixin,
+        IndexerMixin,
+        ]
 )
 
