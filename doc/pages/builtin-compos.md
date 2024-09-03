@@ -49,7 +49,7 @@ There are many different ways to define an `AnSec`:
 # Explicitly define inner radius, outter radius,
 # angle one, and angle two
 
-ansec = rai.AnSec(
+ansec = rai.AnSec.from_auto(
     theta1=np.deg2rad(45),
     theta2=np.deg2rad(180),
     r1=50,
@@ -61,7 +61,7 @@ show(ansec)
 ```python exec
 # Make it go the other way
 
-ansec = rai.AnSec(
+ansec = rai.AnSec.from_auto(
     theta1=np.deg2rad(45),
     theta2=np.deg2rad(180),
     r1=50,
@@ -75,7 +75,7 @@ show(ansec)
 # define radius delta and angle delta
 
 for x in (10, 40, 60):
-    ansec = rai.AnSec(
+    ansec = rai.AnSec.from_auto(
         theta1=np.deg2rad(0),
         dtheta=np.deg2rad(x * 3),
         r1=50,
