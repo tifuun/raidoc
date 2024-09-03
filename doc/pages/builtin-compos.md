@@ -7,15 +7,16 @@ designs:
 
 ```python exec
 import raimad as rai
-import numpy as np
+
+from math import radians
 
 RectLW = rai.RectLW(100, 50)
 
 circle = rai.Circle(radius=40)
 
 ansec = rai.AnSec(
-    theta1=np.deg2rad(45),
-    theta2=np.deg2rad(180),
+    theta1=radians(45),
+    theta2=radians(180),
     r1=50,
     r2=80,
     )
@@ -50,8 +51,8 @@ There are many different ways to define an `AnSec`:
 # angle one, and angle two
 
 ansec = rai.AnSec.from_auto(
-    theta1=np.deg2rad(45),
-    theta2=np.deg2rad(180),
+    theta1=radians(45),
+    theta2=radians(180),
     r1=50,
     r2=80,
     )
@@ -62,8 +63,8 @@ show(ansec)
 # Make it go the other way
 
 ansec = rai.AnSec.from_auto(
-    theta1=np.deg2rad(45),
-    theta2=np.deg2rad(180),
+    theta1=radians(45),
+    theta2=radians(180),
     r1=50,
     r2=80,
     )
@@ -76,8 +77,8 @@ show(ansec)
 
 for x in (10, 40, 60):
     ansec = rai.AnSec.from_auto(
-        theta1=np.deg2rad(0),
-        dtheta=np.deg2rad(x * 3),
+        theta1=radians(0),
+        dtheta=radians(x * 3),
         r1=50,
         dr=x,
         )

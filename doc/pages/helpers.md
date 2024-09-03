@@ -8,12 +8,12 @@ but you can also use them for your own benefit.
 
 ```python exec
 import raimad as rai
-import numpy as np
+from math import degrees
 
-print( rai.midpoint( np.array((-10, -10)), np.array((12, 12)) ))
-print( rai.polar( np.deg2rad(90), 5 ))
-print( np.rad2deg(
-    rai.angle_between( np.array((0, 10)), np.array((2, 2)) )
+print( rai.midpoint( (-10, -10), (12, 12) ))
+print( rai.polar( rai.halfcircle, 5 ))
+print( degrees(
+    rai.angle_between( (0, 10), (2, 2) )
     ))
 
 ```

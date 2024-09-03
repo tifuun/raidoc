@@ -21,7 +21,6 @@ You can move, rotate, and scale any RAIMAD compo:
 
 ```python exec
 import raimad as rai
-import numpy as np
 
 class IShapedFilter(rai.Compo):
     def _make(self, beam_length: float = 10.5):
@@ -42,7 +41,7 @@ class TransformExample(rai.Compo):
 
         moved = filter.copy().move(50, 20)
         scaled = filter.copy().scale(5)
-        rotated = filter.copy().rotate(np.deg2rad(90)).scale(4)
+        rotated = filter.copy().rotate(rai.quartercircle).scale(4)
 
         self.subcompos.filter = filter
         self.subcompos.moved = moved
