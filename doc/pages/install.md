@@ -75,7 +75,7 @@ If all goes well, the output file should contain a snowman:
 
 ```python exec hide-code
 import raimad as rai
-show(rai.Snowman())
+rai.show(rai.Snowman())
 ```
 
 > [INFO]

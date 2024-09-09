@@ -33,11 +33,11 @@ triangle = rai.CustomPoly([
     (40, 80)
     ])
 
-show(RectLW)
-show(circle)
-show(ansec)
-show(rectwire)
-show(triangle)
+rai.show(RectLW)
+rai.show(circle)
+rai.show(ansec)
+rai.show(rectwire)
+rai.show(triangle)
 ```
 
 ## AnSec
@@ -56,7 +56,7 @@ ansec = rai.AnSec.from_auto(
     r1=50,
     r2=80,
     )
-show(ansec)
+rai.show(ansec)
 ```
 
 ```python exec
@@ -68,7 +68,7 @@ ansec = rai.AnSec.from_auto(
     r1=50,
     r2=80,
     )
-show(ansec)
+rai.show(ansec)
 ```
 
 ```python exec
@@ -82,7 +82,7 @@ for x in (10, 40, 60):
         r1=50,
         dr=x,
         )
-    show(ansec)
+    rai.show(ansec)
 ```
 
 For all the options that AnSec takes,

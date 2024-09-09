@@ -123,6 +123,8 @@ class IndexerMixin(object):
         return copy.deepcopy(cls.index_entry)
 
 codeblock_preamble = """
+import raimad as rai
+
 __raimark_output__ = []
 
 if '_og_print' not in dir():
@@ -144,6 +146,8 @@ def show(obj):
         __raimark_output__.append(('svg', obj._repr_svg_()))
     else:
         __raimark_output__.append(('str', repr(obj)))
+
+rai.show = show
 """
 
 

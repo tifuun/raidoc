@@ -28,7 +28,7 @@ class Antenna(rai.Compo):
         self.subcompos.active = active
 
 antenna = Antenna()
-show(antenna)
+rai.show(antenna)
 ```
 
 > [WORKINPROGRESS]
@@ -78,7 +78,7 @@ class MySpectrometer(rai.Compo):
         self.subcompos.antenna_diel = antenna_diel
 
 spec = MySpectrometer()
-show(spec)
+rai.show(spec)
 ```
 
 > [INFO]

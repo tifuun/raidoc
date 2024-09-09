@@ -19,7 +19,7 @@ class IShapedFilter(rai.Compo):
         self.subcompos.coup_bot = coup_bot
 
 coup1 = IShapedFilter()
-show(coup1)
+rai.show(coup1)
 ```
 
 Once you've made your basic components
@@ -46,7 +46,7 @@ class Filterbank(rai.Compo):
         self.subcompos.thz_line = thz_line
 
 bank = Filterbank()
-show(bank)
+rai.show(bank)
 ```
 
 Next up: [builtin compos](builtin-compos.md)

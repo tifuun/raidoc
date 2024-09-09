@@ -48,7 +48,7 @@ class TransformExample(rai.Compo):
         self.subcompos.scaled = scaled
         self.subcompos.rotated = rotated
 
-show(TransformExample())
+rai.show(TransformExample())
         
 ```
 
