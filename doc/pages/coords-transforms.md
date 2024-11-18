@@ -39,9 +39,9 @@ class TransformExample(rai.Compo):
     def _make(self):
         filter = IShapedFilter().proxy()
 
-        moved = filter.copy().move(50, 20)
-        scaled = filter.copy().scale(5)
-        rotated = filter.copy().rotate(rai.quartercircle).scale(4)
+        moved = filter.shallow_copy().move(50, 20)
+        scaled = filter.shallow_copy().scale(5)
+        rotated = filter.shallow_copy().rotate(rai.quartercircle).scale(4)
 
         self.subcompos.filter = filter
         self.subcompos.moved = moved
