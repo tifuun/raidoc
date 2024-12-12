@@ -5,6 +5,7 @@ journey:
         - basics.md
         - builtin-compos.md
         - coords-transforms.md
+        - subcompos.md
         - layers.md
         - packaging.md
 ---

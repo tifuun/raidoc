@@ -15,54 +15,71 @@ this should make sense.
 If you come from a computer graphics environment,
 we sincerely apologize.
 
-## Transformations
+## Transformations are done with Proxies
 
-You can move, rotate, and scale any RAIMAD compo:
+RAIMAD compos are immutable.
+You cannot transform them.
+However, what you can do,
+is create a Proxy.
+Proxies are like lenses that apply transformations to compos.
+The compo itself remains unchanged,
+but looking at it through a proxy changes how it looks to you.
 
 ```python exec
+from math import radians
 import raimad as rai
 
-class IShapedFilter(rai.Compo):
-    def _make(self, beam_length: float = 10.5):
-        beam = rai.RectLW(2, beam_length).proxy()
-        coup_top = rai.RectLW(10, 2).proxy()
-        coup_bot = rai.RectLW(12, 2).proxy()
+square = rai.RectLW(10, 10)
 
-        coup_top.snap_above(beam)
-        coup_bot.snap_below(beam)
+square_translated = square.proxy().move(15, 0)
+square_stretched = square.proxy().scale(1.5, 0.5)
+square_rotated = square.proxy().rotate(radians(15))
 
-        self.subcompos.beam = beam
-        self.subcompos.coup_top = coup_top
-        self.subcompos.coup_bot = coup_bot
-
-class TransformExample(rai.Compo):
-    def _make(self):
-        filter = IShapedFilter().proxy()
-
-        moved = filter.shallow_copy().move(50, 20)
-        scaled = filter.shallow_copy().scale(5)
-        rotated = filter.shallow_copy().rotate(rai.quartercircle).scale(4)
-
-        self.subcompos.filter = filter
-        self.subcompos.moved = moved
-        self.subcompos.scaled = scaled
-        self.subcompos.rotated = rotated
-
-rai.show(TransformExample())
-        
+rai.show(square)
+rai.show(square_translated)  # won't be visible because of autocrop
+rai.show(square_stretched)
+rai.show(square_rotated)
 ```
 
-## Snapping and bbox
+## Multiple transformations
 
-Each compo has a bounding box (bbox).
-It's an imaginary rectangle that encloses the entire geometry of the compo.
-One application of bbox are the `snap_above` and `snap_below` functions you've
-seen earlier (`snap_left` and `snap_right` also exist).
-You can also access the bbox directly with the `.bbox` attribute:
+There are three ways to combine transformations.
+First of all, you can simply chain the different
+transformation methods on top of each other:
 
-```exec python
-# TODO example
+
+```python exec
+square_multiple = (
+    square.proxy()
+    .move(15, 0)
+    .scale(1.5, 1)
+    )
+
+rai.show(square_multiple)
 ```
 
-Next up: [Layers](layers.md)
+This method is preferred, 
+because it is easiest to type.
 
+
+Unlike compos, proxies are mutable,
+so you can perform the various methods on separate lines:
+```python exec
+square_multiple.rotate(radians(-15))
+rai.show(square_multiple)
+```
+
+Finally, you can create proxies of proxies:
+```python exec
+square_big = square_multiple.proxy().scale(2)
+rai.show(square_big)
+```
+
+Applying a transformation to a proxy of a proxy only
+affects the topmost proxy.
+So the `square_multiple` proxy is unaffected
+by the `.scale(2)` call above:
+
+```python exec
+rai.show(square_multiple)
+```

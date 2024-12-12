@@ -110,7 +110,9 @@ class Builder:
 
     def _prepass(self) -> None:
         for path in (self.source / 'pages').rglob('*.md'):
-            page = self._load_page(path)
+            self._load_page(path)
+
+        for page in self.pages:
             self._parse_journey(page)
 
     def _load_page(self, path: Path) -> Page:
