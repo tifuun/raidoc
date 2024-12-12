@@ -1,3 +1,7 @@
+---
+next: basics.md
+---
+
 # Installing RAIMAD
 
 RAIMAD is a Python package.

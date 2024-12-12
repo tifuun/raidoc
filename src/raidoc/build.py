@@ -7,6 +7,7 @@ import sass
 import jinja2
 import marko
 from pygments.formatters import HtmlFormatter
+import frontmatter
 
 from raidoc.raimark_ext import RaimarkExt, LinkMixin, IndexerMixin
 from raidoc.autogen import FilesystemScanner
@@ -23,16 +24,16 @@ def build(source='./doc', dest='./build'):
     source = Path(source)
     dest = Path(dest)
 
-    scanner = FilesystemScanner()
-    scanner.use_module(raimad)
-    scanner.scan()
-    for file_scanner in scanner.file_scanners:
-        md_path = (
-            source / 'pages' / 'autogen' / file_scanner.relpath
-            .with_suffix('.md')
-            )
-        (md_path.parent).mkdir(parents = True, exist_ok = True)
-        md_path.write_text(file_scanner.get_md())
+    #scanner = FilesystemScanner()
+    #scanner.use_module(raimad)
+    #scanner.scan()
+    #for file_scanner in scanner.file_scanners:
+    #    md_path = (
+    #        source / 'pages' / 'autogen' / file_scanner.relpath
+    #        .with_suffix('.md')
+    #        )
+    #    (md_path.parent).mkdir(parents = True, exist_ok = True)
+    #    md_path.write_text(file_scanner.get_md())
 
     graph = [
         'digraph D {',
@@ -77,7 +78,11 @@ def build(source='./doc', dest='./build'):
         if path.suffix != '.md':
             continue
 
-        markdown = path.read_text()
+        fm = frontmatter.load(path)
+        # TODO parse it to get `next`
+
+        # Strip frontmatter before passing to marko
+        markdown = fm.content
 
         LinkMixin.links_to = []
         IndexerMixin.init()
