@@ -19,7 +19,8 @@ dependencies = [
 	'jinja2',
 	'libsass',
 	'marko[codehilite]',
-    'python-frontmatter',
+	'python-frontmatter',
+	'addict',
 	]
 
 #[tool.setuptools.packages.find]

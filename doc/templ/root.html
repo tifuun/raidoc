@@ -21,6 +21,25 @@
 
 			<div id="content">
 				{{content}}
+
+				{% if prevnext %}
+				<div id="prevnext">
+					{% if prevnext.prev %}
+					<div id="prevnext-prev">
+						Previous: <a href="{{prevnext.prev}}">{{prevnext.prev}}</a>
+					</div>
+					{% endif %}
+					{% if prevnext.next %}
+					<div id="prevnext-next">
+						Next: <a href="{{prevnext.next}}">{{prevnext.next}}</a>
+					</div>
+					{% endif %}
+				</div>
+				{% endif %}
+				<!-- TODO display article name instead of filename
+					This will need a "prepass" over the docs to build
+					a filename -> title lookup table
+				-->
 			</div>
 		</div>
 	</body>

@@ -8,6 +8,7 @@ import jinja2
 import marko
 from pygments.formatters import HtmlFormatter
 import frontmatter
+from addict import Dict
 
 from raidoc.raimark_ext import RaimarkExt, LinkMixin, IndexerMixin
 from raidoc.autogen import FilesystemScanner
@@ -79,7 +80,13 @@ def build(source='./doc', dest='./build'):
             continue
 
         fm = frontmatter.load(path)
-        # TODO parse it to get `next`
+
+        prevnext = Dict()
+        prevnext.prev = fm.get('prev', '').replace('.md', '.html')
+        prevnext.next = fm.get('next', '').replace('.md', '.html')
+        # TODO ugly replace hack. Again,
+        # we need a prepass to map filename -> title
+        # but also filename.md -> filename.html
 
         # Strip frontmatter before passing to marko
         markdown = fm.content
@@ -108,7 +115,8 @@ def build(source='./doc', dest='./build'):
 
         html = template.render({
             'content': content,
-            'webroot': '../' * len(path.relative_to(source).parent.parts)
+            'webroot': '../' * len(path.relative_to(source).parent.parts),
+            'prevnext': prevnext
             })
 
         destparent = dest / path.parent.relative_to(source)
