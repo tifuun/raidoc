@@ -66,7 +66,7 @@ class Builder:
     def page(self, path):
         for page in self.pages:
             # The `str` here converts Path to str so that the equality works
-            if str(page.path) == path:
+            if str(page.path) == str(path):
                 return page
         raise Exception(path)
     
@@ -150,7 +150,12 @@ class Builder:
 
         # FIXME one and two item journeys
 
-        for prev, this, next in rai.triplets(journey.pages):
+        journey_pages = (
+            page.path,
+            *journey.pages
+            )
+
+        for prev, this, next in rai.triplets(journey_pages):
             self.page(this).journey_links.append(
                 JourneyLink(
                     journey_page=page,
@@ -159,19 +164,20 @@ class Builder:
                 )
             )
 
-        self.page(journey.pages[0]).journey_links.append(
-            JourneyLink(
-                journey_page=page,
-                next=self.page(journey.pages[1])
-            )
-        )
-
         self.page(journey.pages[-1]).journey_links.append(
             JourneyLink(
                 journey_page=page,
                 prev=self.page(journey.pages[-2])
             )
         )
+
+        page.journey_links.append(
+            JourneyLink(
+                journey_page=page,
+                next=self.page(journey.pages[0])
+            )
+        )
+
 
     def _render_page(self, page: Page):
         page.html_full = self.j2_templ.render({
