@@ -1,3 +1,14 @@
+---
+journey:
+    pages:
+        - install.md
+        - basics.md
+        - builtin-compos.md
+        - coords-transforms.md
+        - layers.md
+        - packaging.md
+---
+
 # RAIMAD Tutorial
 
 If you're new to RAIMAD,

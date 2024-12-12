@@ -105,7 +105,7 @@ class IndexerMixin(object):
     index_entry = None
 
     @classmethod
-    def init(cls):
+    def clear(cls):
         cls.index_entry = tuple([] for _ in range(10))
 
     def render_heading(self, element):
@@ -121,6 +121,22 @@ class IndexerMixin(object):
     @classmethod
     def get_index_entry(cls):
         return copy.deepcopy(cls.index_entry)
+
+class TitleMixin(object):
+    """Collect the title of the page"""
+
+    page_title = ''
+
+    @classmethod
+    def clear(cls):
+        cls.page_title = ''
+
+    def render_heading(self, element):
+        if not TitleMixin.page_title and element.level == 1:
+            TitleMixin.page_title = element.children[0].children
+            # FIXME this will break eventually
+        return super().render_heading(element)
+
 
 codeblock_preamble = """
 import raimad as rai
@@ -246,6 +262,7 @@ RaimarkExt = marko.helpers.MarkoExtension(
         CalloutMixin,
         EmphasisMixin,
         IndexerMixin,
+        TitleMixin,
         ]
 )
 

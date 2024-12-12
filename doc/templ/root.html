@@ -20,22 +20,27 @@
 			</header>
 
 			<div id="content">
-				{{content}}
+				{{page.html_content}}
 
-				{% if prevnext %}
 				<div id="prevnext">
-					{% if prevnext.prev %}
-					<div id="prevnext-prev">
-						Previous: <a href="{{prevnext.prev}}">{{prevnext.prev}}</a>
-					</div>
-					{% endif %}
-					{% if prevnext.next %}
-					<div id="prevnext-next">
-						Next: <a href="{{prevnext.next}}">{{prevnext.next}}</a>
-					</div>
-					{% endif %}
+					{% for link in page.journey_links %}
+
+						{% if link.prev %}
+							<div id="prevnext-prev">
+								Previous:
+								<a href="{{link.prev.path_html}}">{{link.prev.title}}</a>
+							</div>
+						{% endif %}
+
+						{% if link.next %}
+							<div id="prevnext-next">
+								Next:
+								<a href="{{link.next.path_html}}">{{link.next.title}}</a>
+							</div>
+						{% endif %}
+
+					{% endfor %}
 				</div>
-				{% endif %}
 				<!-- TODO display article name instead of filename
 					This will need a "prepass" over the docs to build
 					a filename -> title lookup table

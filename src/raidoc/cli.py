@@ -23,8 +23,14 @@ def cli():
     args = parser.parse_args()
 
     if args.action == ACTION_BUILD:
-        from raidoc.build import build
-        build(dest=args.dest)
+        #from raidoc.build import build
+        #build(dest=args.dest)
+        from raidoc.builder import Builder
+        builder = Builder(Path('./doc'))
+        builder._prepass()
+        for page in builder.pages:
+            builder._render_page(page)
+        builder.render(Path('./build'))
 
     else:
         # This should never happen, since
