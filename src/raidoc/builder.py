@@ -19,6 +19,7 @@ import raimad as rai
 from raidoc.raimark_ext import TitleMixin
 from raidoc.raimark_ext import IndexerMixin
 from raidoc.raimark_ext import RaimarkExt
+from raidoc.raimark_ext import LinkMixin
 
 @dataclass
 class JourneyLink:
@@ -122,6 +123,7 @@ class Builder:
 
         TitleMixin.clear()
         IndexerMixin.clear()
+        LinkMixin.builder = self
         html_content = self.marko(md)
         title = TitleMixin.page_title
 

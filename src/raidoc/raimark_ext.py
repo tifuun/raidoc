@@ -10,6 +10,12 @@ class CodeCTX:
         self.globs = {}
         self.locs = {}
 
+class WikiLink(marko.inline.InlineElement):
+    pattern = r'\[\[(.+?)\]\]'
+    parse_children = True
+
+    def __init__(self, match):
+        self.target = match.group(1)
 
 class LinkMixin(object):
     """
@@ -30,6 +36,12 @@ class LinkMixin(object):
             self.escape_url(element.dest.rstrip('.md') + '.html'),
             self.render_children(element)
             )
+
+    def render_wiki_link(self, element):
+        page = LinkMixin.builder.page(element.target)
+        href = page.path_html
+        title = page.title
+        return f'<a href="{href}" class="wikilink">{title}</a>'
 
 
 re_callout_class = re.compile(r'\s*\[\s*(\w+)\s*\]\s*')
@@ -256,6 +268,7 @@ class CodeBlockMixin(object):
 
 
 RaimarkExt = marko.helpers.MarkoExtension(
+    elements=[WikiLink],
     renderer_mixins=[
         LinkMixin,
         CodeBlockMixin,
