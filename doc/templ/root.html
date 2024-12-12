@@ -22,22 +22,24 @@
 			<div id="content">
 				{{page.html_content}}
 
-				<div id="prevnext">
+				<div id="journey">
 					{% for link in page.journey_links %}
 
-						{% if link.prev %}
-							<div id="prevnext-prev">
-								Previous:
-								<a href="{{link.prev.path_html}}">{{link.prev.title}}</a>
-							</div>
-						{% endif %}
+						<div class="journey-line">
+							{% if link.prev %}
+								<div class="journey-prev">
+									Previous:<br>
+									<a href="{{link.prev.path_html}}">{{link.prev.title}}</a>
+								</div>
+							{% endif %}
 
-						{% if link.next %}
-							<div id="prevnext-next">
-								Next:
-								<a href="{{link.next.path_html}}">{{link.next.title}}</a>
-							</div>
-						{% endif %}
+							{% if link.next %}
+								<div class="journey-next">
+									Next:<br>
+									<a href="{{link.next.path_html}}">{{link.next.title}}</a>
+								</div>
+							{% endif %}
+						</div>
 
 					{% endfor %}
 				</div>

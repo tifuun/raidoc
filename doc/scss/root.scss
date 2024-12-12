@@ -362,3 +362,22 @@ h1, h2, h3, h4 {
     }
 }
 
+#journey {
+  display: flex;
+  flex-direction: column;
+}
+
+.journey-line {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%
+}
+
+.journey-prev, .journey-next {
+	@extend .panel;
+	@extend .convex;
+}
+
+
+
