@@ -39,6 +39,7 @@ class Page:
 
     journey_links: list[JourneyLink] = field(default_factory=list)
 
+    md_filled: str = ''
     html_content: str = ''
     html_full: str = ''
 
@@ -190,7 +191,16 @@ class Builder:
 
     def _render_page(self, page: Page):
 
-        page.html_content = self.marko(page.md)
+        # TODO full jinja
+        page.md_filled = page.md.replace(
+            '{{journey_toc}}', 
+            '\n'.join((
+                f'1. [[{link}]]'
+                for link in page.fm.journey.pages
+                ))
+            )
+
+        page.html_content = self.marko(page.md_filled)
 
         page.html_full = self.j2_templ.render({
             'page': page,

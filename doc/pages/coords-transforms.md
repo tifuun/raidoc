@@ -103,5 +103,28 @@ below = rai.sub(my_point, (0, 2))
 
 print("My point: ", my_point)
 print("To the left: ", left)
-print("above: ", below)
+print("Above: ", below)
+```
+
+There is also `rai.midpoint`, which calculates
+the midpoint by averaging the X and Y values:
+
+```python exec
+print("Midpoint: ",
+    rai.midpoint(
+        (0, 6),
+        (6, 0)
+        )
+    )
+```
+
+If you really want to use infix notation,
+you can. But please don't.
+
+```python exec
+sum = (5, 5) |rai.add| (1, 3)
+midpoint = (5, 5) |rai.midpoint| (1, 3)
+
+print("Sum: ", sum)
+print("Midpoint: ", midpoint)
 ```
