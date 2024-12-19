@@ -288,3 +288,8 @@ RaimarkExt = marko.helpers.MarkoExtension(
         ]
 )
 
+RaimarkPrepassExt = marko.helpers.MarkoExtension(
+    renderer_mixins=[
+        TitleMixin,
+        ]
+)

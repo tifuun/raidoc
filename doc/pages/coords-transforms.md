@@ -83,3 +83,25 @@ by the `.scale(2)` call above:
 ```python exec
 rai.show(square_multiple)
 ```
+
+## Adding and subtracting points
+
+<!-- TODO boundpoint page -->
+
+RAIMAD uses Python tuples
+(and sometimes its own BoundPoint class,
+which you will learn about later)
+to store coordinate points.
+You cannot add and subtract tuples using the familiar
+`+` and `-` operators.
+Instead, you can use `rai.add` and `rai.sub` helpers:
+
+```python exec
+my_point = (5, 5)
+left = rai.add(my_point, (-2, 0))
+below = rai.sub(my_point, (0, 2))
+
+print("My point: ", my_point)
+print("To the left: ", left)
+print("above: ", below)
+```

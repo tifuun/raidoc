@@ -17,9 +17,10 @@ import ansi2html
 
 import raimad as rai
 
+from raidoc.raimark_ext import RaimarkExt
+from raidoc.raimark_ext import RaimarkPrepassExt
 from raidoc.raimark_ext import TitleMixin
 from raidoc.raimark_ext import IndexerMixin
-from raidoc.raimark_ext import RaimarkExt
 from raidoc.raimark_ext import LinkMixin
 
 @dataclass
@@ -35,10 +36,10 @@ class Page:
     title: str
     fm: Any  # FIXME
     md: str
-    html_content: str
 
     journey_links: list[JourneyLink] = field(default_factory=list)
 
+    html_content: str = ''
     html_full: str = ''
 
 def custom_copy(source, dest):
@@ -63,6 +64,7 @@ class Builder:
         self.j2_templ = self.j2_env.from_string((source / 'templ/root.html').read_text())
 
         self.marko = marko.Markdown(extensions=['gfm', 'codehilite', RaimarkExt])
+        self.marko_prepass = marko.Markdown(extensions=[RaimarkPrepassExt])
 
     def page(self, path):
         for page in self.pages:
@@ -129,11 +131,10 @@ class Builder:
         fm = frontmatter.load(path)
         md = fm.content
 
-
         TitleMixin.clear()
         IndexerMixin.clear()
         LinkMixin.builder = self
-        html_content = self.marko(md)
+        self.marko_prepass(md)
         title = TitleMixin.page_title
 
         path = path.relative_to(self.source / 'pages')
@@ -146,7 +147,6 @@ class Builder:
                 title=title,
                 fm=Dict(fm.to_dict()),
                 md=md,
-                html_content=html_content
                 )
             )
 
@@ -189,6 +189,9 @@ class Builder:
 
 
     def _render_page(self, page: Page):
+
+        page.html_content = self.marko(page.md)
+
         page.html_full = self.j2_templ.render({
             'page': page,
             'webroot': '../' * (len(page.path.parts) + 1),  # FIXME magic number

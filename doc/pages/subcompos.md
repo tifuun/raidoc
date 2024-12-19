@@ -68,7 +68,51 @@ print("The bottom left corner is at:\n", rect.bbox.bot_left)
 print("The middle of the right edge is at:\n", rect.bbox.mid_right)
 ```
 
-However, there is a better way: using the `.bbox.mid` property:
+As you can see, the objects returned by the `.bbox` property
+are not regular tuples,
+but BoundPoints that hold a reference back to the proxy
+that was used to create them.
+
+BoundPoints support all of the transformations that you learned about in
+[[coords-transforms.md]].
+While transforming a proxy directly causes the transformation to be
+applied in reference to the origin of the proxy's coordinate system,
+applying a transformation through a boundpoint causes
+it to be applied in relation to that point:
+
+```python exec
+from math import radians
+
+rect = rai.RectLW(10, 20).proxy()
+
+rai.show(rect)
+
+rect1 = rect.proxy().bbox.bot_right.rotate(radians(15))
+rai.show(rect1)
+
+rect2 = rect.proxy().bbox.top_left.rotate(radians(15))
+rai.show(rect2)
+```
+
+BoundPoints also have a special `.to(point)` method,
+which translates the proxy such that the boundpoint
+is in the same place as `point`:
+
+```python exec
+from math import radians
+
+rect = rai.RectLW(10, 20).proxy()
+
+rai.show(rect)
+
+rect1 = rect.proxy().bbox.bot_right.to((5, 5))
+rai.show(rect1)
+```
+
+Using bounding box boundpoints, we can fix
+out `Antenna` component and line up the reflector
+and active element:
+
 
 ```python exec
 import raimad as rai
