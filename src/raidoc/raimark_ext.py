@@ -3,7 +3,9 @@ import re
 import copy
 
 import marko
+from ansi2html import Ansi2HTMLConverter
 
+ansi2html = Ansi2HTMLConverter().convert
 
 class CodeCTX:
     def __init__(self):
@@ -243,9 +245,16 @@ class CodeBlockMixin(object):
             else:
                 blocks.append(''.join((
                     '<pre>',
-                    self.escape_html(block_string),
+                    ansi2html(
+                        #self.escape_html(
+                            block_string,
+                            #    ),
+                        full=False
+                        ),
                     '</pre>',
                     )))
+                # self.escape_html not needed here;
+                # ansi2html takes care of that
 
         return '\n'.join(map(template.format, blocks))
 

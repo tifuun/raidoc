@@ -21,6 +21,7 @@ dependencies = [
 	'marko[codehilite]',
 	'python-frontmatter',
 	'addict',
+	'ansi2html',
 	]
 
 #[tool.setuptools.packages.find]

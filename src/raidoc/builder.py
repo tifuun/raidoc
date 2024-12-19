@@ -13,6 +13,7 @@ import jinja2
 from addict import Dict
 from reflink import reflink
 from pygments.formatters import HtmlFormatter
+import ansi2html
 
 import raimad as rai
 
@@ -105,6 +106,14 @@ class Builder:
 
         pyg_style = HtmlFormatter(style='default').get_style_defs()
         (dest / 'pyg.css').write_text(pyg_style)
+
+        ansi_style = '\n'.join(
+                str_style
+                for style in ansi2html.style.get_styles()
+                if (str_style := str(style)).startswith('.ansi')
+                )
+        # FIXME .inv styles not covered
+        (dest / 'ansi.css').write_text(ansi_style)
 
         for page in self.pages:
             (dest / 'pages' / page.path_html).write_text(page.html_full)

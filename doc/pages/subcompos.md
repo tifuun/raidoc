@@ -34,15 +34,40 @@ rai.show(antenna)
 Note that you cannot register compos as subcompos directly.
 You must create proxies.
 
-## Using bounding boxes
+## Legible transformations with BoundPoints
 
-<!-- FIXME wikilinks -->
 <!-- TODO dont-autocrop method -->
 
 Notice how the antenna's active element in the example above
 is not quite aligned to the circle?
 As you've learned in [[coords-transforms.md]],
 you can use `Proxy().move()` method to adjust its position.
+
+However, RAIMAD offers a better way to do transformations
+called BoundPoints.
+
+A boundpoint is simply an XY coordinate pair
+with a few special methods that allow the user to perform
+transformations *in reference to* that point.
+
+One way to get a boundpoint to a proxy is by using its
+bounding box.
+The bounding box, or `bbox`,
+is simply an upright rectangle that fits the entirety of a
+component within itself.
+It can be accessed using the `.bbox` property:
+
+
+```python exec
+
+rect = rai.RectLW(10, 20).proxy()
+
+rai.show(rect)
+print("The center is at:\n", rect.bbox.mid)
+print("The bottom left corner is at:\n", rect.bbox.bot_left)
+print("The middle of the right edge is at:\n", rect.bbox.mid_right)
+```
+
 However, there is a better way: using the `.bbox.mid` property:
 
 ```python exec
