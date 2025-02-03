@@ -31,8 +31,5 @@ module_browser
 *.ipynb
 venv
 
-doc/dep
-
-fontawesome*
 doc/pages/autogen
 
