@@ -151,6 +151,27 @@ class TitleMixin(object):
             # FIXME this will break eventually
         return super().render_heading(element)
 
+class AsciinemaMixin:
+    def render_image(self, element):
+        """
+        Embed asciinema movies
+        """
+        if not element.dest.endswith('.cast'):
+            return super().render_image(element)
+
+        #element.virtual = True  # Is this needed?
+        #inner_html = super().render_image(element)
+
+        inner_html = super().render(element.children[0])
+
+        return (
+            '<div class="asciinema-figure">'
+            f'<a href="{element.dest}">'
+            f'{inner_html}'
+            '</a>'
+            '</div>'
+            )
+
 
 codeblock_preamble = """
 import raimad as rai
@@ -285,6 +306,7 @@ RaimarkExt = marko.helpers.MarkoExtension(
         EmphasisMixin,
         IndexerMixin,
         TitleMixin,
+        AsciinemaMixin,
         ]
 )
 

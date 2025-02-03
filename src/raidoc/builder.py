@@ -44,11 +44,14 @@ class Page:
     html_full: str = ''
 
 def custom_copy(source, dest):
-    if os.path.exists(dest):
-        if os.stat(source).st_mtime <= os.stat(dest).st_mtime:
-            return reflink(source, dest)
-    else:
-        return reflink(source, dest)
+    print(dest)
+    #if os.path.exists(dest):
+    #    if os.stat(source).st_mtime <= os.stat(dest).st_mtime:
+    #        print('a')
+    #        return reflink(source, dest)
+    #else:
+    #    print('b')
+    return reflink(source, dest)
 
 class Builder:
     pages: list[Page]
@@ -75,24 +78,18 @@ class Builder:
         raise Exception(path)
     
     def render(self, dest: Path):
-        shutil.copytree(
-            self.source / 'fontawesome',
-            dest / 'fontawesome',
-            copy_function=custom_copy,
-            dirs_exist_ok=True
-            )
-        shutil.copytree(
-            self.source / 'img',
-            dest / 'img',
-            copy_function=custom_copy,
-            dirs_exist_ok=True
-            )
-        shutil.copytree(
-            self.source / 'js',
-            dest / 'js',
-            copy_function=custom_copy,
-            dirs_exist_ok=True
-            )
+        for subfolder in (
+                'fontawesome',
+                'img',
+                'js',
+                'asciinema'
+                ):
+            shutil.copytree(
+                self.source / subfolder,
+                dest / subfolder,
+                copy_function=custom_copy,
+                dirs_exist_ok=True
+                )
 
         Path(dest / 'pages').mkdir(parents=True, exist_ok=True)
 

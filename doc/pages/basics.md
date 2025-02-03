@@ -49,6 +49,33 @@ bank = Filterbank()
 rai.show(bank)
 ```
 
+## Exporting components
+
+There are two ways to export components:
+though Python code,
+or from the command line using the `raimad` command.
+
+To export a component from within Python,
+pass it to `raimad.export_cif()` method:
+
+```python
+import raimad as rai
+
+class MyCompo(rai.Compo):
+    ...
+
+# Create instance
+mycompo = MyCompo()
+
+# Export to `mycimpo.cif`
+rai.export_cif(mycompo)
+```
+
+To use the `raimad` command, invoke it as
+`raimad <module>:<compo>`,
+as demonstrated in the screencast below:
+
+![screencast demonstrating the raimad export command](../asciinema/raimad-cli-export.enhance.cast)
 
 Next up: [builtin compos](builtin-compos.md)
 

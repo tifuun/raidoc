@@ -26,11 +26,17 @@ def cli():
         #from raidoc.build import build
         #build(dest=args.dest)
         from raidoc.builder import Builder
+        from raidoc.getdeps import getdeps
+
         builder = Builder(Path('./doc'))
         builder._prepass()
         for page in builder.pages:
             builder._render_page(page)
+
         builder.render(Path('./build'))
+
+        Path('./build/dep').mkdir(exist_ok=True)
+        getdeps(Path('./doc/dep'), Path('./build/dep'))
 
     else:
         # This should never happen, since

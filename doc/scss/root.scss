@@ -379,5 +379,16 @@ h1, h2, h3, h4 {
 	@extend .convex;
 }
 
+.asciinema-figure {
+  width: min-content;
+
+	align-self: center;
+
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+
+
+}
 
 
