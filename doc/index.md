@@ -12,7 +12,7 @@ Visit the [TIFUUN collaborator welcome page](pages/tifuun.md)!
         <h3>Tutorial</h3>
         Learn RAIMAD step-by-step
     </a>
-    <a href="map.html">
+    <!--<a href="map.html">
         <img
             src="img/doc/map-traced.svg"
             alt="map icon"
@@ -20,7 +20,7 @@ Visit the [TIFUUN collaborator welcome page](pages/tifuun.md)!
             >
         <h3>Map</h3>
         Browse the map of all RAIDOC pages
-    </a>
+    </a>-->
     <a href="pages/tifuun.html">
         <img
             src="img/doc/tifuun-mono.svg"
