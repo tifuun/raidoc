@@ -43,7 +43,7 @@ class LinkMixin(object):
 
         page = LinkMixin.builder.page(element.target)
 
-        webroot = '../' * (len(page.path.parts) + 1)  # FIXME ???
+        webroot = '../' * (len(page.path.parts) - 1)  # FIXME ???
 
         href = f'{webroot}{page.path_html}'
         title = page.title
