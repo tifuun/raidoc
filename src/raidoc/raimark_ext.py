@@ -40,8 +40,12 @@ class LinkMixin(object):
             )
 
     def render_wiki_link(self, element):
+
         page = LinkMixin.builder.page(element.target)
-        href = page.path_html
+
+        webroot = '../' * (len(page.path.parts) + 1)  # FIXME ???
+
+        href = f'{webroot}{page.path_html}'
         title = page.title
         return f'<a href="{href}" class="wikilink">{title}</a>'
 

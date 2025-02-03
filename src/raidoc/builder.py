@@ -72,9 +72,9 @@ class Builder:
         self.marko_prepass = marko.Markdown(extensions=[RaimarkPrepassExt])
 
     def page(self, path):
+        # FIXME path vs name!?
         for page in self.pages:
-            # The `str` here converts Path to str so that the equality works
-            if str(page.path) == str(path):
+            if page.path.name == Path(path).name:
                 return page
         raise Exception(path)
     
@@ -116,10 +116,10 @@ class Builder:
         (dest / 'ansi.css').write_text(ansi_style)
 
         for page in self.pages:
-            (dest / 'pages' / page.path_html).write_text(page.html_full)
+            (dest / page.path_html).write_text(page.html_full)
 
     def _prepass(self) -> None:
-        for path in (self.source / 'pages').rglob('*.md'):
+        for path in (self.source).rglob('*.md'):
             self._load_page(path)
 
         for page in self.pages:
@@ -135,7 +135,7 @@ class Builder:
         self.marko_prepass(md)
         title = TitleMixin.page_title
 
-        path = path.relative_to(self.source / 'pages')
+        path = path.relative_to(self.source)
         path_html = path.with_suffix('.html')
 
         self.pages.append(
@@ -188,6 +188,8 @@ class Builder:
 
     def _render_page(self, page: Page):
 
+        webroot = '../' * (len(page.path.parts) + 1)  # FIXME magic number
+
         # TODO full jinja
         page.md_filled = page.md.replace(
             '{{journey_toc}}', 
@@ -201,7 +203,7 @@ class Builder:
 
         page.html_full = self.j2_templ.render({
             'page': page,
-            'webroot': '../' * (len(page.path.parts) + 1),  # FIXME magic number
+            'webroot': webroot,
             })
 
 
