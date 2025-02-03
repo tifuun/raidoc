@@ -51,7 +51,8 @@ def custom_copy(source, dest):
     #        return reflink(source, dest)
     #else:
     #    print('b')
-    return reflink(source, dest)
+    #return reflink(source, dest)
+    raise Exception()
 
 class Builder:
     pages: list[Page]
@@ -86,7 +87,7 @@ class Builder:
             shutil.copytree(
                 self.source / subfolder,
                 dest / subfolder,
-                copy_function=custom_copy,
+                #copy_function=custom_copy,
                 dirs_exist_ok=True
                 )
 
