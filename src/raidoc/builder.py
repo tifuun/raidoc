@@ -188,7 +188,7 @@ class Builder:
 
     def _render_page(self, page: Page):
 
-        webroot = '../' * (len(page.path.parts) + 1)  # FIXME magic number
+        webroot = '../' * (len(page.path.parts))
 
         # TODO full jinja
         page.md_filled = page.md.replace(
