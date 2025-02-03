@@ -79,7 +79,6 @@ class Builder:
     
     def render(self, dest: Path):
         for subfolder in (
-                'fontawesome',
                 'img',
                 'js',
                 'asciinema'
