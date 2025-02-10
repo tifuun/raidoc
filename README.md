@@ -25,6 +25,14 @@ cd raidoc
 python -m pip install -e .
 ```
 
+If you're on a non-glibc system (e.g. Alpine Linux),
+you will also need to install gcc, g++ and some headers
+so that pip can compile the dependencies of this project:
+
+```sh
+apk add gcc g++ python3-dev musl-dev linux-headers
+```
+
 You can then build the documentation like this.
 The command MUST be run from the root of the repo.
 

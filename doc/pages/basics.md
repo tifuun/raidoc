@@ -67,12 +67,12 @@ class MyCompo(rai.Compo):
 # Create instance
 mycompo = MyCompo()
 
-# Export to `mycimpo.cif`
+# Export to `mycompo.cif`
 rai.export_cif(mycompo)
 ```
 
 To use the `raimad` command, invoke it as
-`raimad <module>:<compo>`,
+`raimad export <module>:<compo>`,
 as demonstrated in the screencast below:
 
 ![screencast demonstrating the raimad export command](../asciinema/raimad-cli-export.enhance.cast)
