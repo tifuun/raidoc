@@ -36,7 +36,7 @@
 							{% if link.prev %}
 								<div class="journey-prev">
 									Previous:<br>
-									<a href="{{link.prev.path_html}}">{{link.prev.title}}</a>
+									<a href="{{webroot}}/{{link.prev.path_html}}">{{link.prev.title}}</a>
 								</div>
 							{% endif %}
 
@@ -47,7 +47,7 @@
 							{% if link.next %}
 								<div class="journey-next">
 									Next:<br>
-									<a href="{{link.next.path_html}}">{{link.next.title}}</a>
+									<a href="{{webroot}}{{link.next.path_html}}">{{link.next.title}}</a>
 								</div>
 							{% endif %}
 						</div>
