@@ -86,5 +86,32 @@ rai.show(rai.Snowman())
 > Don't know how to open CIF files?
 > [KLayout](https://www.klayout.de/) is highly recommended.
 
-Next up: [The Basics of RAIMAD](basics.md)
+### A note on this tutorial: screencasts
+
+Throughout this tutorial, you will encounter
+pre-recorded screencasts that demonstrate certain
+actions.
+
+In these screencasts, we use a POSIX-like terminal
+environment
+for tasks like cloning repositories,
+editing files,
+and invoking RAIMAD.
+
+We do this because it's more concise, universal,
+and accessible
+than screen recordings of graphical interfaces.
+
+If you're coming from Windows and aren't familiar
+with POSIX,
+don't fret,
+it's rather simple!
+The screencast below gives a demonstration.
+
+And keep in mind, these screencasts are for
+demonstration purposes.
+You can use whatever tools you like to achieve the same
+goals.
+
+![An example screencast](../asciinema/asciinema-demo.cast )
 

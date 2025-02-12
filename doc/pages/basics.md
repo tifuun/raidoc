@@ -77,5 +77,8 @@ as demonstrated in the screencast below:
 
 ![screencast demonstrating the raimad export command](../asciinema/raimad-cli-export.enhance.cast)
 
-Next up: [builtin compos](builtin-compos.md)
+More extensive use of `raimad export` is covered in
+[[collaboration.md]].
+
+
 
