@@ -8,7 +8,7 @@ journey:
         - subcompos.md
         - marks.md
         - layers.md
-        - packaging.md
+        - collaboration.md
 ---
 
 # RAIMAD Tutorial
