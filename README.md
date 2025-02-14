@@ -33,6 +33,10 @@ so that pip can compile the dependencies of this project:
 apk add gcc g++ python3-dev musl-dev linux-headers
 ```
 
+See also the discussion on
+[libsass-python](https://github.com/sass/libsass-python/issues/391#issuecomment-2555670485)
+about musl wheels
+
 You can then build the documentation like this.
 The command MUST be run from the root of the repo.
 
@@ -46,12 +50,21 @@ the above command rebuilds EVERYTHING.
 
 ## TODO
 
-- [ ] Lint references
-- [ ] incremental compilation
-- [ ] references to specific labels or headings
-- [ ] Frontmatter parsing
-    - [ ] "next" link through frontmatter
-    - [ ] "previous" link automatic
+- [ ] Capabilities of RAIMARK
+    - [ ] Lint references
+    - [ ] incremental compilation
+    - [ ] references to specific labels or headings
+    - [ ] Frontmatter parsing
+        - [x] "next" link through frontmatter
+        - [x] "previous" link automatic
+        - [ ] display journey TOC
+    - [ ] API reference generation
+- [ ] RAIDOC Content
+    - [ ] Deepdive on proxies
+    - [ ] Demos of various raimad designs
+    - [ ] ...potentially others?
+    - [ ] Documentation for maintaining raimad
+    - [ ] Documentation for maintaining radoc/raidoc/raimark
 
 ## License
 
