@@ -7,23 +7,38 @@ RAIMAD packages are nothing more the standard Python
 packages.
 That means you can install them with tools like `pip`.
 
+## Using a RAIMAD package
+
+If you would just like to make use of a RAIMAD package
+within your designs,
+you can install it using pip.
+For example, if you wanted to install
+the sample
+[`rai_smiley` package](https://github.com/tifuun/rai_smiley),
+you could do it like so
+
+```shell
+pip install git+https://github.com/tifuun/rai_smiley
+```
+
 ## Working on other people's repos
 
-One of the common tasks you might find yourself doing
-as a RAIMAD user is changing code in existing packages.
-Although every project is free to use whatever source control
-and packaging system they want,
-we expect most RAIMAD work to happen in Python packages
-hosted on git repositories.
+If you want to not only use a package,
+but also change its code
+(for example, if you want to contribute new components to an existing package),
+you should first *clone*
+the repository using git,
+and then install it using pip editable mode,
+like so:
 
-Therefore, in general, contributing code to a RAIMAD repo
-follows these steps:
+```shell
+git clone https://github.com/tifuun/rai_smiley
+pip install -e ./rai_smiley
+```
 
-1. Clone the git repo
-1. Install the package container in the repo with `pip` in `editable` mode.
-1. Make your changes to the code
-1. Preview your changes by testing the component with `raimad export`
-1. Commit the changes or submit a pull request.
+Installing a package in editable mode means that any changes
+that you make in your local copy of the package
+will be reflected from within Python when you import it.
 
 The screencast below demonstrates these steps by making a simple
 change in the sample
@@ -118,7 +133,7 @@ that
 and starts with `rai_`.
 
 After that, by using the sample
-[`rai_smiley`](https://github.com/tifuun/rai_smiley),
+[`rai_smiley`](https://github.com/tifuun/rai_smiley)
 as a reference,
 set up the file structure of your package and upload it to
 a git repository.
