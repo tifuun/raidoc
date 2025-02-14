@@ -10,11 +10,12 @@ authors = [
 	{name = "maybetree", email = "maybetree48@proton.me"}
 	]
 license = { file = "LICENSE-GPL.txt" }
-license-files = [
-    { file = "LICENSE-GPL3.txt", text = "GNU GPL v3" },
-    { file = "LICENSE-FDL.txt", text = "GNU FDL" },
-    { file = "LICENSE-CC0.txt", text = "CC0" }
-]
+# idk how to specify multiple licenses, someone please fix.
+#license-files = [
+#    { file = "LICENSE-GPL3.txt", text = "GNU GPL v3" },
+#    { file = "LICENSE-FDL.txt", text = "GNU FDL" },
+#    { file = "LICENSE-CC0.txt", text = "CC0" }
+#]
 
 readme = "README.md"
 classifiers = [
