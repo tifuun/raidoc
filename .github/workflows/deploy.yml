@@ -8,6 +8,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    # Needed by release action
+    permissions:
+      contents: write
+
     steps:
       - name: checkout repo
         uses: actions/checkout@v2
