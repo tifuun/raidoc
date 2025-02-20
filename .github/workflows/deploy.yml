@@ -29,12 +29,14 @@ jobs:
         #
         # And y'all thought docker was bloat lol
         run: |
+          set -e
           sudo apt install graphviz zstd
           python -m venv venv
           source venv/bin/activate
           python -m pip install -e .
           python -m pip install raimad
           python -m raidoc build
+          set +e
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
@@ -43,9 +45,11 @@ jobs:
 
       - name: Make release
         run: |
-          mv build raidoc_$tagname_web
-          tar cf - build | zstd --compress --ultra -20 --threads=0 - -o raidoc_$tagname_web.tar.zst
-          mv raidoc_$tagname_web build
+          set -e
+          mv "build" "raidoc-${tagname}-web"
+          tar cf - "raidoc-${tagname}-web" | zstd --compress --ultra -20 --threads=0 - -o "raidoc-${tagname}-web.tar.zst"
+          mv "raidoc-${tagname}-web" "build"
+          set +e
 
       - name: Upload release artifact
         uses: ncipollo/release-action@v1
