@@ -46,10 +46,17 @@ jobs:
       - name: Make release
         run: |
           set -e
+          tagname=$(git describe --tags --abbrev=0)
           mv "build" "raidoc-${tagname}-web"
           tar cf - "raidoc-${tagname}-web" | zstd --compress --ultra -20 --threads=0 - -o "raidoc-${tagname}-web.tar.zst"
           mv "raidoc-${tagname}-web" "build"
+          ls -lah
           set +e
+        
+        # FIXME there's probably a code injection
+        # vuln somewhere in these horrible shards of shell code,
+        # but oh well, let's just say we trust
+        # whoever has push access to this repo
 
       - name: Upload release artifact
         uses: ncipollo/release-action@v1
