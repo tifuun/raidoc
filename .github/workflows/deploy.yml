@@ -2,8 +2,8 @@ name: Deploy Github Pages
 
 on:
   push:
-    branches:
-      - main
+    tags:
+      - '*'
 
 jobs:
   build:
@@ -17,9 +17,7 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: get graphviz
-        run: |
-          sudo apt install graphviz
+      - name: Set up everything else
         # do NOT run apt update && apt upgrade here!
         # Micros*ft, in their infinite wisdom, decided
         # to include "other tools" in the virtual machine,
@@ -30,30 +28,30 @@ jobs:
         # do NOT do apt update && apt update
         #
         # And y'all thought docker was bloat lol
-
-      - name: create venv
         run: |
+          sudo apt install graphviz zstd
           python -m venv venv
-
-      - name: install raidoc
-        run: |
           source venv/bin/activate
           python -m pip install -e .
-
-      - name: install raimad
-        run: |
-          source venv/bin/activate
           python -m pip install raimad
-
-      - name: build raidoc
-        run: |
-          source venv/bin/activate
           python -m raidoc build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./build
+
+      - name: Make release
+        run: |
+          mv build raidoc_$tagname_web
+          tar cf - build | zstd --compress --ultra -20 --threads=0 - -o raidoc_$tagname_web.tar.zst
+          mv raidoc_$tagname_web build
+
+      - name: Upload release artifact
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "*.tar.zst"
+
 
   deploy:
     runs-on: ubuntu-latest
@@ -67,3 +65,4 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
