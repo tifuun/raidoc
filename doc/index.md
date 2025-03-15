@@ -33,6 +33,13 @@ Visit the [TIFUUN collaborator welcome page](pages/tifuun.md)!
     </a>
 </nav>
 
+## Offline Access and Old Versions
+
+Archives of the current and previous versions of this
+documentation can be found on the
+[Github releases page](https://github.com/tifuun/raidoc/releases).
+After extracting the archive, open the contained `index.html`
+
 <!--
 
 
