@@ -48,6 +48,52 @@ The output is written to the `build` directory.
 Currently, there is no incremental compilation;
 the above command rebuilds EVERYTHING.
 
+## Building with podman
+
+You can also build raidoc inside a podman container.
+
+We use podman in a bit of an unusual way:
+the container image only has python, pip,
+and necessary build tools to compile python
+extensions.
+Then we just bind-mount raidoc source code,
+the python venv, and the output directory into the container.
+The advantage of this approach is that you don't have to
+re-build your iamge every time you want to re-build raidoc.
+More details ara available inthe comments inside the
+scripts under the `podman` directory.
+
+Build the image like this:
+```shell
+podman/build-podman-image.sh
+```
+
+And use it to build raidoc like this:
+```shell
+podman/run-container.sh
+```
+
+The first run will take a long time and use a lot of CPU because python
+extensions need to be compiled.
+Subsequent runs will use the compiled binaries from inside `venv`
+and will therefore be much faster.
+
+If there are weird errors, try removing the `venv`
+directory in the root of the repo.
+
+You can launch a shell into the container and poke around in it like this:
+```shell
+podman/run-container.sh sh
+```
+
+For example, if you want to uninstall raimad from inside container
+(so that the next invocation downloads a newer version),
+you can do it like this:
+```shell
+podman/run-container.sh venv/bin/pip uninstall raimad
+```
+
+
 ## TODO
 
 - [ ] Capabilities of RAIMARK

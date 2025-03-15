@@ -1,0 +1,26 @@
+#FROM ghcr.io/void-linux/void-glibc-full
+#
+#RUN xbps-install -Syu \
+#	python3 \
+#	graphviz
+#
+#WORKDIR /pwd
+
+FROM alpine:latest
+
+RUN apk add --no-cache \
+		graphviz \
+		python3 \
+		zstd \
+		gcc \
+		g++ \
+		python3-dev \
+		musl-dev \
+		linux-headers \
+		&& \
+	:
+
+WORKDIR /pwd
+
+CMD ["/pwd/podman/build-raidoc-in-container.sh"]
+
