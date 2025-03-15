@@ -93,6 +93,29 @@ you can do it like this:
 podman/run-container.sh venv/bin/pip uninstall raimad
 ```
 
+## Viewing the built website
+
+Once you've built raidoc,
+all you need to do to view your local copy
+is a http static file server to serve the contents
+of the `build` directory.
+The easiest way to do this is with python's
+built-in `http.server`
+module.
+Simply run
+
+```
+python -m http.server -d build
+```
+
+in the root of th repo and then navigate to
+`localhost:8000` in your web browser.
+
+This will work regardless of whether you built raidoc natively
+or in docker,
+since we're just using python as a static file server.
+
+
 
 ## TODO
 
