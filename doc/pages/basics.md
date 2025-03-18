@@ -1,5 +1,8 @@
-# The Basics of RAIMAD
+---
+kind: tutorial
+---
 
+# The Basics of RAIMAD
 Creating components in RAIMAD is as simple as...
 
 ```python exec

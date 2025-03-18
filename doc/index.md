@@ -31,6 +31,12 @@ Visit the [TIFUUN collaborator welcome page](pages/tifuun.md)!
         Are you a TIFUUN collaborator?
         Read the welcome page!
     </a>
+    <a href="pages/contributor-guide.html">
+        <i class="fa-solid fa-code icon"></i>
+        <h3>Contribute</h3>
+        Want to contiribute to RAIMAD?
+        Check the Controbutor's guide!
+    </a>
 </nav>
 
 ## Offline Access and Old Versions
@@ -39,6 +45,8 @@ Archives of the current and previous versions of this
 documentation can be found on the
 [Github releases page](https://github.com/tifuun/raidoc/releases).
 After extracting the archive, open the contained `index.html`
+
+{{all_pages}}
 
 <!--
 

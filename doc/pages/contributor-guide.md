@@ -1,3 +1,7 @@
+---
+kind: tutorial
+---
+
 # Contributor's guide
 
 > [INFO]

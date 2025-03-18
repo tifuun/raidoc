@@ -1,3 +1,7 @@
+---
+kind: tutorial
+---
+
 # Builtin Compos
 
 You've already seen `RectLW` in [The Basics of RAIMAD](basics.md),

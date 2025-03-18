@@ -1,3 +1,7 @@
+---
+kind: tutorial
+---
+
 # Coordinates and Transformations
 
 RAIMAD's coordinate system works like this:

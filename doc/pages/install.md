@@ -1,5 +1,5 @@
 ---
-next: basics.md
+kind: tutorial
 ---
 
 # Installing RAIMAD
