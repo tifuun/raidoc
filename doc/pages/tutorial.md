@@ -1,8 +1,5 @@
 ---
 kind: tutorial
----
-
----
 journey:
     pages:
         - install.md
