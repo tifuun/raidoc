@@ -1,3 +1,7 @@
+---
+kind: tutorial
+---
+
 # Collaboration
 
 In order to make it easier for different people to use your

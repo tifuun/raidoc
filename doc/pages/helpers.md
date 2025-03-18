@@ -1,3 +1,7 @@
+---
+kind: tutorial
+---
+
 # Helpers
 
 RAIMAD defines some helper functions.

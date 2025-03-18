@@ -1,3 +1,8 @@
+---
+kind: tutorial
+---
+
+
 # Subcompos
 
 You can create complex components which themselves consist of other components.

@@ -1,3 +1,7 @@
+---
+kind: tutorial
+---
+
 # Marks
 
 Marks allow the author of a component to

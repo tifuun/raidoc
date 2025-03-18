@@ -5,6 +5,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 import shutil
 import os
+from collections import defaultdict
 
 import sass
 import frontmatter
@@ -22,6 +23,13 @@ from raidoc.raimark_ext import RaimarkPrepassExt
 from raidoc.raimark_ext import TitleMixin
 from raidoc.raimark_ext import IndexerMixin
 from raidoc.raimark_ext import LinkMixin
+
+#class PageKind(StrEnum):
+#    NONE = 'none'
+#    TUTORIAL = 'tutorial'
+#    HOWTO = 'howto'
+#    DEEPDIVE = 'deepdive'
+#    REFERENCE = 'reference'
 
 @dataclass
 class JourneyLink:
@@ -185,6 +193,26 @@ class Builder:
             )
         )
 
+    def get_pages_by_kind(self):
+        by_kind = defaultdict(list)
+        by_kind['tutorial']
+        by_kind['other']
+        for page in self.pages:
+            by_kind[str(page.fm.get('kind', 'other')).lower()].append(page)
+        return by_kind
+
+    def _get_pages_by_kind_str(self):
+        #FIXME just add full jinja templating to the md files
+        #aswell as html
+        for kind, pages in self.get_pages_by_kind().items():
+            yield f'### {kind}\n'
+            for page in pages:
+                if page.path.name == 'index.md':
+                    continue
+                yield f'- [[{str(page.path)}]] \n'
+
+    def get_pages_by_kind_str(self):
+        return ''.join(self._get_pages_by_kind_str())
 
     def _render_page(self, page: Page):
 
@@ -197,7 +225,10 @@ class Builder:
                 f'1. [[{link}]]'
                 for link in page.fm.journey.pages
                 ))
-            )
+            ).replace(
+                '{{all_pages}}', 
+                self.get_pages_by_kind_str()
+                )
 
         page.html_content = self.marko(page.md_filled)
 

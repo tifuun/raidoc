@@ -1,3 +1,7 @@
+---
+kind: tutorial
+---
+
 # Adding your (public) package to RAIDEX
 
 > [ INFO ]

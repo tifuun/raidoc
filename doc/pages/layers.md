@@ -1,3 +1,7 @@
+---
+kind: tutorial
+---
+
 # Layers
 
 Components can have multiple layers.
