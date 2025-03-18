@@ -104,7 +104,7 @@ built-in `http.server`
 module.
 Simply run
 
-```
+```shell
 python -m http.server -d build
 ```
 
@@ -114,8 +114,6 @@ in the root of th repo and then navigate to
 This will work regardless of whether you built raidoc natively
 or in docker,
 since we're just using python as a static file server.
-
-
 
 ## TODO
 

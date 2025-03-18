@@ -102,9 +102,11 @@ To ensure compatibility,
 simply run the unit tests in all three versions.
 
 Installing all three versions of Python
-locally might prove tedious;
-see the *Github Workflows* section below
-on how you can use Github's runners to run unit tests for you.
+locally might prove tedious.
+Therefore, we provide a docker container
+that you can use to test RAIMAD
+in all supported versions.
+See the *Docker* section below for more info.
 
 ## Tooling
 
@@ -126,7 +128,7 @@ mypy --strict src/raimad
 ```
 
 Note that we currently do not require the unit tests
-to comply with MyPy at all.
+to comply with MyPy at all, just the main code.
 This might change in the future.
 
 ### Ruff
@@ -177,6 +179,38 @@ The `-i` flag is needed to ignore errors that result
 from unit tests that create temporary Python modules.
 We hope to resolve this issue soon.
 
+## Docker
+
+We provide a docker container that can be used to easily
+test RAIMAD in all supported Python versions
+and run all the tooling.
+
+You can use it by pulling the docker image from github
+and running it from the root of the repo
+like this:
+
+```
+docker pull ghcr.io/maybeetree/raimad-tooling:latest
+docker run -v "./:/pwd" raimad-tooling
+```
+
+Sample output:
+```shell
+TOOLING_UNITTEST_3.13=true  # Did unittests pass?
+TOOLING_UNITTEST_3.12=true  # Did unittests pass?
+TOOLING_UNITTEST_3.11=true  # Did unittests pass?
+TOOLING_UNITTEST_3.10=true  # Did unittests pass?
+TOOLING_MYPY=true  # Were there NO mypy issues?
+TOOLING_COVERAGE=89  # Percentage of codebase covered by tests
+TOOLING_TODOS=67  # How many TODOs and FIXMEs are in the code?
+TOOLING_RUFF=107  # How many issues reported by ruff?
+```
+
+For more information,
+please visit the
+[raimad-tooling github repo](https://github.com/maybeetree/raimad-tooling.git).
+
+<!--
 Another way to use Coverage is by creating a HTML
 report that offers line-by-line coverage information:
 
@@ -219,4 +253,6 @@ should automatically launch unit tests and tooling.
 You can check the result in the "Actions" tab.
 Make sure to undo your changes to the workflow file
 before opening a pull request.
+
+-->
 
