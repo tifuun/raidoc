@@ -102,22 +102,6 @@ class CalloutMixin(object):
             return ''
         return rendered
 
-
-class EmphasisMixin(object):
-
-    def render_emphasis(self, element):
-
-        rendered_children = []
-        for i, child in enumerate(element.children):
-            rendered_children.append(super().render(child))
-
-        return ''.join((
-            '<span class="deemphasis">',
-            *rendered_children,
-            '</span>',
-            ))
-
-
 class IndexerMixin(object):
 
     index_entry = None
@@ -307,7 +291,6 @@ RaimarkExt = marko.helpers.MarkoExtension(
         LinkMixin,
         CodeBlockMixin,
         CalloutMixin,
-        EmphasisMixin,
         IndexerMixin,
         TitleMixin,
         AsciinemaMixin,
