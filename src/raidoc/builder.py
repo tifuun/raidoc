@@ -104,12 +104,13 @@ def wtf4(self, source):
                     # to ``__init__()``.
                     result = ele_type(result)  # type: ignore
 
-                result.monkeypatch_source = ''.join(
-                    match.string[match.span()[0]:match.span()[1]]
-                    for match in
-                    source.monkeypatch_lines
-                    )
-                source.monkeypatch_lines.clear()
+                if not hasattr(result, 'monkeypatch_source'):
+                    result.monkeypatch_source = ''.join(
+                        match.string[match.span()[0]:match.span()[1]]
+                        for match in
+                        source.monkeypatch_lines
+                        )
+                    source.monkeypatch_lines.clear()
 
                 ast.append(result)
                 break
@@ -134,7 +135,13 @@ class MySource(marko.source.Source):
         return super().pop_state(*args, **kwargs)
 
     def consume(self, *args, **kwargs):
+        #FIXME WHAT is going on here + prefix is lost
         self.monkeypatch_lines.append(self.match)
+        self.state.monkeypatch_source = ''.join(
+            match.string[match.span()[0]:match.span()[1]]
+            for match in
+            self.monkeypatch_lines
+            )
         return super().consume(*args, **kwargs)
 
 marko.source.Source = MySource
@@ -364,6 +371,8 @@ class Builder:
                     'metadata': {},
                     'source': element.children[0].children
                     })
+            elif isinstance(element, marko.block.BlankLine):
+                continue
             else:
                 cells.append({
                     'cell_type': 'markdown',
