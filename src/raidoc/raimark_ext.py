@@ -283,6 +283,36 @@ class CodeBlockMixin(object):
         assert not stderr
         return stdout.decode('utf-8')
 
+class JupyterExporterMixin:
+    """
+    Renders toplevel elements to markdown and code cells
+    in jupyter notebook format
+    """
+
+    this_doc = None
+    toplevel_elements = []
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def render(self, element):
+        for _ in ' ':
+            if isinstance(element, marko.block.Document):
+                type(self).this_doc = element
+                type(self).toplevel_elements.clear()
+                break
+
+            assert self.this_doc is not None, \
+                    "Got element before document!"
+
+            if element in self.this_doc.children:
+                source = self.builder.marko.parser.monkeypatch_source
+                type(self).toplevel_elements.append((
+                    element, source
+                    ))
+
+        return super().render(element)
+
 
 
 RaimarkExt = marko.helpers.MarkoExtension(
@@ -294,6 +324,7 @@ RaimarkExt = marko.helpers.MarkoExtension(
         IndexerMixin,
         TitleMixin,
         AsciinemaMixin,
+        JupyterExporterMixin,
         ]
 )
 
