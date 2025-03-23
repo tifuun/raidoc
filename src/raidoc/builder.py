@@ -6,6 +6,7 @@ from pathlib import Path
 import shutil
 import os
 from collections import defaultdict
+import json
 
 import sass
 import frontmatter
@@ -23,6 +24,7 @@ from raidoc.raimark_ext import RaimarkPrepassExt
 from raidoc.raimark_ext import TitleMixin
 from raidoc.raimark_ext import IndexerMixin
 from raidoc.raimark_ext import LinkMixin
+from raidoc.raimark_ext import JupyterExporterMixin
 
 #class PageKind(StrEnum):
 #    NONE = 'none'
@@ -30,6 +32,112 @@ from raidoc.raimark_ext import LinkMixin
 #    HOWTO = 'howto'
 #    DEEPDIVE = 'deepdive'
 #    REFERENCE = 'reference'
+
+from typing import cast
+
+#FIXME horrible monkeypatch
+def wtf(self, text):
+    source = marko.source.Source(text)
+    source.parser = self
+    doc = cast(marko.block.Document, self.block_elements["Document"]())
+    with source.under_state(doc):
+        doc.children = self.parse_source(source)
+        self.parse_inline(doc, source)
+
+    self.monkeypatch_source = source
+
+    return doc
+
+
+marko.Parser.parse = wtf
+
+def wtf2(source):
+    cls = marko.block.FencedCode
+
+    m = source.expect_re(cls.pattern)
+    if not m:
+        return None
+    prefix, leading, info = m.groups()
+    if leading[0] == "`" and "`" in info:
+        return None
+    lang, _, extra = marko.helpers.partition_by_spaces(info)
+    source.context.code_info = cls.ParseInfo(prefix, leading, lang, extra)
+    return m
+
+import re
+def wtf3(source) -> tuple[str, str, str]:
+    cls = marko.block.FencedCode
+
+    source.next_line()
+    source.consume()
+    lines = []
+    parse_info: marko.block.FencedCode.ParseInfo = source.context.code_info
+    while not source.exhausted:
+        line = source.next_line()
+        if line is None:
+            break
+        source.consume()
+        m = re.match(r" {,3}(~+|`+)[^\n\S]*$", line, flags=re.M)
+        if m and parse_info.leading in m.group(1):
+            break
+
+        prefix_len = source.match_prefix(parse_info.prefix, line)
+        if prefix_len >= 0:
+            line = line[prefix_len:]
+        else:
+            line = line.lstrip()
+        lines.append(line)
+
+    return parse_info.lang, parse_info.extra, "".join(lines)
+
+def wtf4(self, source):
+    """Parse the source into a list of block elements."""
+    element_list = self._build_block_element_list()
+    ast: list[block.BlockElement] = []
+    while not source.exhausted:
+        for ele_type in element_list:
+            if ele_type.match(source):
+                result = ele_type.parse(source)
+                if not hasattr(result, "priority"):
+                    # In some cases ``parse()`` won't return the element, but
+                    # instead some information to create one, which will be passed
+                    # to ``__init__()``.
+                    result = ele_type(result)  # type: ignore
+
+                result.monkeypatch_source = ''.join(
+                    match.string[match.span()[0]:match.span()[1]]
+                    for match in
+                    source.monkeypatch_lines
+                    )
+                source.monkeypatch_lines.clear()
+
+                ast.append(result)
+                break
+        else:
+            # Quit the current parsing and go back to the last level.
+            break
+    return ast
+
+marko.parser.Parser.parse_source = wtf4
+
+class MySource(marko.source.Source):
+    def __init__(self, *args, **kwargs):
+        self.monkeypatch_lines = []
+        super().__init__(*args, **kwargs)
+
+    def push_state(self, *args, **kwargs):
+        self.monkeypatch_lines.clear()
+        return super().push_state(*args, **kwargs)
+
+    def pop_state(self, *args, **kwargs):
+        #self.monkeypatch_lines.clear()
+        return super().pop_state(*args, **kwargs)
+
+    def consume(self, *args, **kwargs):
+        self.monkeypatch_lines.append(self.match)
+        return super().consume(*args, **kwargs)
+
+marko.source.Source = MySource
 
 @dataclass
 class JourneyLink:
@@ -41,9 +149,12 @@ class JourneyLink:
 class Page:
     path: Path
     path_html: Path
+    path_jupyter: Path
     title: str
     fm: Any  # FIXME
     md: str
+
+    jupyter_json: dict | None = None
 
     journey_links: list[JourneyLink] = field(default_factory=list)
 
@@ -100,6 +211,7 @@ class Builder:
                 )
 
         Path(dest / 'pages').mkdir(parents=True, exist_ok=True)
+        Path(dest / 'downloads/jupyter/pages').mkdir(parents=True, exist_ok=True)
 
         for path in (self.source / 'scss').rglob('*'):
             if path.suffix != '.scss':
@@ -125,6 +237,8 @@ class Builder:
 
         for page in self.pages:
             (dest / page.path_html).write_text(page.html_full)
+            json.dump(page.jupyter_json, (dest / page.path_jupyter).open('w'))
+
 
     def _prepass(self) -> None:
         for path in (self.source).rglob('*.md'):
@@ -145,11 +259,13 @@ class Builder:
 
         path = path.relative_to(self.source)
         path_html = path.with_suffix('.html')
+        path_jupyter = Path('downloads/jupyter') / path.with_suffix('.ipynb')
 
         self.pages.append(
             Page(
                 path=path,
                 path_html=path_html,
+                path_jupyter=path_jupyter,
                 title=title,
                 fm=Dict(fm.to_dict()),
                 md=md,
@@ -236,6 +352,31 @@ class Builder:
             'page': page,
             'webroot': webroot,
             })
+
+        # jupyter notebook stuff
+
+        cells = []
+        for element, source in JupyterExporterMixin.toplevel_elements:
+            if isinstance(element, marko.block.FencedCode):
+                cells.append({
+                    'cell_type': 'code',
+                    'execution_count': None,
+                    'metadata': {},
+                    'source': element.children[0].children
+                    })
+            else:
+                cells.append({
+                    'cell_type': 'markdown',
+                    'metadata': {},
+                    'source': element.monkeypatch_source
+                    })
+
+        page.jupyter_json = {
+                'nbformat': 4,
+                'nbformat_minor': 0,
+                'metadata': {},
+                'cells': cells
+            }
 
 
 
