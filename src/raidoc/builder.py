@@ -7,6 +7,7 @@ import shutil
 import os
 from collections import defaultdict
 import json
+import importlib
 
 import sass
 import frontmatter
@@ -361,9 +362,15 @@ class Builder:
 
         page.html_content = self.marko(page.md_filled)
 
+        try:
+            raidoc_version = importlib.metadata.version('raidoc')
+        except:
+            raidoc_version = '???'
+
         page.html_full = self.j2_templ.render({
             'page': page,
             'webroot': webroot,
+            'raidoc_version': f"v{raidoc_version}",
             })
 
         # jupyter notebook stuff
