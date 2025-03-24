@@ -1,10 +1,17 @@
 # Welcome to RAIMAD!
 
+RAIMAD is a parametric 2D CAD program
+for designing on-chip astronomical mask files.
+
+- GitHub: [tifuun/raimad](https://github.com/tifuun/raimad)
+- Install: `pip install raimad` or read the [instructions](pages/install.md)
+- Start working: [[tutorial.md]]
+
+<!--
 Start reading at [Installing RAIMAD](pages/install.md)
 or [browse the map of all pages](map.md).
 Are you a TIFUUN collaborator?
 Visit the [TIFUUN collaborator welcome page](pages/tifuun.md)!
-
 
 <nav id="navgrid">
     <a href="pages/tutorial.html">
@@ -12,7 +19,7 @@ Visit the [TIFUUN collaborator welcome page](pages/tifuun.md)!
         <h3>Tutorial</h3>
         Learn RAIMAD step-by-step
     </a>
-    <!--<a href="map.html">
+    <a href="map.html">
         <img
             src="img/doc/map-traced.svg"
             alt="map icon"
@@ -20,7 +27,7 @@ Visit the [TIFUUN collaborator welcome page](pages/tifuun.md)!
             >
         <h3>Map</h3>
         Browse the map of all RAIDOC pages
-    </a>-->
+    </a>
     <a href="pages/tifuun.html">
         <img
             src="img/doc/tifuun-mono.svg"
@@ -38,6 +45,8 @@ Visit the [TIFUUN collaborator welcome page](pages/tifuun.md)!
         Check the Controbutor's guide!
     </a>
 </nav>
+
+-->
 
 ## Offline Access and Old Versions
 
