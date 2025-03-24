@@ -154,9 +154,10 @@ class JourneyLink:
 
 @dataclass
 class Page:
-    path: Path
+    path: Path  # <- in source directory
     path_html: Path
     path_jupyter: Path
+    path_md: Path  # <- in build directory, to allow users to download
     title: str
     fm: Any  # FIXME
     md: str
@@ -205,6 +206,11 @@ class Builder:
         raise Exception(path)
     
     def render(self, dest: Path):
+
+        Path(dest / 'pages').mkdir(parents=True, exist_ok=True)
+        Path(dest / 'downloads/jupyter/pages').mkdir(parents=True, exist_ok=True)
+        Path(dest / 'downloads/md/pages').mkdir(parents=True, exist_ok=True)
+
         for subfolder in (
                 'img',
                 'js',
@@ -216,9 +222,6 @@ class Builder:
                 #copy_function=custom_copy,
                 dirs_exist_ok=True
                 )
-
-        Path(dest / 'pages').mkdir(parents=True, exist_ok=True)
-        Path(dest / 'downloads/jupyter/pages').mkdir(parents=True, exist_ok=True)
 
         for path in (self.source / 'scss').rglob('*'):
             if path.suffix != '.scss':
@@ -244,6 +247,7 @@ class Builder:
 
         for page in self.pages:
             (dest / page.path_html).write_text(page.html_full)
+            (dest / page.path_md).write_text(page.md)
             json.dump(page.jupyter_json, (dest / page.path_jupyter).open('w'))
 
 
@@ -267,11 +271,13 @@ class Builder:
         path = path.relative_to(self.source)
         path_html = path.with_suffix('.html')
         path_jupyter = Path('downloads/jupyter') / path.with_suffix('.ipynb')
+        path_md = Path('downloads/md') / path
 
         self.pages.append(
             Page(
                 path=path,
                 path_html=path_html,
+                path_md=path_md,
                 path_jupyter=path_jupyter,
                 title=title,
                 fm=Dict(fm.to_dict()),

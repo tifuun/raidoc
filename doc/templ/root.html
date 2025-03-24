@@ -18,12 +18,19 @@
 	<body>
 		<div id="page">
 			<header>
-				<h1>RAIDOC</h1>
-				<a href="{{webroot}}index.html">HOME</a>
-				<!--
-				<a href="{{webroot}}map.html">ALL PAGES</a>
-				<a href="{{webroot}}search.html">SEARCH</a>
-				-->
+				<nav>
+								<h1>RAIDOC</h1>
+								<a href="{{webroot}}index.html">HOME</a>
+				</nav>
+				<div class="flex-spacer"></div>
+				<div id="downloads">
+					<span>
+						<i class="fa-solid fa-floppy-disk icon"></i>
+						Download page
+					</span>
+					<a href="{{webroot}}/{{page.path_md}}" download>Markdown Notebook</a>
+					<a href="{{webroot}}/{{page.path_jupyter}}" download>Jupyter Notebook</a>
+				</div>
 			</header>
 
 			<div id="content">
