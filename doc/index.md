@@ -55,6 +55,8 @@ documentation can be found on the
 [Github releases page](https://github.com/tifuun/raidoc/releases).
 After extracting the archive, open the contained `index.html`
 
+## List of all pages by category
+
 {{all_pages}}
 
 

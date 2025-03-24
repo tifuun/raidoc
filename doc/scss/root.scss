@@ -88,28 +88,23 @@ header {
 	max-width: 100%;
 	min-width: 100%;
 
-	& > nav {
-		display: flex;
-		flex-direction: row;
-		flex-wrap: wrap;
-		gap: 20px;
-		align-items: flex-end;
+  & > h1 {
+    font-size: 5em;
+    &::before {
+      font-size: 0.6em;
+    }
+  }
 
-		& > h1 {
-			font-size: 5em;
-			&::before {
-				font-size: 0.6em;
-			}
-			margin-bottom: -14px;
-		}
-		margin-bottom: 14px;
-
-	}
+  & > #title-links {
+    display: flex;
+    flex-direction: column;
+  }
 
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
 	align-items: center;
+  gap: 20px;
 	// TODO mobile
 }
 
