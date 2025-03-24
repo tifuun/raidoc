@@ -37,6 +37,11 @@ import raimad as rai
 rai.export_cif(rai.Snowman(), '/path/to/output/file.cif')
 ```
 
+## Dependencies
+
+RAIMAD depends only on the `typing-extensions` module,
+which `pip` will install automatically.
+
 ## RAIMAD in Jupyter
 
 It is discouraged but possible to use RAIMAD
