@@ -8,6 +8,7 @@ import os
 from collections import defaultdict
 import json
 import importlib
+import ast
 
 import sass
 import frontmatter
@@ -26,6 +27,9 @@ from raidoc.raimark_ext import TitleMixin
 from raidoc.raimark_ext import IndexerMixin
 from raidoc.raimark_ext import LinkMixin
 from raidoc.raimark_ext import JupyterExporterMixin
+#from raidoc.autogen import FilesystemScanner
+#from raidoc.autogen import ast_unparse_function_signature
+from raidoc.autogen import scan_public
 
 #class PageKind(StrEnum):
 #    NONE = 'none'
@@ -196,19 +200,88 @@ class Builder:
             )
         self.j2_templ = self.j2_env.from_string((source / 'templ/root.html').read_text())
 
+        self.j2_function_reference = self.j2_env.from_string((source / 'templ/function-reference.html').read_text())
+
         self.marko = marko.Markdown(extensions=['gfm', 'codehilite', RaimarkExt])
         self.marko_prepass = marko.Markdown(extensions=[RaimarkPrepassExt])
+
+        try:
+            self.raidoc_version = importlib.metadata.version('raidoc')
+        except:
+            self.raidoc_version = '???'
 
     def page(self, path):
         # FIXME path vs name!?
         for page in self.pages:
+            if page.path is None:
+                # FIXME hack for autogen
+                continue
             if page.path.name == Path(path).name:
                 return page
         raise Exception(path)
+
+    def render_autogen(self, dest):
+        #functions, classes = scan_public(rai)
+
+        # TODO so that self.pages entries exist already
+        # this just kind of ignores them.
+        # Refactor so that these pages are generated from self.pages
+
+        for fn in self.autogen_functions:
+            html_content = (
+                self.j2_function_reference.render({
+                    'fndef': fn
+                    })
+                )
+
+            html_full = self.j2_templ.render({
+                'page': {
+                    'html_content': html_content,
+                    'path_md': None,  # FIXME this is a hack
+                    'journey_links': None,
+                    },
+                'webroot': '../../',
+                'raidoc_version': f"v{self.raidoc_version}",
+                })
+
+            path_html = dest / f'pages/autogen/fn_{fn.name}.html'
+            path_html.write_text(html_full)
+
+        #scanner = FilesystemScanner()
+        #scanner.use_module(rai)
+        #scanner.scan()
+
+        #for file_scanner in scanner.file_scanners:
+        #    for cls in file_scanner.classes:
+        #        pass
+        #    for fn in file_scanner.functions:
+        #        html_content = (
+        #            self.j2_function_reference.render({
+        #                'reference': {
+        #                    'name': fn.name,
+        #                    'signature': ast_unparse_function_signature(fn),
+        #                    'docstring': ast.get_docstring(fn),
+        #                    }
+        #                })
+        #            )
+
+        #        html_full = self.j2_templ.render({
+        #            'page': {
+        #                'html_content': html_content,
+        #                'path_md': None,  # FIXME this is a hack
+        #                'journey_links': None,
+        #                },
+        #            'webroot': '../../',
+        #            'raidoc_version': f"v{self.raidoc_version}",
+        #            })
+
+        #        (dest / f'pages/autogen/fn_{fn.name}.html').write_text(html_full)
+
     
     def render(self, dest: Path):
 
         Path(dest / 'pages').mkdir(parents=True, exist_ok=True)
+        Path(dest / 'pages/autogen').mkdir(parents=True, exist_ok=True)
         Path(dest / 'downloads/jupyter/pages').mkdir(parents=True, exist_ok=True)
         Path(dest / 'downloads/md/pages').mkdir(parents=True, exist_ok=True)
 
@@ -247,9 +320,14 @@ class Builder:
         (dest / 'ansi.css').write_text(ansi_style)
 
         for page in self.pages:
+            if page.path is None:
+                #FIXME hack for autogen
+                continue
             (dest / page.path_html).write_text(page.html_full)
             (dest / page.path_md).write_text(page.md)
             json.dump(page.jupyter_json, (dest / page.path_jupyter).open('w'))
+
+        self.render_autogen(dest)
 
 
     def _prepass(self) -> None:
@@ -257,7 +335,30 @@ class Builder:
             self._load_page(path)
 
         for page in self.pages:
-            self._parse_journey(page)
+            try:
+                self._parse_journey(page)
+            except Exception as e:
+                raise Exception(f"While parsing {page}") from e
+
+        # autogen
+        self.autogen_functions, self.autogen_classes = scan_public(rai)
+        for fn in self.autogen_functions:
+
+            #FIXME copypasta from render_autogen
+            path_html = f'pages/autogen/fn_{fn.name}.html'
+
+            self.pages.append(
+                Page(
+                    path=None,
+                    path_html=path_html,
+                    path_md=None,
+                    path_jupyter=None,
+                    title=fn.name,
+                    fm={'kind': 'reference'},  # TODO separate field?
+                    md=None,
+                    )
+                )
+
 
     def _load_page(self, path: Path) -> Page:
         fm = frontmatter.load(path)
@@ -337,8 +438,13 @@ class Builder:
         for kind, pages in self.get_pages_by_kind().items():
             yield f'### {kind}\n'
             for page in pages:
+                if page.path is None:  # TODO hack for autogen
+                    yield f'- [{page.title}]({str(page.path_html)}) \n'
+                    continue
+
                 if page.path.name == 'index.md':
                     continue
+
                 yield f'- [[{str(page.path)}]] \n'
 
     def get_pages_by_kind_str(self):
@@ -362,15 +468,10 @@ class Builder:
 
         page.html_content = self.marko(page.md_filled)
 
-        try:
-            raidoc_version = importlib.metadata.version('raidoc')
-        except:
-            raidoc_version = '???'
-
         page.html_full = self.j2_templ.render({
             'page': page,
             'webroot': webroot,
-            'raidoc_version': f"v{raidoc_version}",
+            'raidoc_version': f"v{self.raidoc_version}",
             })
 
         # jupyter notebook stuff

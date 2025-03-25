@@ -41,7 +41,11 @@ class LinkMixin(object):
 
     def render_wiki_link(self, element):
 
-        page = LinkMixin.builder.page(element.target)
+        try:
+            page = LinkMixin.builder.page(element.target)
+        except Exception as e:
+            raise Exception(f"While rendering {element}") from e
+
 
         webroot = '../' * (len(page.path.parts) - 1)  # FIXME ???
 

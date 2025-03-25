@@ -31,6 +31,9 @@ def cli():
         builder = Builder(Path('./doc'))
         builder._prepass()
         for page in builder.pages:
+            if page.path is None:
+                # FIXME hack for autogen
+                continue
             builder._render_page(page)
 
         builder.render(Path('./build'))
