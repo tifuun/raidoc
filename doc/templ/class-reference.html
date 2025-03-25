@@ -1,22 +1,24 @@
-<h3>{{clsdef.name}}</h3>
+{% import "util.html" as util with context %}
+
+<h2>Class <code>{{clsdef.name}}</code> from <code>{{clsdef.module}}</code></h2>
+
+{% call util.pygmentize() %}
 class {{clsdef.name}}
+{% endcall %}
 <!-- TODO show inheritance! -->
 
-<br>
-<br>
-
+<pre>
 {{clsdef.docstring}}
+</pre>
 
-<br>
-<br>
-
-<ul>
-	{% for method in clsdef.methods %}
-	<li>
-		def {{method.name}}{{method.sig}}
-
-		{{method.docstring}}
-	</li>
-	{% endfor %}
-</ul>
+{% for method in clsdef.methods %}
+<pre>
+{% call util.pygmentize() %}
+def {{method.name}}{{method.sig}}:
+    """
+    {{ method.docstring | indent }}
+    """
+{% endcall %}
+</pre>
+{% endfor %}
 
