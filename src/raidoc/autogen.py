@@ -227,14 +227,15 @@ class FnDef:
     name: str
     sig: str
     docstring: str
-    #module: str
+    module: str
+    source: str
 
 @dataclass
 class ClsDef:
     name: str
     docstring: str
     methods: tuple[FnDef]
-    #module: str
+    module: str
 
 def scan_public(module):
     functions = []
@@ -250,20 +251,29 @@ def scan_public(module):
                     FnDef(
                         name=methname,
                         sig=str(inspect.signature(method)),
-                        docstring=inspect.getdoc(method),
+                        docstring=inspect.getdoc(method) or '',
+                        module=method.__module__,
+                        source=inspect.getsource(obj),
                         )
                     for methname, method in vars(obj).items()
                     if
-                        not methname.startswith('_')
-                        and inspect.isfunction(method)
+                        inspect.isfunction(method)
+                        and (
+                            methname.startswith('__')
+                            or methname == '_make'
+                            or not methname.startswith('_')
+                            )
                     # TODO static/classmethod?
-                    )
+                    ),
+                module=obj.__module__
                 ))
         elif inspect.isfunction(obj):
             functions.append(FnDef(
                 name=name,
                 sig=str(inspect.signature(obj)),
-                docstring=inspect.getdoc(obj)
+                docstring=inspect.getdoc(obj) or '',  # TODO jinja2 "missing docstring" message?
+                module=obj.__module__,
+                source=inspect.getsource(obj),
                 ))
 
     return functions, classes

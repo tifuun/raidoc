@@ -17,6 +17,8 @@ import jinja2
 from addict import Dict
 from reflink import reflink
 from pygments.formatters import HtmlFormatter
+from pygments.lexers import PythonLexer
+from pygments import highlight
 import ansi2html
 
 import raimad as rai
@@ -39,6 +41,9 @@ from raidoc.autogen import scan_public
 #    REFERENCE = 'reference'
 
 from typing import cast
+
+def _pygmentize(code):
+    return highlight(code, PythonLexer(), HtmlFormatter(nowrap=True))
 
 #FIXME horrible monkeypatch
 def wtf(self, text):
@@ -197,6 +202,7 @@ class Builder:
         self.j2_env = jinja2.Environment(
             autoescape=False,
             undefined=jinja2.StrictUndefined,
+            loader=jinja2.FileSystemLoader(source / 'templ')
             )
         self.j2_templ = self.j2_env.from_string((source / 'templ/root.html').read_text())
 
@@ -231,7 +237,8 @@ class Builder:
         for fn in self.autogen_functions:
             html_content = (
                 self.j2_function_reference.render({
-                    'fndef': fn
+                    'fndef': fn,
+                    '_pygmentize': _pygmentize
                     })
                 )
 
@@ -251,7 +258,8 @@ class Builder:
         for cls in self.autogen_classes:
             html_content = (
                 self.j2_class_reference.render({
-                    'clsdef': cls
+                    'clsdef': cls,
+                    '_pygmentize': _pygmentize
                     })
                 )
 

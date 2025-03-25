@@ -1,5 +1,21 @@
-<h3>{{fndef.name}}</h3>
-def {{fndef.sig}}
+{% import "util.html" as util with context %}
 
+<h2>Function <code>{{fndef.name}}</code> from <code>{{fndef.module}}</code></h2>
+
+{% call util.pygmentize() %}
+def {{fndef.name}}{{fndef.sig}}
+{% endcall %}
+
+<pre>
 {{fndef.docstring}}
+</pre>
+
+<details>
+    <summary>Click to show code</summary>
+    <pre>
+{% call util.pygmentize() %}
+{{fndef.source}}
+{% endcall %}
+    </pre>
+</details>
 
