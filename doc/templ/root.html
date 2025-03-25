@@ -26,48 +26,48 @@
 					<a href="{{webroot}}pages/contributor-guide.html">CONTRIBUTE</a>
 				</div>
 				<div class="flex-spacer"></div>
-				<div id="downloads">
-					<span>
-						<i class="fa-solid fa-floppy-disk icon"></i>
-						Download page
-					</span>
-					<a href="{{webroot}}/{{page.path_md}}" download>Markdown Notebook</a>
-					<a href="{{webroot}}/{{page.path_jupyter}}" download>Jupyter Notebook</a>
-				</div>
+				{% if page.path_md != None %}
+					<div id="downloads">
+						<span>
+							<i class="fa-solid fa-floppy-disk icon"></i>
+							Download page
+						</span>
+						<a href="{{webroot}}/{{page.path_md}}" download>Markdown Notebook</a>
+						<a href="{{webroot}}/{{page.path_jupyter}}" download>Jupyter Notebook</a>
+					</div>
+				{% endif %}
 			</header>
 
 			<div id="content">
 				{{page.html_content}}
 
-				<div id="journey">
-					{% for link in page.journey_links %}
+				{% if page.journey_links != None %}
+					<div id="journey">
+						{% for link in page.journey_links %}
 
-						<div class="journey-line">
-							{% if link.prev %}
-								<div class="journey-prev">
-									Previous:<br>
-									<a href="{{webroot}}{{link.prev.path_html}}">{{link.prev.title}}</a>
-								</div>
-							{% endif %}
+							<div class="journey-line">
+								{% if link.prev %}
+									<div class="journey-prev">
+										Previous:<br>
+										<a href="{{webroot}}{{link.prev.path_html}}">{{link.prev.title}}</a>
+									</div>
+								{% endif %}
 
-							<!-- ensures that if only `journey-next` is present,
-								it is aligned to the right. -->
-							<div class="flex-spacer"></div>
+								<!-- ensures that if only `journey-next` is present,
+									it is aligned to the right. -->
+								<div class="flex-spacer"></div>
 
-							{% if link.next %}
-								<div class="journey-next">
-									Next:<br>
-									<a href="{{webroot}}{{link.next.path_html}}">{{link.next.title}}</a>
-								</div>
-							{% endif %}
-						</div>
+								{% if link.next %}
+									<div class="journey-next">
+										Next:<br>
+										<a href="{{webroot}}{{link.next.path_html}}">{{link.next.title}}</a>
+									</div>
+								{% endif %}
+							</div>
 
-					{% endfor %}
-				</div>
-				<!-- TODO display article name instead of filename
-					This will need a "prepass" over the docs to build
-					a filename -> title lookup table
-				-->
+						{% endfor %}
+					</div>
+				{% endif %}
 			</div>
 		</div>
 	</body>
