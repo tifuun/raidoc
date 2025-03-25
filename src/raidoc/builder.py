@@ -201,6 +201,7 @@ class Builder:
         self.j2_templ = self.j2_env.from_string((source / 'templ/root.html').read_text())
 
         self.j2_function_reference = self.j2_env.from_string((source / 'templ/function-reference.html').read_text())
+        self.j2_class_reference = self.j2_env.from_string((source / 'templ/class-reference.html').read_text())
 
         self.marko = marko.Markdown(extensions=['gfm', 'codehilite', RaimarkExt])
         self.marko_prepass = marko.Markdown(extensions=[RaimarkPrepassExt])
@@ -245,6 +246,29 @@ class Builder:
                 })
 
             path_html = dest / f'pages/autogen/fn_{fn.name}.html'
+            path_html.write_text(html_full)
+
+        for cls in self.autogen_classes:
+            html_content = (
+                self.j2_class_reference.render({
+                    'clsdef': cls
+                    })
+                )
+
+            # FIXME get rid of this entire function and have
+            # the standard page render logic handle this to
+            # avoid copypasta
+            html_full = self.j2_templ.render({
+                'page': {
+                    'html_content': html_content,
+                    'path_md': None,  # FIXME this is a hack
+                    'journey_links': None,
+                    },
+                'webroot': '../../',
+                'raidoc_version': f"v{self.raidoc_version}",
+                })
+
+            path_html = dest / f'pages/autogen/cls_{cls.name}.html'
             path_html.write_text(html_full)
 
         #scanner = FilesystemScanner()
@@ -353,7 +377,24 @@ class Builder:
                     path_html=path_html,
                     path_md=None,
                     path_jupyter=None,
-                    title=fn.name,
+                    title=f"Function: {fn.name}",
+                    fm={'kind': 'reference'},  # TODO separate field?
+                    md=None,
+                    )
+                )
+
+        for cls in self.autogen_classes:
+
+            #FIXME copypasta from render_autogen
+            path_html = f'pages/autogen/cls_{cls.name}.html'
+
+            self.pages.append(
+                Page(
+                    path=None,
+                    path_html=path_html,
+                    path_md=None,
+                    path_jupyter=None,
+                    title=f"Class: {cls.name}",
                     fm={'kind': 'reference'},  # TODO separate field?
                     md=None,
                     )

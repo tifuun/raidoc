@@ -229,6 +229,13 @@ class FnDef:
     docstring: str
     #module: str
 
+@dataclass
+class ClsDef:
+    name: str
+    docstring: str
+    methods: tuple[FnDef]
+    #module: str
+
 def scan_public(module):
     functions = []
     classes = []
@@ -236,7 +243,22 @@ def scan_public(module):
     for name in module.__all__:
         obj = vars(module)[name]
         if inspect.isclass(obj):
-            pass
+            classes.append(ClsDef(
+                name=name,
+                docstring=inspect.getdoc(obj),
+                methods=tuple(
+                    FnDef(
+                        name=methname,
+                        sig=str(inspect.signature(method)),
+                        docstring=inspect.getdoc(method),
+                        )
+                    for methname, method in vars(obj).items()
+                    if
+                        not methname.startswith('_')
+                        and inspect.isfunction(method)
+                    # TODO static/classmethod?
+                    )
+                ))
         elif inspect.isfunction(obj):
             functions.append(FnDef(
                 name=name,

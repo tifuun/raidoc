@@ -1,0 +1,22 @@
+<h3>{{clsdef.name}}</h3>
+class {{clsdef.name}}
+<!-- TODO show inheritance! -->
+
+<br>
+<br>
+
+{{clsdef.docstring}}
+
+<br>
+<br>
+
+<ul>
+	{% for method in clsdef.methods %}
+	<li>
+		def {{method.name}}{{method.sig}}
+
+		{{method.docstring}}
+	</li>
+	{% endfor %}
+</ul>
+
