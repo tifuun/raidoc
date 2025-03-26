@@ -249,6 +249,7 @@ class Builder:
                     'journey_links': None,
                     },
                 'webroot': '../../',
+                'body_classes': 'autogen',
                 'raidoc_version': f"v{self.raidoc_version}",
                 })
 
@@ -273,6 +274,7 @@ class Builder:
                     'journey_links': None,
                     },
                 'webroot': '../../',
+                'body_classes': 'autogen',
                 'raidoc_version': f"v{self.raidoc_version}",
                 })
 
@@ -520,6 +522,7 @@ class Builder:
         page.html_full = self.j2_templ.render({
             'page': page,
             'webroot': webroot,
+            'body_classes': '',
             'raidoc_version': f"v{self.raidoc_version}",
             })
 
