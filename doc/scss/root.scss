@@ -417,4 +417,12 @@ h1, h2, h3, h4 {
 
 }
 
+body.autogen pre {
+	font-size: 1.2em;
+}
+
+.clsdoc, .clsmethods, .clsmethod, .clsmethoddoc, .fndoc {
+	margin-left: 4ex;
+	margin-top: 2ex;
+}
 

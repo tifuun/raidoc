@@ -1,24 +1,34 @@
 {% import "util.html" as util with context %}
 
-<h2>Class <code>{{clsdef.name}}</code> from <code>{{clsdef.module}}</code></h2>
+<h2>
+	raimad.{{clsdef.name}}
+</h2>
 
-{% call util.pygmentize() %}
-class {{clsdef.name}}
-{% endcall %}
 <!-- TODO show inheritance! -->
+<div class="clsdef">
+	<div class="clssig">
+		{% call util.pygmentize() %}class {{clsdef.name}}:{% endcall %}
+	</div>
+	<div class="clsdoc">
+		{{clsdef.docstring}}
+	</div>
+	<div class="clsmethods">
+		{% for method in clsdef.methods %}
+		<div class="clsmethod">
+			{% call util.pygmentize() %}
+			def {{method.name}}{{method.sig}}:
+			{% endcall %}
+			<div class="clsmethoddoc">
+				{{ method.docstring }}
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+</div>
 
-<pre>
-{{clsdef.docstring}}
-</pre>
 
-{% for method in clsdef.methods %}
-<pre>
-{% call util.pygmentize() %}
-def {{method.name}}{{method.sig}}:
-    """
-    {{ method.docstring | indent }}
-    """
-{% endcall %}
-</pre>
-{% endfor %}
+<!--
 
+
+
+-->
