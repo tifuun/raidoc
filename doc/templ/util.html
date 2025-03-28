@@ -1,3 +1,86 @@
 {% macro pygmentize() -%}
 {{ _pygmentize(caller()) }}
 {%- endmacro %}
+
+{% macro ag_mult_simple(lst, head) %}
+{% if lst %}
+<div class="ag-mult">
+	<div class="ag-mult-head"><h5>{{head}}</h4></div>
+	<div class="ag-mult-body">
+		{% for entry in lst %}
+		<div class="ag-mult-entry">
+			<div class="ag-mult-name"><h6>{{ entry.name }}{{ entry.type }}</h4></div>
+			<div class="ag-mult-desc">{{ ' '.join(entry.desc) }}</div>
+		</div>
+		{% endfor %}
+	</div>
+</div>
+{% endif %}
+{% endmacro %}
+
+{% macro ag_fn(fn) %}
+<div class="ag-fn">
+	<div class="ag-fn-head">
+		<h4>
+			{% call pygmentize() %}
+			def {{fn.name}}{{fn.sig}}:
+			{% endcall %}
+		</h4>
+	</div>
+	<div class="ag-parsed">
+
+		{% if fn.doc["Summary"] %}
+		<div class="ag-summary">
+			{{ ' '.join(fn.doc["Summary"]) }}
+		</div>
+		{% endif %}
+
+		{% if fn.doc["Extended Summary"] %}
+		<div class="ag-esummary">
+			{{ ' '.join(fn.doc["Extended Summary"]) }}
+		</div>
+		{% endif %}
+
+		{{ ag_mult_simple(fn.doc["Parameters"], "Parameters") }}
+		{{ ag_mult_simple(fn.doc["Returns"], "Returns") }}
+		{{ ag_mult_simple(fn.doc["Yields"], "Yields") }}
+		{{ ag_mult_simple(fn.doc["Raises"], "Raises") }}
+		{# TODO util.ag_mult_simple(fn.doc["Examples"], "Examples") #}
+		{{ ag_mult_simple(fn.doc["See Also"], "See Also") }}
+
+	</div>
+</div>
+{% endmacro %}
+
+{% macro ag_prop(fn) %}
+<div class="ag-fn">
+	<div class="ag-fn-head">
+		<h4>
+			<span class="nd">Property</span>
+			<span class="nf">{{fn.name}}</span>
+			<!-- nd and nf are pygments classes -->
+		</h4>
+	</div>
+	<div class="ag-parsed">
+
+		{% if fn.doc["Summary"] %}
+		<div class="ag-summary">
+			{{ ' '.join(fn.doc["Summary"]) }}
+		</div>
+		{% endif %}
+
+		{% if fn.doc["Extended Summary"] %}
+		<div class="ag-esummary">
+			{{ ' '.join(fn.doc["Extended Summary"]) }}
+		</div>
+		{% endif %}
+
+		{{ ag_mult_simple(fn.doc["Returns"], "Returns") }}
+		{{ ag_mult_simple(fn.doc["Yields"], "Yields") }}
+		{{ ag_mult_simple(fn.doc["Raises"], "Raises") }}
+		{# TODO util.ag_mult_simple(fn.doc["Examples"], "Examples") #}
+		{{ ag_mult_simple(fn.doc["See Also"], "See Also") }}
+
+	</div>
+</div>
+{% endmacro %}

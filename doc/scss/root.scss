@@ -420,9 +420,57 @@ h1, h2, h3, h4 {
 body.autogen pre {
 	font-size: 1.2em;
 }
+// FIXME this is a huge mess panel is a class but panel-lite is a mixin
+
+.clsmethoddoc, .clsdoc, .clsmethod, .clsmethods {
+	display: flex;
+	flex-direction: column;
+	gap: 2ex;
+}
 
 .clsdoc, .clsmethods, .clsmethod, .clsmethoddoc, .fndoc {
 	margin-left: 4ex;
-	margin-top: 2ex;
 }
+
+.clsmethodparams {
+	display: flex;
+	flex-direction: column;
+	gap: 2ex;
+}
+
+.clsmethodparam, .clsmethodparamdesc {
+	margin-left: 4ex;
+}
+
+.ag-methods, .fndef {
+	& h1, & h2, & h3, & h4, & h5, & h6 {
+		&::before {
+			display: none !important;
+		}
+		font-size: 1em !important;
+		margin: 0px !important;
+		padding: 0px !important;
+	}
+}
+
+////////// AUTOGEN //////////
+
+@mixin ag-flex {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+@mixin ag-indent {
+	padding-left: 30px;
+}
+
+@mixin panel-lite() {
+	background: rgba(0, 0, 0, 0.1);
+	padding: 5px;
+}
+
+.ag-methods, .ag-fn, .ag-parsed, .ag-mult, .ag-mult-body, .ag-mult-entry { @include ag-flex }
+.ag-fn, .ag-parsed, .ag-mult-body, .ag-mult-desc { @include ag-indent }
+.ag-mult-head, .ag-fn-head { @include panel-lite }
 

@@ -6,12 +6,7 @@
 
 <!-- TODO show inheritance! -->
 <div class="fndef">
-	<div class="fnhead">
-		{% call util.pygmentize() %}def {{fndef.name}}:{% endcall %}
-	</div>
-	<div class="fndoc">
-		{{fndef.docstring}}
-	</div>
+	{{ util.ag_fn(fndef) }}
 </div>
 
 

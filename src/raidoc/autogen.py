@@ -16,6 +16,7 @@ import ast
 from pathlib import Path
 from dataclasses import dataclass
 import inspect
+from numpydoc.docscrape import NumpyDocString
 
 import raimad
 
@@ -223,19 +224,29 @@ class FilesystemScanner():
                 print(fuck(fn))
 
 @dataclass
+class Property:
+    name: str
+    docstring: str
+    module: str
+    doc: NumpyDocString
+
+@dataclass
 class FnDef:
     name: str
     sig: str
     docstring: str
     module: str
     source: str
+    doc: NumpyDocString
 
 @dataclass
 class ClsDef:
     name: str
     docstring: str
     methods: tuple[FnDef]
+    properties: tuple[Property]
     module: str
+    doc: NumpyDocString
 
 def scan_public(module):
     functions = []
@@ -252,8 +263,9 @@ def scan_public(module):
                         name=methname,
                         sig=str(inspect.signature(method)),
                         docstring=inspect.getdoc(method) or '',
-                        module=method.__module__,
+                        module=obj.__module__,
                         source=inspect.getsource(obj),
+                        doc=NumpyDocString(inspect.getdoc(method) or ''),
                         )
                     for methname, method in vars(obj).items()
                     if
@@ -265,7 +277,20 @@ def scan_public(module):
                             )
                     # TODO static/classmethod?
                     ),
-                module=obj.__module__
+                properties=tuple(
+                    Property(
+                        name=propname,
+                        docstring=inspect.getdoc(prop) or '',
+                        module=obj.__module__,
+                        doc=NumpyDocString(inspect.getdoc(prop) or ''),
+                        )
+                    for propname, prop in vars(obj).items()
+                    if
+                        isinstance(prop, property)
+                        and not propname.startswith('_')
+                    ),
+                module=obj.__module__,
+                doc=NumpyDocString(inspect.getdoc(obj)),
                 ))
         elif inspect.isfunction(obj):
             functions.append(FnDef(
@@ -274,6 +299,7 @@ def scan_public(module):
                 docstring=inspect.getdoc(obj) or '',  # TODO jinja2 "missing docstring" message?
                 module=obj.__module__,
                 source=inspect.getsource(obj),
+                doc=NumpyDocString(inspect.getdoc(obj) or ''),
                 ))
 
     return functions, classes

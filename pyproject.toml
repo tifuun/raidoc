@@ -29,7 +29,8 @@ dependencies = [
 	'python-frontmatter',
 	'addict',
 	'ansi2html',
-	'reflink'
+	'reflink',
+	'numpydoc',
 	]
 
 #[tool.setuptools.packages.find]
