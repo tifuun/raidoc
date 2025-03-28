@@ -246,6 +246,7 @@ class ClsDef:
     methods: tuple[FnDef]
     properties: tuple[Property]
     module: str
+    bases: tuple[str]
     doc: NumpyDocString
 
 def scan_public(module):
@@ -290,6 +291,7 @@ def scan_public(module):
                         and not propname.startswith('_')
                     ),
                 module=obj.__module__,
+                bases=obj.__bases__,
                 doc=NumpyDocString(inspect.getdoc(obj)),
                 ))
         elif inspect.isfunction(obj):

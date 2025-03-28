@@ -4,10 +4,16 @@
 	raimad.{{clsdef.name}}
 </h2>
 
-<!-- TODO show inheritance! -->
 <div class="clsdef">
 	<div class="clssig">
-		{% call util.pygmentize() %}class {{clsdef.name}}:{% endcall %}
+		{% call util.pygmentize() %}
+		class
+		{{clsdef.name}}(
+		{% for base in clsdef.bases %}
+		{{ base.__module__ }}.{{ base.__name__ }},
+		{% endfor %}
+		):
+		{% endcall %}
 	</div>
 	<div class="clsdoc">
 		{{clsdef.docstring}}
