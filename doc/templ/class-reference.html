@@ -11,17 +11,20 @@
 	</div>
 	<div class="clsdoc">
 		{{clsdef.docstring}}
+		<!--
+		{% for k, v in clsdef.doc.items() %}
+		<div>{{ k }}</div>
+		<div>{{ v }}</div>
+		{% endfor %}
+		-->
 	</div>
-	<div class="clsmethods">
+	<div class="ag-methods">
 		{% for method in clsdef.methods %}
-		<div class="clsmethod">
-			{% call util.pygmentize() %}
-			def {{method.name}}{{method.sig}}:
-			{% endcall %}
-			<div class="clsmethoddoc">
-				{{ method.docstring }}
-			</div>
-		</div>
+		{{ util.ag_fn(method) }}
+		{% endfor %}
+
+		{% for property in clsdef.properties %}
+		{{ util.ag_prop(property) }}
 		{% endfor %}
 	</div>
 </div>
