@@ -282,6 +282,7 @@ class CodeBlockMixin(object):
                 ],
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
+            # FIXME check status code
             )
         stdout, stderr = dot.communicate(code.encode('utf-8'))
         assert not stderr
