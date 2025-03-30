@@ -85,6 +85,12 @@
 		</div>
 		{% endif %}
 
+		{% if fn.doc["Diagram"] %}
+		<div class="ag-diagram">
+			{{_goat('\n'.join(fn.doc['Diagram']))}}
+		</div>
+		{% endif %}
+
 		{{ ag_mult_simple(fn.doc["Returns"], "Returns") }}
 		{{ ag_mult_simple(fn.doc["Yields"], "Yields") }}
 		{{ ag_mult_simple(fn.doc["Raises"], "Raises") }}
