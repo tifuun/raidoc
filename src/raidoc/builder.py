@@ -9,6 +9,7 @@ from collections import defaultdict
 import json
 import importlib
 import ast
+import subprocess
 
 import sass
 import frontmatter
@@ -44,6 +45,17 @@ from typing import cast
 
 def _pygmentize(code):
     return highlight(code, PythonLexer(), HtmlFormatter(nowrap=True))
+
+def _goat(code):
+    goat = subprocess.Popen(
+        ['goat', ],
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        # FIXME check status code
+        )
+    stdout, stderr = goat.communicate(code.encode('utf-8'))
+    assert not stderr
+    return stdout.decode('utf-8')
 
 #FIXME horrible monkeypatch
 def wtf(self, text):
@@ -238,7 +250,8 @@ class Builder:
             html_content = (
                 self.j2_function_reference.render({
                     'fndef': fn,
-                    '_pygmentize': _pygmentize
+                    '_pygmentize': _pygmentize,
+                    '_goat': _goat,
                     })
                 )
 
@@ -260,7 +273,8 @@ class Builder:
             html_content = (
                 self.j2_class_reference.render({
                     'clsdef': cls,
-                    '_pygmentize': _pygmentize
+                    '_pygmentize': _pygmentize,
+                    '_goat': _goat,
                     })
                 )
 

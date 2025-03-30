@@ -20,6 +20,12 @@ from numpydoc.docscrape import NumpyDocString
 
 import raimad
 
+class ExtendedNumpyDocString(NumpyDocString):
+    sections = {
+        **NumpyDocString.sections,
+        "Diagram": ""
+        }
+
 def docstring_to_md(docstring):
     if docstring is None:
         return '*Missing docstring*\n\n'
@@ -228,7 +234,7 @@ class Property:
     name: str
     docstring: str
     module: str
-    doc: NumpyDocString
+    doc: ExtendedNumpyDocString
 
 @dataclass
 class FnDef:
@@ -237,7 +243,7 @@ class FnDef:
     docstring: str
     module: str
     source: str
-    doc: NumpyDocString
+    doc: ExtendedNumpyDocString
 
 @dataclass
 class ClsDef:
@@ -247,7 +253,7 @@ class ClsDef:
     properties: tuple[Property]
     module: str
     bases: tuple[str]
-    doc: NumpyDocString
+    doc: ExtendedNumpyDocString
 
 def scan_public(module):
     functions = []
@@ -266,7 +272,7 @@ def scan_public(module):
                         docstring=inspect.getdoc(method) or '',
                         module=obj.__module__,
                         source=inspect.getsource(obj),
-                        doc=NumpyDocString(inspect.getdoc(method) or ''),
+                        doc=ExtendedNumpyDocString(inspect.getdoc(method) or ''),
                         )
                     for methname, method in vars(obj).items()
                     if
@@ -283,7 +289,7 @@ def scan_public(module):
                         name=propname,
                         docstring=inspect.getdoc(prop) or '',
                         module=obj.__module__,
-                        doc=NumpyDocString(inspect.getdoc(prop) or ''),
+                        doc=ExtendedNumpyDocString(inspect.getdoc(prop) or ''),
                         )
                     for propname, prop in vars(obj).items()
                     if
@@ -292,7 +298,7 @@ def scan_public(module):
                     ),
                 module=obj.__module__,
                 bases=obj.__bases__,
-                doc=NumpyDocString(inspect.getdoc(obj)),
+                doc=ExtendedNumpyDocString(inspect.getdoc(obj)),
                 ))
         elif inspect.isfunction(obj):
             functions.append(FnDef(
@@ -301,7 +307,7 @@ def scan_public(module):
                 docstring=inspect.getdoc(obj) or '',  # TODO jinja2 "missing docstring" message?
                 module=obj.__module__,
                 source=inspect.getsource(obj),
-                doc=NumpyDocString(inspect.getdoc(obj) or ''),
+                doc=ExtendedNumpyDocString(inspect.getdoc(obj) or ''),
                 ))
 
     return functions, classes

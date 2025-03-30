@@ -2,6 +2,10 @@
 {{ _pygmentize(caller()) }}
 {%- endmacro %}
 
+{% macro goat() -%}
+{{ _goat(caller()) }}
+{%- endmacro %}
+
 {% macro ag_mult_simple(lst, head) %}
 {% if lst %}
 <div class="ag-mult">
@@ -38,6 +42,12 @@
 		{% if fn.doc["Extended Summary"] %}
 		<div class="ag-esummary">
 			{{ ' '.join(fn.doc["Extended Summary"]) }}
+		</div>
+		{% endif %}
+
+		{% if fn.doc["Diagram"] %}
+		<div class="ag-diagram">
+			{{_goat('\n'.join(fn.doc['Diagram']))}}
 		</div>
 		{% endif %}
 
