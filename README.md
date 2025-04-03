@@ -16,8 +16,20 @@ $ dot --version
 dot - graphviz version 10.0.1 (0)
 ```
 
-After you have `dot` working, install RAIDOC like any other Python package
-by cloning this repository:
+Then, you need to go and install [goat](https://github.com/blampe/goat):
+
+```sh
+go install github.com/blampe/goat/cmd/goat@latest
+```
+
+Go puts executables into `~/go/bin`, so you might have to update your `$PATH`
+accordingly:
+```sh
+export PATH="$PATH:$HOME/go/bin"
+```
+
+After you have `dot` and `goat` working,
+install RAIDOC like any other Python package by cloning this repository:
 
 ```sh
 git clone https://github.com/maybeetree/raidoc.git
