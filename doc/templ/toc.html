@@ -1,0 +1,23 @@
+{% macro tocsection(kind) %}
+<ul>
+	{% for page in pages %}
+	{% if page.fm.get("kind", "other").lower() == kind %}
+	<li><a href="{{webroot}}{{page.path_html}}">{{page.title}}</a></li>
+	{% endif %}
+	{% endfor %}
+</ul>
+{% endmacro %}
+
+
+{% macro toc() %}
+<h3>Tutorial</h3>
+{{ tocsection("tutorial") }}
+<h3>Deepdive</h3>
+{{ tocsection("deepdive") }}
+<h3>Howto</h3>
+{{ tocsection("howto") }}
+<h3>Reference</h3>
+{{ tocsection("reference") }}
+<h3>Other</h3>
+{{ tocsection("other") }}
+{% endmacro %}

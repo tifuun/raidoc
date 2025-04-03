@@ -1,12 +1,14 @@
 /* MAIN LAYOUT */
 
 body {
-	margin: 0px;
-    display: flex;
-	flex-direction: column;
-	align-items: center;
+  margin: 0px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  gap: 40px;
 
-	font-family: Sans-Serif;
+  font-family: Sans-Serif;
 }
 
 body * {
@@ -36,6 +38,7 @@ body * {
 
 $max-page-width: 1000px;
 $navbox-width: 200px;
+$screen-width-portrait: 900px;
 
 $color-danger-1: rgba(0, 0, 0, 0);
 $color-danger-2: rgba(255, 0, 0, 1);
@@ -65,28 +68,41 @@ $bricksize: 1.2em;
 /* STYLING */
 
 #page {
-	width: 100%;
-	max-width: $max-page-width;
+  //width: 100%;
+  max-width: $max-page-width;
 
-	margin: 0px;
-    display: flex;
-	flex-direction: column;
-	align-items: center;
+  margin: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-	gap: 40px;
-	padding-top: 40px;
+  gap: 40px;
+  padding-top: 40px;
+}
+
+#page-left {
+
+  flex-grow: 1;
+  flex-basis: 0;
+  height: min-content;
+  width: min-content;
+}
+
+#page-right {
+  flex-grow: 1;
+  flex-basis: 0;
 }
 
 body {
-	background-color: var(--color-panel);
+  background-color: var(--color-panel);
 }
 
 header {
-	@extend .panel;
-	@extend .convex;
-	width: 100%;
-	max-width: 100%;
-	min-width: 100%;
+  @extend .panel;
+  @extend .convex;
+  width: 100%;
+  max-width: 100%;
+  min-width: 100%;
 
   & > h1 {
     font-size: 5em;
@@ -125,15 +141,16 @@ header {
 
 
 #content {
-	@extend .panel;
-	@extend .convex;
-	@include flex;
-    width: 100%;
-    max-width: 100%;
-    min-width: 100%;
-	flex-direction: column;
-	flex-wrap: nowrap;
-	margin-bottom: 50px;
+  @extend .panel;
+  @extend .convex;
+  @include flex;
+  width: 100%;
+  max-width: 100%;
+  min-width: 100%;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  margin-bottom: 50px;
+
 }
 
 .raimark-rendered-code {
@@ -473,4 +490,49 @@ body.autogen pre {
 .ag-methods, .ag-fn, .ag-parsed, .ag-mult, .ag-mult-body, .ag-mult-entry { @include ag-flex }
 .ag-fn, .ag-parsed, .ag-mult-body, .ag-mult-desc { @include ag-indent }
 .ag-mult-head, .ag-fn-head { @include panel-lite }
+
+#toc {
+  //position: absolute;
+  //top: 20px;
+  //left: 0px;
+  //width: 10vw;
+  margin-top: 200px;
+  margin-left: 20px;
+  height: min-content;
+  //width: min-content;
+  @extend .panel;
+  @extend .convex;
+}
+
+#toc-button {
+	@include panel-lite;
+	position: fixed;
+	display: none;
+
+
+}
+
+
+@media screen and (max-width: $screen-width-portrait) {
+  #toc-wrap {
+	  position: fixed;
+	  overflow: scroll;
+	  left: 0px;
+	  top: 0px;
+	  right: 0px;
+	  bottom: 0px;
+	  backdrop-filter: blur(10px);
+	  &.hide {
+		display: none;
+	  }
+  }
+  #toc {
+	  margin-top: 40px;
+	  margin-left: 20px;
+	  width: max-content;
+  }
+  #toc-button {
+	display: block;
+}
+}
 

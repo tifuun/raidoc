@@ -261,8 +261,10 @@ class Builder:
                     'path_md': None,  # FIXME this is a hack
                     'journey_links': None,
                     },
+                'pages': self.pages,
                 'webroot': '../../',
                 'body_classes': 'autogen',
+                #'all_pages': self.marko(self.get_pages_by_kind_str()),  #FIXME
                 'raidoc_version': f"v{self.raidoc_version}",
                 })
 
@@ -287,8 +289,10 @@ class Builder:
                     'path_md': None,  # FIXME this is a hack
                     'journey_links': None,
                     },
+                'pages': self.pages,
                 'webroot': '../../',
                 'body_classes': 'autogen',
+                #'all_pages': self.marko(self.get_pages_by_kind_str()),  #FIXME
                 'raidoc_version': f"v{self.raidoc_version}",
                 })
 
@@ -489,31 +493,31 @@ class Builder:
             )
         )
 
-    def get_pages_by_kind(self):
-        by_kind = defaultdict(list)
-        by_kind['tutorial']
-        by_kind['other']
-        for page in self.pages:
-            by_kind[str(page.fm.get('kind', 'other')).lower()].append(page)
-        return by_kind
+    #def get_pages_by_kind(self):
+    #    by_kind = defaultdict(list)
+    #    by_kind['tutorial']
+    #    by_kind['other']
+    #    for page in self.pages:
+    #        by_kind[str(page.fm.get('kind', 'other')).lower()].append(page)
+    #    return by_kind
 
-    def _get_pages_by_kind_str(self):
-        #FIXME just add full jinja templating to the md files
-        #aswell as html
-        for kind, pages in self.get_pages_by_kind().items():
-            yield f'### {kind}\n'
-            for page in pages:
-                if page.path is None:  # TODO hack for autogen
-                    yield f'- [{page.title}]({str(page.path_html)}) \n'
-                    continue
+    #def _get_pages_by_kind_str(self):
+    #    #FIXME just add full jinja templating to the md files
+    #    #aswell as html
+    #    for kind, pages in self.get_pages_by_kind().items():
+    #        yield f'### {kind}\n'
+    #        for page in pages:
+    #            if page.path is None:  # TODO hack for autogen
+    #                yield f'- [{page.title}]({str(page.path_html)}) \n'
+    #                continue
 
-                if page.path.name == 'index.md':
-                    continue
+    #            if page.path.name == 'index.md':
+    #                continue
 
-                yield f'- [[{str(page.path)}]] \n'
+    #            yield f'- [[{str(page.path)}]] \n'
 
-    def get_pages_by_kind_str(self):
-        return ''.join(self._get_pages_by_kind_str())
+    #def get_pages_by_kind_str(self):
+    #    return ''.join(self._get_pages_by_kind_str())
 
     def _render_page(self, page: Page):
 
@@ -526,17 +530,19 @@ class Builder:
                 f'1. [[{link}]]'
                 for link in page.fm.journey.pages
                 ))
-            ).replace(
-                '{{all_pages}}', 
-                self.get_pages_by_kind_str()
-                )
+            )#.replace(
+            #    '{{all_pages}}', 
+            #    self.get_pages_by_kind_str()
+            #    )
 
         page.html_content = self.marko(page.md_filled)
 
         page.html_full = self.j2_templ.render({
             'page': page,
+            'pages': self.pages,
             'webroot': webroot,
             'body_classes': '',
+            #'all_pages': self.marko(self.get_pages_by_kind_str()),  #FIXME
             'raidoc_version': f"v{self.raidoc_version}",
             })
 

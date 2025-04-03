@@ -19,6 +19,18 @@ function main() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-  main();
+	main();
+
+	toc_wrap = document.getElementById('toc-wrap');
+	toc_wrap.addEventListener("click", (e) => {
+		if (e.target == toc_wrap) {
+			toc_wrap.classList.add('hide');
+		}
+	})
+
+	toc_button = document.getElementById('toc-button');
+	toc_button.addEventListener("click", (e) => {
+		toc_wrap.classList.remove('hide');
+	})
 });
 
