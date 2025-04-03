@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+{% import "toc.html" as toc with context %}
+
 <html>
 	<head>
 		<meta charset="UTF-8"> 
@@ -16,6 +18,17 @@
 		<link href="{{webroot}}dep/fontawesome/fontawesome-free-6.6.0-web/css/solid.css" rel="stylesheet" />
 	</head>
 	<body class="{{body_classes}}">
+		<div id="toc-button">
+			<i class="fa-solid fa-bars icon"></i>
+		</div>
+		<div id="page-left">
+			<div id="toc-wrap" class="hide">
+				<nav id="toc">
+					<h2>All Pages by Category</h2>
+					{{ toc.toc() }}
+				</nav>
+			</div>
+		</div>
 		<div id="page">
 			<header>
 				<h1>RAIMAD</h1>
@@ -69,6 +82,8 @@
 					</div>
 				{% endif %}
 			</div>
+		</div>
+		<div id="page-right">
 		</div>
 	</body>
 </html>
