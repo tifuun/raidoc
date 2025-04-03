@@ -35,7 +35,7 @@ jobs:
         # And y'all thought docker was bloat lol
         run: |
           set -e
-          sudo apt install graphviz zstd git go
+          sudo apt install graphviz zstd git golang
           go install github.com/blampe/goat/cmd/goat@latest 
           echo -e '\n\nexport PATH="$PATH:$HOME/go/bin"\n\n' >> ~/.bashrc
           python -m venv venv
