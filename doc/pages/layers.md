@@ -143,7 +143,6 @@ class RemoveUnwantedLayers(rai.Compo):
             })
 
         self.subcompos.spectro = spectro
-        breakpoint()
 
 rai.show(RemoveUnwantedLayers())
 ```
