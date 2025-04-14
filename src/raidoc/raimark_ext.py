@@ -47,7 +47,7 @@ class LinkMixin(object):
             raise Exception(f"While rendering {element}") from e
 
 
-        webroot = '../' * (len(page.path.parts) - 1)  # FIXME ???
+        webroot = '../' * (len(self.builder.monkeypatch_current_page.path.parts) - 1)  # FIXME ???
 
         href = f'{webroot}{page.path_html}'
         title = page.title

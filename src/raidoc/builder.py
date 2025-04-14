@@ -538,6 +538,7 @@ class Builder:
             #    self.get_pages_by_kind_str()
             #    )
 
+        self.monkeypatch_current_page = page
         page.html_content = self.marko(page.md_filled)
 
         page.html_full = self.j2_templ.render({
