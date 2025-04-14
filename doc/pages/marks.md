@@ -9,7 +9,7 @@ define special points of interest.
 For example, the author of an MKID component
 can define a mark that specifies where the readout line should
 connect.
-Marks can be created created using the `.marks` property
+Marks can be created using the `.marks` property
 of a compo,
 and they can be accessed through the `.marks` property of
 any proxy pointing to that compo.

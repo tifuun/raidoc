@@ -152,7 +152,10 @@ class Antenna(rai.Compo):
             )
 
         # Now they're at the same point!
-        assert reflector.bbox.mid == active_element.bbox.mid
+        assert rai.eq(
+            reflector.bbox.mid,
+            active_element.bbox.mid
+            )
 
         # register the reflector and driven element
         # as subcompos

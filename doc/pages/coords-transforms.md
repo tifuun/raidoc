@@ -6,17 +6,19 @@ kind: tutorial
 
 RAIMAD's coordinate system works like this:
 
-- the X axis goes from left to right
-- the Y axis goes from bottom to top
-- Positive angles go counterclockwise
-- Negative angles go clockwise
+- the X axis goes from left to right.
+- the Y axis goes from bottom to top.
+- Angles are measured in radians.
+- Increasing the angle goes counterclockwise.
+- Decreasing the angle goes clockwise.
+- Angle 0 is in the positive X direction.
 - When talking about rectangles:
-    - "length" is the measure on the X axis
-    - "width" is the measure on the Y axis
+    - "length" is the measure on the X axis.
+    - "width" is the measure on the Y axis.
 
 If you are a mathematician,
-this should make sense.
-If you come from a computer graphics environment,
+this should feel familiar.
+If you come from a computer graphics background,
 we sincerely apologize.
 
 ## Transformations are done with Proxies
