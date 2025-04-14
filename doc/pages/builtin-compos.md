@@ -89,17 +89,38 @@ for x in (10, 40, 60):
     rai.show(ansec)
 ```
 
-For all the options that AnSec takes,
-go read it's source code.
+For more information about AnSec,
+check the [API reference](autogen/cls_AnSec.md).
 
-> [ WORKINPROGRESS ]
-> We will soon have documentation pages for all RAIMAD classes and functions.
-> But for now, if you want to learn more about a class or function,
-> you should go read its docstring.
+## RectWire
 
-<!--
-    TODO more rectwire examples (polar)
-    -->
+Similar to AnSec, there are multiple possible ways to define a
+RectWire: point-point-width, and point-angle-length-width.
 
-Next up: [Coordinates and Transformations](coords-transforms.md)
+
+```python exec
+rw = rai.RectWire.from_points(
+    (0, 0),              # start point
+    (100, 80),           # end point
+    10                   # width
+    )
+rai.show(rw)
+```
+
+```python exec
+from math import radians
+rw = rai.RectWire.from_polar(
+    (0, 0),              # start point
+    radians(-45),        # angle
+    80,                  # length
+    10                   # width
+    )
+rai.show(rw)
+```
+
+Instantiation `RectWire` directly is the same as using
+`RectWire.from_points`.
+For more information, see the [API reference](autogen/cls_RectWire.md).
+
+<!-- FIXME wikilinks don't need fullpath but mdlinks do!?!?! -->
 

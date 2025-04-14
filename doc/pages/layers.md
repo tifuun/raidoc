@@ -129,7 +129,24 @@ class MySpectrometer(rai.Compo):
         ...
 ```
 
-The tutorial ends here for now.
-Once you've made some components with RAIMAD,
-you might want to learn about [packaging](packaging.md).
+## Removing unwanted layers
+
+You can remove unwanted layers by mapping them to `None`:
+
+```python exec
+class RemoveUnwantedLayers(rai.Compo):
+    def _make(self):
+        spectro = MySpectrometer().proxy().map({
+            'nbtin': 'nbtin',
+            'al': 'al',
+            'ox': None,
+            })
+
+        self.subcompos.spectro = spectro
+        breakpoint()
+
+rai.show(RemoveUnwantedLayers())
+```
+
+<!-- FIXME None doesn't actually work!!>!?!?!?!? -->
 
