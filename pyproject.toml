@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "raidoc"
-version = "1.2.3.3"
+version = "1.2.3.4"
 description = "Documentation for RAIMAD"
 authors = [
 	{name = "maybetree", email = "maybetree48@proton.me"}
