@@ -77,12 +77,12 @@ scripts under the `podman` directory.
 
 Build the image like this:
 ```shell
-podman/build-podman-image.sh
+./podman/build-image.sh
 ```
 
 And use it to build raidoc like this:
 ```shell
-podman/run-container.sh
+./podman/run.sh
 ```
 
 The first run will take a long time and use a lot of CPU because python

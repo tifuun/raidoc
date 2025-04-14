@@ -27,6 +27,12 @@
 	<div class="ag-fn-head">
 		<h4>
 			{% call pygmentize() %}
+			{% if fn.is_classmethod %}
+			@classmethod
+			{% endif %}
+			{% if fn.is_staticmethod %}
+			@staticmethod
+			{% endif %}
 			def {{fn.name}}{{fn.sig}}:
 			{% endcall %}
 		</h4>

@@ -530,6 +530,9 @@ class Builder:
                 f'1. [[{link}]]'
                 for link in page.fm.journey.pages
                 ))
+            ).replace(
+                '{{webroot}}', 
+                webroot
             )#.replace(
             #    '{{all_pages}}', 
             #    self.get_pages_by_kind_str()
