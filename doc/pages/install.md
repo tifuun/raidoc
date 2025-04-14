@@ -25,7 +25,7 @@ rai.show(snowman)
 ```
 
 The `rai.show()` command should open KLayout and display the snowman.
-[KLayout](https://www.klayout.de/) is highly recommended.
+[KLayout](https://www.klayout.de/)
 is a CIF viewer recommended for use with RAIMAD.
 If you don't want to install KLayout,
 you can directly export the snowman

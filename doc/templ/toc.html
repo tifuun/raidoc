@@ -1,8 +1,11 @@
 {% macro tocsection(kind) %}
 <ul>
 	{% for page in pages %}
+	{# FIXME booleans in frontmatter...???? #}
+	{% if page.fm.get("hide_from_toc", "false").lower() == "false" %}
 	{% if page.fm.get("kind", "other").lower() == kind %}
 	<li><a href="{{webroot}}{{page.path_html}}">{{page.title}}</a></li>
+	{% endif %}
 	{% endif %}
 	{% endfor %}
 </ul>

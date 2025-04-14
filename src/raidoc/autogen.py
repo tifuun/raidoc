@@ -244,6 +244,8 @@ class FnDef:
     module: str
     source: str
     doc: ExtendedNumpyDocString
+    is_staticmethod: bool
+    is_classmethod: bool
 
 @dataclass
 class ClsDef:
@@ -268,15 +270,17 @@ def scan_public(module):
                 methods=tuple(
                     FnDef(
                         name=methname,
-                        sig=str(inspect.signature(method)),
-                        docstring=inspect.getdoc(method) or '',
+                        sig=str(inspect.signature(meth_inner)),
+                        docstring=inspect.getdoc(meth_inner) or '',
                         module=obj.__module__,
                         source=inspect.getsource(obj),
-                        doc=ExtendedNumpyDocString(inspect.getdoc(method) or ''),
+                        doc=ExtendedNumpyDocString(inspect.getdoc(meth_inner) or ''),
+                        is_staticmethod=isinstance(method, staticmethod),
+                        is_classmethod=isinstance(method, classmethod),
                         )
                     for methname, method in vars(obj).items()
                     if
-                        inspect.isfunction(method)
+                        inspect.isfunction(meth_inner := getattr(method, "__wrapped__", method))
                         and (
                             methname.startswith('__')
                             or methname == '_make'
@@ -308,6 +312,8 @@ def scan_public(module):
                 module=obj.__module__,
                 source=inspect.getsource(obj),
                 doc=ExtendedNumpyDocString(inspect.getdoc(obj) or ''),
+                is_staticmethod=False,
+                is_classmethod=False,
                 ))
 
     return functions, classes

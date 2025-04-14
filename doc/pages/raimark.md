@@ -1,3 +1,7 @@
+---
+hide_from_toc: "true"
+---
+
 # RAIMARK
 
 This page is a working document for me to try out different
