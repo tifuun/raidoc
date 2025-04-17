@@ -11,7 +11,7 @@ feature of your notebook environment, rather than a code cell.
 Running pip from within code cells may cause a deadlock
 in cases where pip wants to ask you a question.
 
-![opening a terminal in Jupyter: file > new > terminal]({{webroot}}img/doc/scrot/jupy_notebook_terminal.png)
+![opening a terminal in Jupyter: file > new > terminal]({{webroot}}img/doc/misc/jupy_notebook_terminal.png)
 
 After installation, you can use RAIMAD normally.
 The `raimad.show()` function can tell that it's running inside

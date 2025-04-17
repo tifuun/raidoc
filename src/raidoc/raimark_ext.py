@@ -164,6 +164,31 @@ class AsciinemaMixin:
             '</div>'
             )
 
+FIGURE_TEMPLATE="""\
+<figure>
+    <img src="{}" alt="{}"{} />
+    <figcaption>{}</figcaption>
+</figure>
+"""
+# TODO make asciinema screencast also use the figure tag
+# TODO the image transcoding thing as well!!
+class FigureMixin:
+    def render_image(self, element):
+        """
+        Render images with a custom css class and alt text
+        as a visible caption
+        """
+
+        title = f' title="{self.escape_html(element.title)}"' if element.title else ""
+        url = self.escape_url(element.dest)
+        render_func = self.render
+        # This horrible monkeypatching is copy-pasted from Marko source
+        # btw. Not my problem!!
+        self.render = self.render_plain_text  # type: ignore
+        body = self.render_children(element)
+        self.render = render_func  # type: ignore
+        return FIGURE_TEMPLATE.format(url, body, title, body)
+
 
 codeblock_preamble = """
 import raimad as rai
@@ -329,6 +354,7 @@ RaimarkExt = marko.helpers.MarkoExtension(
         IndexerMixin,
         TitleMixin,
         AsciinemaMixin,
+        FigureMixin,
         JupyterExporterMixin,
         ]
 )
