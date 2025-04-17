@@ -434,6 +434,14 @@ h1, h2, h3, h4 {
 
 }
 
+#content figure {
+  img {
+    max-height: 500px;
+    width: 100%;
+    object-fit: contain;
+  }
+}
+
 body.autogen pre {
 	font-size: 1.2em;
 }

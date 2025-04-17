@@ -4,25 +4,54 @@ kind: howto
 
 # HowTo: Vialess MSL
 
-In this howto guide, we will go through making a vialess MSL
-maskfile in RAIMAD.
+In this howto guide, we will go through making a component
+called *vialless MSL* in RAIMAD.
+The purpose of the vialess MSL is to connect
+CPWs (coplanar waveguides) to a MSL (microstrip line).
+It's called "vialess" because the connection is made through
+electromagnetic coupling,
+thus requiring no holes (vias) in the substrate.
+For more information on this design, please consult
+*On-Wafer Measurement of Microstrip-Based Circuits
+With a Broadband Vialess Transition*
+by Lin Zhu and Kathleen L. Melde.
 
-## Goal
+<!-- TODO bibliography handling -->
 
-TODO picture
+For this tutorial we will be designing a "toy" vialess MSL,
+meaning that while the structure will be similar to that of a real
+chip,
+the dimensions will not be to scale.
 
-TODO what MSL does
+
+![
+    Figure 1: Not-to-scale diagram of the Vialess MSL drawn by Akira Endo.
+    There are two wire bonding pads on the left and right of the structure.
+    Then there are tapered CPWs
+    which connect the wire bonding pads to
+    then thin MSL in the center.
+    \
+    Not shown is the microstrip ground layer,
+    which is below all the layers in this diagram.
+    A hole in this layer is required to keep the characteristic impedance
+    of the CPW close to that of the MSL.
+    \
+]({{webroot}}img/doc/misc/Via-less_MSL_test_chip.png)
 
 ## Tapered CPW Segment
 
 First, let's start with a component that represents a CPW segment.
 Before we write any serious code,
 let's first define the Options and Marks annotations
-to have what we want:
+to have what we want.
+As you might remember from the [[tutorial.md]],
+annotations don't do much at runtime,
+but they help other programmers
+and tools understand what our component does.
+By writing the annotations first, we're setting up a framework
+for ourselves.
 
 TODO we don't have a doc page on annotations
-
-TODO picture
 
 ```python exec hide-output
 import raimad as rai
@@ -91,7 +120,7 @@ class CPWTaperMetal(rai.Compo):
 
 ```
 
-Next, let's add the `_make` function function
+Next, let's add the `_make` function.
 
 ```python exec hide-output
 class CPWTaperMetal(rai.Compo):
@@ -122,11 +151,13 @@ class CPWTaperMetal(rai.Compo):
 ```
 
 Now, add some arithmetic that creates the signal line.
-This component has only one layer,
-so we will call that layer `root`,
-per RAIMAD conventions
-
-TODO don't have a doc page on custom geometry
+This is a component with a rather dense geometry,
+so instead of using subcomponents,
+we will access `self.geoms` directly.
+This technique is covered in [this](custom-geometry.md)
+documentation page.
+Since there is only one layer, we will call it `root`,
+as per RAIMAD conventions.
 
 
 ```python exec
@@ -360,10 +391,9 @@ rai.show(CPWTaperMetal(l=10, sl=2, wl1=2, gl1=2, sr=4, wr1=4, gr1=4))
 
 ## Putting the CPW segments together
 
-You can now put the CPW segments together to make the main shape
-of the vialess MSL.
+You can now put the CPW segments together to make the main shape.
 Let's define an `MSLHalf` component that represents one
-half of the MSL shape.
+half of the shape.
 Start small with just a couple segments.
 
 ```python exec
@@ -408,10 +438,12 @@ We can pretty up the code by putting
 the measurements into a list
 and reading them in as a loop.
 
-Here we use the `.extend()` method of the subcompos container,
-which you might not have seen before.
+Here we use the `.extend()` method of the subcompos container
+to add multiple subcomponents in one go.
 It works exactly the same as the `.extend()` method
-of standard python lists TODO page on dictlist.
+of standard python lists.
+More information is available in the following documentation page:
+[[dictlist.md]]
 
 ```python exec
 class MSLHalf(rai.Compo):
@@ -537,4 +569,11 @@ class MSLHalves(rai.Compo):
 
 rai.show(MSLHalves())
 ```
+
+And there we go!
+From here on out, the next step would be to
+define some usful marks and allow setting
+custom dimensions for each part of the tapered
+CPW using Options.
+These are left as an exercise to the reader.
 

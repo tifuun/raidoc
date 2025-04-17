@@ -138,9 +138,18 @@ since we're just using python as a static file server.
         - [x] "previous" link automatic
         - [ ] display journey TOC
     - [ ] API reference generation
+        - [x] classes
+        - [x] functions
+        - [ ] files/modules??
+        - [ ] "Example" section of docstrings gets evaluated??
+        - [ ] "See also" section are actual links
+    - [ ] hayagriva/biblatex citations??
+    - [ ] browser history API for back button
 - [ ] RAIDOC Content
     - [ ] Deepdive on proxies
     - [ ] Demos of various raimad designs
+        - [ ] vialess MSL
+        - [ ] toy deshima
     - [ ] ...potentially others?
     - [ ] Documentation for maintaining raimad
     - [ ] Documentation for maintaining radoc/raidoc/raimark
