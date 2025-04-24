@@ -42,7 +42,7 @@ Visit the [TIFUUN collaborator welcome page](pages/tifuun.md)!
         <i class="fa-solid fa-code icon"></i>
         <h3>Contribute</h3>
         Want to contiribute to RAIMAD?
-        Check the Controbutor's guide!
+        Check the Contributor's guide!
     </a>
 </nav>
 
@@ -54,5 +54,17 @@ Archives of the current and previous versions of this
 documentation can be found on the
 [Github releases page](https://github.com/tifuun/raidoc/releases).
 After extracting the archive, open the contained `index.html`
+
+## Existing components
+
+There are several existing RAIMAD components which
+you can browse in [RAIDEX](https://tifuun.github.io/raidex/).
+Most of them are available on the
+[`rai_compos_pub`](https://github.com/tifuun/rai_compos_pub)
+repository,
+which is also home to a "toy" version of the DESHIMA2.0 spectrometer chip,
+one of the most complex RAIMAD components currently available.
+The [Vialess MSL page](pages/vialess-msl.md) contains a step-by-step
+guide on creating a component of medium complexity.
 
 

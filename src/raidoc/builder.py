@@ -16,7 +16,6 @@ import frontmatter
 import marko
 import jinja2
 from addict import Dict
-from reflink import reflink
 from pygments.formatters import HtmlFormatter
 from pygments.lexers import PythonLexer
 from pygments import highlight
