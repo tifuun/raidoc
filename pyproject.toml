@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "raidoc"
-version = "1.2.3.5"
+version = "1.2.4.0"
 description = "Documentation for RAIMAD"
 authors = [
 	{name = "maybetree", email = "maybetree48@proton.me"}
@@ -29,7 +29,6 @@ dependencies = [
 	'python-frontmatter',
 	'addict',
 	'ansi2html',
-	'reflink',
 	'numpydoc',
 	]
 
