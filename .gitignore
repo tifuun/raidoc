@@ -1,35 +1,124 @@
-# Python temporary files
-__pycache__
-*.py[cod]
+### Generic ###
 
-# pip/stuptools/twine files
+# VIM
+*.sw*
+*.vim*
+*.obsession*
+
+# misc. garbage
+*.bak
+*.old*
+~*
+*~
+-
+tmo
+*.tmp
+
+# XDG stuff
+.Trash-*
+
+# Damn you steve jobs!!!!
+.DS_Store
+
+# Damn you bill gates!!!!
+$RECYCLE.BIN
+System Volume Information
+*.dll
+
+# vscope
+.vscode/*
+*.code-workspace
+.history/
+
+# potential credentials
+*.pem
+*.secret
+*.key
+**/credentials.json
+**/client_secrets.json
+**/client_secret.json
+*creds*
+*.dat
+*password*
+*.httr-oauth*
+*.env
+!*.sample.env
+
+# C/C++
+*.o
+*.out
+*.a
+*.so
+
+# Python
+*.dmypy.json*
+__pycache__/
+*.py[cod]
+*$py.class
+.clirope
 *.egg-info
 build
 dist
-
-# Rope (Python code refactoring tool)
-.clirope
-
-# VIM files
-*.sw*
-*.vim
-*.obsession*
-
-# PyClewin Output files
-/*.cif
-/*.pdf
-/*.svg
-module_browser
-
-# human-generated backup files
-*.bak
-*.old
-
-# Misc files
-*.log
+coverage.json
+htmlcov
+*.spec
+.coverage
+.ipynb_checkpoints/**
 .ipynb_checkpoints
-*.ipynb
-venv
+.jupyter_ystore.db
+venv*
+.mesonpy*
 
-doc/pages/autogen
+# Archives
+*.zip
+*.tar
+*.rar
+*.tar.*
+*.tzst
+*.tgz
+*.txz
+*.zst
+*.gz
+
+# Multimedia
+*.xcf
+*.svg
+*.jpg
+*.webp
+*.jxl
+*.jpeg
+*.png
+*.avif
+*.gif
+*.pdf
+*.gv
+!img/*.jpg
+!img/*.png
+!img/*.svg
+!img/*.gv
+
+# CMake
+
+CMakeCache.txt
+CMakeFiles
+cmake_install.cmake
+*.cmake
+.cmake
+.skbuild-info.json
+CMakeInit.txt
+
+# Rust
+
+target
+
+# Godot
+
+.godot/
+/android/
+
+### Project-specific ###
+
+
+
+
 
