@@ -122,4 +122,5 @@ target
 
 build
 doc/pages/autogen
+!doc/img/**/*.svg
 
