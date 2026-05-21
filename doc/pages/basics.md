@@ -21,8 +21,8 @@ class IShapedFilter(rai.Compo):
         self.subcompos.coup_top = coup_top
         self.subcompos.coup_bot = coup_bot
 
-coup1 = IShapedFilter()
-rai.show(coup1)
+my_filter = IShapedFilter()
+rai.show(my_filter)
 ```
 
 Once you've made your basic components
