@@ -19,7 +19,7 @@ dot - graphviz version 10.0.1 (0)
 Then, you need to go and install [goat](https://github.com/blampe/goat):
 
 ```sh
-go install github.com/blampe/goat/cmd/goat@latest
+go install github.com/blampe/goat/cmd/goat@v0.2.0
 ```
 
 Go puts executables into `~/go/bin`, so you might have to update your `$PATH`
