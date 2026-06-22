@@ -2,7 +2,7 @@ import subprocess
 import re
 import copy
 
-import marko
+import marko_raidoc as marko
 from ansi2html import Ansi2HTMLConverter
 
 ansi2html = Ansi2HTMLConverter().convert
@@ -336,6 +336,7 @@ class JupyterExporterMixin:
                     "Got element before document!"
 
             if element in self.this_doc.children:
+                #breakpoint()
                 source = self.builder.marko.parser.monkeypatch_source
                 type(self).toplevel_elements.append((
                     element, source

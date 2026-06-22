@@ -25,7 +25,7 @@ requires-python = ">=3"
 dependencies = [
 	'jinja2',
 	'libsass',
-	'marko[codehilite]',
+	'marko_raidoc[codehilite]@git+https://github.com/tifuun/marko-raidoc@v1.0.0',
 	'python-frontmatter',
 	'addict',
 	'ansi2html',
@@ -48,3 +48,4 @@ ignore = [
     ]
 [tool.ruff.lint.pydocstyle]
 convention = "numpy"
+

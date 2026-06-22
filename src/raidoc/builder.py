@@ -13,7 +13,7 @@ import subprocess
 
 import sass
 import frontmatter
-import marko
+import marko_raidoc as marko
 import jinja2
 from addict import Dict
 from pygments.formatters import HtmlFormatter
@@ -55,117 +55,6 @@ def _goat(code):
     stdout, stderr = goat.communicate(code.encode('utf-8'))
     assert not stderr
     return stdout.decode('utf-8')
-
-#FIXME horrible monkeypatch
-def wtf(self, text):
-    source = marko.source.Source(text)
-    source.parser = self
-    doc = cast(marko.block.Document, self.block_elements["Document"]())
-    with source.under_state(doc):
-        doc.children = self.parse_source(source)
-        self.parse_inline(doc, source)
-
-    self.monkeypatch_source = source
-
-    return doc
-
-
-marko.Parser.parse = wtf
-
-def wtf2(source):
-    cls = marko.block.FencedCode
-
-    m = source.expect_re(cls.pattern)
-    if not m:
-        return None
-    prefix, leading, info = m.groups()
-    if leading[0] == "`" and "`" in info:
-        return None
-    lang, _, extra = marko.helpers.partition_by_spaces(info)
-    source.context.code_info = cls.ParseInfo(prefix, leading, lang, extra)
-    return m
-
-import re
-def wtf3(source) -> tuple[str, str, str]:
-    cls = marko.block.FencedCode
-
-    source.next_line()
-    source.consume()
-    lines = []
-    parse_info: marko.block.FencedCode.ParseInfo = source.context.code_info
-    while not source.exhausted:
-        line = source.next_line()
-        if line is None:
-            break
-        source.consume()
-        m = re.match(r" {,3}(~+|`+)[^\n\S]*$", line, flags=re.M)
-        if m and parse_info.leading in m.group(1):
-            break
-
-        prefix_len = source.match_prefix(parse_info.prefix, line)
-        if prefix_len >= 0:
-            line = line[prefix_len:]
-        else:
-            line = line.lstrip()
-        lines.append(line)
-
-    return parse_info.lang, parse_info.extra, "".join(lines)
-
-def wtf4(self, source):
-    """Parse the source into a list of block elements."""
-    element_list = self._build_block_element_list()
-    ast: list[block.BlockElement] = []
-    while not source.exhausted:
-        for ele_type in element_list:
-            if ele_type.match(source):
-                result = ele_type.parse(source)
-                if not hasattr(result, "priority"):
-                    # In some cases ``parse()`` won't return the element, but
-                    # instead some information to create one, which will be passed
-                    # to ``__init__()``.
-                    result = ele_type(result)  # type: ignore
-
-                if not hasattr(result, 'monkeypatch_source'):
-                    result.monkeypatch_source = ''.join(
-                        match.string[match.span()[0]:match.span()[1]]
-                        for match in
-                        source.monkeypatch_lines
-                        )
-                    source.monkeypatch_lines.clear()
-
-                ast.append(result)
-                break
-        else:
-            # Quit the current parsing and go back to the last level.
-            break
-    return ast
-
-marko.parser.Parser.parse_source = wtf4
-
-class MySource(marko.source.Source):
-    def __init__(self, *args, **kwargs):
-        self.monkeypatch_lines = []
-        super().__init__(*args, **kwargs)
-
-    def push_state(self, *args, **kwargs):
-        self.monkeypatch_lines.clear()
-        return super().push_state(*args, **kwargs)
-
-    def pop_state(self, *args, **kwargs):
-        #self.monkeypatch_lines.clear()
-        return super().pop_state(*args, **kwargs)
-
-    def consume(self, *args, **kwargs):
-        #FIXME WHAT is going on here + prefix is lost
-        self.monkeypatch_lines.append(self.match)
-        self.state.monkeypatch_source = ''.join(
-            match.string[match.span()[0]:match.span()[1]]
-            for match in
-            self.monkeypatch_lines
-            )
-        return super().consume(*args, **kwargs)
-
-marko.source.Source = MySource
 
 @dataclass
 class JourneyLink:
