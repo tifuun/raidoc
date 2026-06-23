@@ -39,7 +39,11 @@ def cli():
         builder.render(Path('./build'))
 
         Path('./build/dep').mkdir(exist_ok=True)
-        getdeps(Path('./doc/dep'), Path('./build/dep'))
+        getdeps(
+            Path('./doc/dep'),
+            Path('./build/dep'),
+            cachedir=args.cache,
+            )
 
     else:
         # This should never happen, since
@@ -57,6 +61,13 @@ def _add_build_action(subparsers):
         type=Path,
         help='Output directory',
         default='./build',
+        nargs='?'
+        )
+
+    parser_build.add_argument(
+        '--cache',
+        type=Path,
+        help='Dependency cache directory',
         nargs='?'
         )
 

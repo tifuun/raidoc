@@ -1,6 +1,7 @@
 """Dependency downloader for raidoc"""
 
 from pathlib import Path
+from shutil import copy
 from hashlib import sha256
 from zipfile import ZipFile
 from sys import stderr
@@ -11,13 +12,26 @@ from raidoc.url import urlget
 def eprint(*args, **kwargs):
     print(*args, file=stderr, **kwargs)
 
-def getdeps(source: Path, target: Path):
+def getdeps(source: Path, target: Path, cachedir: Path | None = None):
+    if cachedir is not None:
+        cachedir.mkdir(exist_ok=True, parents=True)
+
     for path in (source).rglob('*.url'):
         download_dest = target / (path.with_suffix('').name)
 
         if download_dest.exists():
             eprint(f'Skipping {download_dest}...')
             continue
+
+        if cachedir is None:
+            eprint(f"Cache is disabled...")
+        else:
+            cache_file = cachedir / (path.with_suffix('').name)
+            if cache_file.exists():
+                eprint(f"Using cached {cache_file}.")
+                copy(cache_file, download_dest)
+                continue
+            pass
 
         url = path.read_text()
 
@@ -41,6 +55,10 @@ def getdeps(source: Path, target: Path):
             else:
                 eprint("Hash mismatch.")
                 exit(1)
+
+        if cachedir is not None:
+            eprint(f"Saving to cachefile: {cache_file}.")
+            copy(download_dest, cache_file)
 
     for path in (target).rglob('*.zip'):
         extract_path = path.with_suffix('')

@@ -6,7 +6,7 @@ on:
       - 'v*'
 
 permissions:
-  contents: read
+  contents: write
   packages: write
   pages: write
   id-token: write
@@ -15,22 +15,48 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write
+      packages: write
+      pages: write
+      id-token: write
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Get RAIMAD
-        run: ./scripts/gh-actions/get-raimad.sh
-
       - name: Set up Docker Buildx
+        id: setup-buildx
         uses: docker/setup-buildx-action@v2
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+
+      - name: "Cachedance: dockerfile"
+        uses: actions/cache@v4
+        id: cache
+        with:
+          path: cache-mount
+          key: cache-mount-${{ hashFiles('Dockerfile') }}
+
+      - name: "Cachedance: restore cache mounts"
+        uses: reproducible-containers/buildkit-cache-dance@v3
+        with:
+          builder: ${{ steps.setup-buildx.outputs.name }}
+          cache-dir: cache-mount
+          dockerfile: Dockerfile
+          skip-extraction: ${{ steps.cache.outputs.cache-hit }}
 
       - name: Docker build and push
         uses: docker/build-push-action@v5
         with:
           context: .
           file: "Dockerfile"
-          tags: raidoc:latest
+          tags: ghcr.io/${{ github.repository }}/raidoc:latest
           load: true
           push: true
           # This caches docker layers to github actions cache
@@ -42,17 +68,21 @@ jobs:
       - name: Build raidoc
         uses: addnab/docker-run-action@v3
         with:
-          image: raidoc:latest
-          run: /venv/bin/python -m raidoc build
+          image: ghcr.io/${{ github.repository }}/raidoc:latest
+          run: |
+            set -e
+            . /venv/bin/activate
+            pip install -r ./raimad.requirement.txt
+            python -m raidoc build
           options: |
             -v ${{ github.workspace }}/raimad-symlink:/venv/lib/python3.14/site-packages/raimad
-            -v .:/pwd
+            -v ${{ github.workspace }}:/pwd
             --workdir /pwd
 
       - name: Upload docs artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./docs
+          path: ./build
 
   pages:
     runs-on: ubuntu-latest
