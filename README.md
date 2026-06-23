@@ -6,7 +6,7 @@ This repository contains the source code for RAIDOC.
 If you just want to read the docs,
 please visit <https://tifuun.github.io/raidoc/>.
 
-## Building
+## Building (without docker)
 
 First, you need to go and install [graphviz](https://graphviz.org/).
 You can check that it works by running the `dot` command:
@@ -60,50 +60,32 @@ The output is written to the `build` directory.
 Currently, there is no incremental compilation;
 the above command rebuilds EVERYTHING.
 
-## Building with podman
+## Building (with docker)
 
-You can also build raidoc inside a podman container.
+You can also build raidoc with Docker (or podman).
+First, either download or build the image locally
+and tag it as `raidoc`:
 
-We use podman in a bit of an unusual way:
-the container image only has python, pip,
-and necessary build tools to compile python
-extensions.
-Then we just bind-mount raidoc source code,
-the python venv, and the output directory into the container.
-The advantage of this approach is that you don't have to
-re-build your iamge every time you want to re-build raidoc.
-More details ara available inthe comments inside the
-scripts under the `podman` directory.
-
-Build the image like this:
-```shell
-./podman/build-image.sh
+```sh
+TODO
 ```
 
-And use it to build raidoc like this:
-```shell
-./podman/run.sh
+```sh
+TODO
 ```
 
-The first run will take a long time and use a lot of CPU because python
-extensions need to be compiled.
-Subsequent runs will use the compiled binaries from inside `venv`
-and will therefore be much faster.
+Then, run it like so:
 
-If there are weird errors, try removing the `venv`
-directory in the root of the repo.
-
-You can launch a shell into the container and poke around in it like this:
-```shell
-podman/run-container.sh sh
+```sh
+docker run --rm \
+    -v /path/to/raimad/repo/src/raimad:/venv/lib/python3.14/site-packages/raimad \
+    -v .:/pwd \
+    --workdir /pwd \
+    raidoc \
+    /venv/bin/python -m raidoc build
 ```
 
-For example, if you want to uninstall raimad from inside container
-(so that the next invocation downloads a newer version),
-you can do it like this:
-```shell
-podman/run-container.sh venv/bin/pip uninstall raimad
-```
+The container does not have a raimad inside of it.
 
 ## Viewing the built website
 
@@ -156,7 +138,7 @@ since we're just using python as a static file server.
 
 ## License
 
-Copyright 2024 maybetree
+Copyright 2026 maybetree
 
 ### Documentation
 
