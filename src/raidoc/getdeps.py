@@ -1,23 +1,12 @@
 """Dependency downloader for raidoc"""
 
 from pathlib import Path
-import urllib.request
 from hashlib import sha256
 from zipfile import ZipFile
 from sys import stderr
 
-class CustomURLOpener(urllib.request.FancyURLopener):
-    """
-    FancyURLopener with browser-like user agent.
+from raidoc.url import urlget
 
-    fontawesome.com maintainers for some reason but a user
-    agent filter on their releases endpoint,
-    so we have to perform this incantation to download
-    things from there.
-    """
-    version = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
-
-opener = CustomURLOpener()
 
 def eprint(*args, **kwargs):
     print(*args, file=stderr, **kwargs)
@@ -33,7 +22,7 @@ def getdeps(source: Path, target: Path):
         url = path.read_text()
 
         eprint(f'Downloading {download_dest} from {url}...')
-        opener.retrieve(url, download_dest)
+        urlget(url, download_dest)
 
         hash_file = path.with_suffix('.sha256')
 
