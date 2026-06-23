@@ -452,6 +452,7 @@ class Builder:
             elif isinstance(element, marko.block.BlankLine):
                 continue
             else:
+                assert isinstance(element.monkeypatch_source, str)
                 cells.append({
                     'cell_type': 'markdown',
                     'metadata': {},
