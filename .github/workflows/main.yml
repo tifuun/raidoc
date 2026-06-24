@@ -82,6 +82,7 @@ jobs:
             . /venv/bin/activate
             pip install -r ./raimad.requirement.txt
             python -m raidoc build --cache /var/cache/raidoc-dep
+            ./scripts/gh-actions/make-release-tarball.sh
           options: |
             -v ${{ github.workspace }}/raimad-symlink:/venv/lib/python3.14/site-packages/raimad
             -v ${{ github.workspace }}:/pwd
@@ -99,6 +100,11 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./build
+
+      - name: Upload release artifact
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "*.tar.zst"
 
   pages:
     runs-on: ubuntu-latest
