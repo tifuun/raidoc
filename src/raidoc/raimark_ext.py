@@ -22,16 +22,28 @@ class WikiLink(marko.inline.InlineElement):
 class LinkMixin(object):
     """
     Change markdown links that point to `.md` files
-    into ones that point to `.html` files
-    TODO don't touch non-local links, also validate links
+    into ones that point to `.html` files,
+    and also validate them.
     """
 
     links_to = []
 
     def render_link(self, element):
-        # TODO reject xx:// type links
+
+        # Leave external links untouched
+        if re.match(r"\w+://.*", element.dest):
+            return super().render_link(element)
+
+        # Leave external links to non-markdown content untouched
         if not element.dest.endswith('.md'):
             return super().render_link(element)
+
+        # Crash if the page does not exist
+        # (this is better than allowing dead link in the output)
+        try:
+            _page = LinkMixin.builder.page(element.dest)
+        except Exception as e:
+            raise Exception(f"While rendering {element}") from e
 
         self.links_to.append(element.dest)
         return '<a href="{}">{}</a>'.format(
@@ -40,6 +52,9 @@ class LinkMixin(object):
             )
 
     def render_wiki_link(self, element):
+
+        # This will crash on invalid wiki links.
+        # Good, this is what we want!!
 
         try:
             page = LinkMixin.builder.page(element.target)

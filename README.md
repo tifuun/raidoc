@@ -180,6 +180,11 @@ since we're just using python as a static file server.
     - [ ] ...potentially others?
     - [ ] Documentation for maintaining raimad
     - [ ] Documentation for maintaining radoc/raidoc/raimark
+    - [ ] New RAIMAD Features
+        - [ ] dithers
+        - [ ] layer names
+        - [ ] layer transform
+        - [ ] orotate
 
 ## License
 
