@@ -65,6 +65,14 @@ jobs:
           # idk why
           cache-to: type=gha,mode=min
 
+      - name: Attemp restore raidoc dep cache
+        id: cache-raidoc-restore
+        uses: actions/cache/restore@v6
+        with:
+          path: |
+            /var/cache/raidoc-dep
+          key: ${{ runner.os }}-raidoc-dep
+
       - name: Build raidoc
         uses: addnab/docker-run-action@v3
         with:
@@ -73,11 +81,19 @@ jobs:
             set -e
             . /venv/bin/activate
             pip install -r ./raimad.requirement.txt
-            python -m raidoc build
+            python -m raidoc build --cache /var/cache/raidoc-dep
           options: |
             -v ${{ github.workspace }}/raimad-symlink:/venv/lib/python3.14/site-packages/raimad
             -v ${{ github.workspace }}:/pwd
             --workdir /pwd
+
+      - name: Save raidoc dep cache
+        id: cache-raidoc-save
+        uses: actions/cache/save@v6
+        with:
+          path: |
+            /var/cache/raidoc-dep
+          key: ${{ steps.cache-raidoc-restore.outputs.cache-primary-key }}
 
       - name: Upload docs artifact
         uses: actions/upload-pages-artifact@v3

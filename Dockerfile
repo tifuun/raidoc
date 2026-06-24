@@ -11,6 +11,8 @@ ENV GOCACHE=/root/.cache/go-build
 #                                    
 # Python pip modules:                /root/.cache/pip
 #                                    
+# RAIDOC's own cache:                /var/cache/raidoc-dep
+#                                    
 # XBPS (System package manager)      /var/cache/xbps
 
 RUN \
@@ -19,6 +21,8 @@ RUN \
 	--mount=type=cache,target=/root/.cache/go-build \
 	\
 	--mount=type=cache,target=/root/.cache/pip \
+	\
+	--mount=type=cache,target=/var/cache/raidoc-dep \
 	\
 	--mount=type=cache,target=/var/cache/xbps \
 	\
