@@ -6,6 +6,11 @@ This repository contains the source code for RAIDOC.
 If you just want to read the docs,
 please visit <https://tifuun.github.io/raidoc/>.
 
+## RAIMAD version
+
+RAIDOC builds docs for whatever version of RAIMAD is currently installed.
+So you must have _some_ version installed with pip.
+
 ## Building (without docker)
 
 First, you need to go and install [graphviz](https://graphviz.org/).
@@ -63,18 +68,38 @@ the above command rebuilds EVERYTHING.
 ## Building (with docker)
 
 You can also build raidoc with Docker (or podman).
-First, either download or build the image locally
-and tag it as `raidoc`:
+First, either pull or build the image locally
+and tag it as `raidoc`.
 
+To pull the latest image from github:
 ```sh
-TODO
+docker pull ghcr.io/tifuun/raidoc/raidoc:latest
+docker tag ghcr.io/tifuun/raidoc/raidoc raidoc
 ```
 
+Or, to build locally:
 ```sh
-TODO
+docker build . --tag raidoc
 ```
 
-Then, run it like so:
+We want the image to be a complete archive of all of RAIDOC's dependencies,
+in case they ever go down from the internet.
+Therefore, the image is quite chubby (around 1GB).
+
+Once the image is available, it can be used to build RAIDOC.
+To build RAIDOC for the latest version of RAIMAD available on pip,
+you can `pip install raimad` within the contianer:
+
+```sh
+docker run --rm \
+    -v .:/pwd \
+    --workdir /pwd \
+    raidoc \
+    '/venv/bin/pip install raimad && /venv/bin/pip -m raidoc build'
+```
+
+Or, alternatively, you can forward a locally clone of the RAIMAD repo
+into the container:
 
 ```sh
 docker run --rm \
@@ -85,7 +110,27 @@ docker run --rm \
     /venv/bin/python -m raidoc build
 ```
 
-The container does not have a raimad inside of it.
+The output will be available in `./build`.
+
+## Dependency cache
+
+RAIDOC can cache the dependencies it downloads from the internet
+(fonts, javascript, etc.),
+but you have to tell it where:
+
+```
+python -m raidoc build --cache /var/cache/raidoc-dep
+```
+
+## GitHub Actions
+
+The [pages site](https://tifuun.github.io/raidoc/)
+is automatically built and deployed on every git tag pushed to this repo.
+The RAIMAD version that is used to build the docs is specified in
+`./raimad.requirement.txt`
+in pip's `requirements.txt` format
+(so it could be changed to a git commit instead of a PyPI version,
+for example)
 
 ## Viewing the built website
 
