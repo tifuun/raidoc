@@ -1,3 +1,7 @@
+---
+kind: howto
+---
+
 # RAIMAD in Jupyter Notebook
 
 Although it is discouraged,
