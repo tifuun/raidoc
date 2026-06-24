@@ -117,14 +117,29 @@ class Builder:
         except:
             self.raidoc_version = '???'
 
-    def page(self, path):
-        # FIXME path vs name!?
-        for page in self.pages:
-            if page.path is None:
-                # FIXME hack for autogen
-                continue
-            if page.path.name == Path(path).name:
-                return page
+    def page(self, path_or_stem):
+        """
+        Try to find page.
+
+        This is a throw-mud-at-a-wall-and-see-what-sticks
+        kind of function -- it doesn't match by path exactly,
+        rather it checks whether stem of `path_or_stem` is the same
+        as the stem of the html path of the page.
+        So expect pain if you have two pages with the same name
+        in different subdirs.
+
+        The root of the issue here is that the base unit of
+        cross-references should be labels/bookmarks,
+        not individual pages.
+        Oh well.
+        """
+        stem = Path(path_or_stem).stem
+        assert bool(stem)
+        for this_page in self.pages:
+            this_page_stem = this_page.path_html.stem
+            assert bool(this_page_stem)
+            if this_page_stem == stem:
+                return this_page
         raise Exception(path)
 
     def render_autogen(self, dest):

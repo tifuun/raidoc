@@ -29,7 +29,7 @@ other TIFUUN collaborators.
 You can choose which of the two access policies is more
 appropriate for your work.
 
-If you want, you can also [create and your package](packaging.md).
+If you want, you can also [create your own package](collaboration.md).
 However, this is sadly a bit of a tedious process,
 especially if you are not familiar with Python packaging.
 So you can save yourself a lot of headache by instead

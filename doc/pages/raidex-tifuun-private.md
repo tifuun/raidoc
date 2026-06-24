@@ -28,7 +28,7 @@ kind: tutorial
 
 
 So, you've
-[set up your package](packaging.md)
+[set up your package](collaboration.md)
 and want to add it to RAIDEX.
 Good!
 

@@ -90,7 +90,7 @@ for x in (10, 40, 60):
 ```
 
 For more information about AnSec,
-check the [API reference](autogen/cls_AnSec.md).
+check the [API reference](cls_AnSec).
 
 ## RectWire
 
@@ -120,7 +120,7 @@ rai.show(rw)
 
 Instantiation `RectWire` directly is the same as using
 `RectWire.from_points`.
-For more information, see the [API reference](autogen/cls_RectWire.md).
+For more information, see the [API reference](cls_RectWire).
 
 <!-- FIXME wikilinks don't need fullpath but mdlinks do!?!?! -->
 
