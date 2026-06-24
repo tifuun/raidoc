@@ -23,7 +23,13 @@ import raimad
 class ExtendedNumpyDocString(NumpyDocString):
     sections = {
         **NumpyDocString.sections,
-        "Diagram": ""
+        "Diagram": "",
+        # We call them `Examples` and `See Also`
+        # but this docscraper thing seems to do some sort of
+        # transofrmation so `Examples` becomes `Example`
+        # and `See Also` becomes `Seealso`??
+        "Example": "",
+        "Seealso": "",
         }
 
 def docstring_to_md(docstring):

@@ -9,11 +9,11 @@
 {% macro ag_mult_simple(lst, head) %}
 {% if lst %}
 <div class="ag-mult">
-	<div class="ag-mult-head"><h5>{{head}}</h4></div>
+	<div class="ag-mult-head"><h5>{{head}}</h5></div>
 	<div class="ag-mult-body">
 		{% for entry in lst %}
 		<div class="ag-mult-entry">
-			<div class="ag-mult-name"><h6>{{ entry.name }}{{ entry.type }}</h4></div>
+			<div class="ag-mult-name"><h6>{{ entry.name }}{{ entry.type }}</h6></div>
 			<div class="ag-mult-desc">{{ ' '.join(entry.desc) }}</div>
 		</div>
 		{% endfor %}
@@ -62,7 +62,20 @@
 		{{ ag_mult_simple(fn.doc["Yields"], "Yields") }}
 		{{ ag_mult_simple(fn.doc["Raises"], "Raises") }}
 		{# TODO util.ag_mult_simple(fn.doc["Examples"], "Examples") #}
-		{{ ag_mult_simple(fn.doc["See Also"], "See Also") }}
+
+		{% if fn.doc["Example"] %}
+		<div class="ag-example">
+			<div class="ag-example-head"><h5>Example</h5></div>
+			<pre class="ag-example-body">{{ '\n'.join(fn.doc["Example"]) }}</pre>
+		</div>
+		{% endif %}
+
+		{% if fn.doc["Seealso"] %}
+		<div class="ag-seealso">
+			<div class="ag-seealso-head"><h5>See Also</h5></div>
+			<p class="ag-seealso-body">{{ ' '.join(fn.doc["Seealso"]) }}</p>
+		</div>
+		{% endif %}
 
 	</div>
 </div>

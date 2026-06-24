@@ -495,9 +495,9 @@ body.autogen pre {
 	padding: 5px;
 }
 
-.ag-methods, .ag-fn, .ag-parsed, .ag-mult, .ag-mult-body, .ag-mult-entry { @include ag-flex }
-.ag-fn, .ag-parsed, .ag-mult-body, .ag-mult-desc { @include ag-indent }
-.ag-mult-head, .ag-fn-head { @include panel-lite }
+.ag-methods, .ag-fn, .ag-parsed, .ag-mult, .ag-mult-body, .ag-mult-entry, .ag-example, .ag-seealso { @include ag-flex }
+.ag-fn, .ag-parsed, .ag-mult-body, .ag-mult-desc, .ag-example-body, .ag-seealso-body { @include ag-indent }
+.ag-mult-head, .ag-fn-head, .ag-example-head, .ag-seealso-head { @include panel-lite }
 
 #toc {
   //position: absolute;
