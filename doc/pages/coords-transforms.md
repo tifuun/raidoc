@@ -134,3 +134,10 @@ midpoint = (5, 5) |rai.midpoint| (1, 3)
 print("Sum: ", sum)
 print("Midpoint: ", midpoint)
 ```
+
+## Orthogonal rotations
+
+Most of the time, you need to rotate by a multiple of 90 degrees.
+RAIMAD calls these "orthogonal rotations",
+and there is a special method for these
+
