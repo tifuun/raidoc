@@ -166,3 +166,11 @@ print("Sum: ", sum)
 print("Midpoint: ", midpoint)
 ```
 
+## More editing methods
+
+[[editing-methods-overview.md]] gives a complete overview
+of editing methods.
+It's recommended to consult that page after completing the tutorial.
+
+
+
