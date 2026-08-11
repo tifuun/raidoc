@@ -90,6 +90,37 @@ by the `.scale(2)` call above:
 rai.show(square_multiple)
 ```
 
+## Orthogonal rotations
+
+The `.orotate` method rotates the Proxy by an integer multiple
+of 90 degrees in the counterclockwise direction,
+*without* invoking trigonometric functions.
+This can be used to avoid floating-point noise.
+
+```python exec
+rect = rai.RectLW(20, 10)
+rect_orot = rect.proxy().orotate(1)
+show(rect)
+show(rect_orot)
+print(f"{rect.bbox.as_list() = }")
+print(f"{rect_orot.bbox.as_list() = }")
+```
+
+The `.bbox` method returns a bounding box
+(this is explained later in [[subcompos.md]]).
+As you can see, the values are exact,
+both in the original Compo and its rotated Proxy.
+Compare with using regular `.rotate`:
+
+```python exec
+rect_rot = rect.proxy().rotate(rai.quartercircle)
+show(rect)
+show(rect_rot)
+print(f"{rect.bbox.as_list() = }")
+print(f"{rect_rot.bbox.as_list() = }")
+```
+
+
 ## Adding and subtracting points
 
 <!-- TODO boundpoint page -->
@@ -134,10 +165,4 @@ midpoint = (5, 5) |rai.midpoint| (1, 3)
 print("Sum: ", sum)
 print("Midpoint: ", midpoint)
 ```
-
-## Orthogonal rotations
-
-Most of the time, you need to rotate by a multiple of 90 degrees.
-RAIMAD calls these "orthogonal rotations",
-and there is a special method for these
 
