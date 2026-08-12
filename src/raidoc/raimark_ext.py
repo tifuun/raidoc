@@ -121,6 +121,18 @@ class CalloutMixin(object):
             return ''
         return rendered
 
+class TableMixin(object):
+    """
+    Wrap tables in a `.table-wrap` div for easier css
+    """
+
+    def render_table(self, element):
+        return ''.join((
+            f'<div class="table-wrap">',
+            super().render_table(element),
+            '</div>',
+            ))
+
 class IndexerMixin(object):
 
     index_entry = None
@@ -367,6 +379,7 @@ RaimarkExt = marko.helpers.MarkoExtension(
         LinkMixin,
         CodeBlockMixin,
         CalloutMixin,
+        TableMixin,
         IndexerMixin,
         TitleMixin,
         AsciinemaMixin,

@@ -28,6 +28,7 @@ body * {
 
 :root {
   --color-panel: #CADADE;
+  --color-panel-alt: #AAAAAE;
   --color-panel-interest: #000;
   --color-fg: #333;
   --color-fg-interest: #EEE;
@@ -231,10 +232,16 @@ header {
     display: none;
 }
 
+.table-wrap {
+  @extend .panel;
+  @extend .convex;
+  width: fit-content; // don't grow to width of article
+  align-self: center; // put in center instead
+}
+
 table {
-	@extend .panel;
-	@extend .convex;
-	padding: 0px;
+  // make row borders display
+  border-collapse: collapse; 
 }
 
 th, td {
@@ -245,34 +252,48 @@ th, td {
 	padding-right: 6px;
 }
 
+// TODO this whole file is a mess, refactor in multiple!!
+
 th:last-child, td:last-child {
 }
 
 thead {
+  //@extend .panel;
+  //@extend .concave;
 }
 
 th {
-	background-color: gray;
+  //padding: 10px;
+  //background-color: var(--color-panel-alt);
 }
 
+//tr {
+//  border-bottom: 1px solid black;
+//  tbody &:last-child {
+//    border-bottom: none;
+//    // no bottom border
+//  }
+//}
+
 tr:nth-child(2n + 0){
-	background-color: gray;
+  background-color: rgba(0, 0, 0, 0.2);
+	//background-color: var(--color-panel-alt);
 }
 
 thead > tr > th:first-child {
-	border-radius: 10px 0px 0px 0px;
+	//border-radius: 10px 0px 0px 0px;
 }
 
 thead > tr > th:last-child {
-	border-radius: 0px 10px 0px 0px;
+	//border-radius: 0px 10px 0px 0px;
 }
 
 tbody > tr:last-child > td:first-child {
-	border-radius: 0px 0px 0px 10px;
+	//border-radius: 0px 0px 0px 10px;
 }
 
 tbody > tr:last-child > td:last-child {
-	border-radius: 0px 0px 10px 0px;
+	//border-radius: 0px 0px 10px 0px;
 }
 
 @mixin stripes($color1, $color2, $angle) {
