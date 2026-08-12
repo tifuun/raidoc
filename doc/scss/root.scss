@@ -254,15 +254,15 @@ th, td {
 
 // TODO this whole file is a mess, refactor in multiple!!
 
-th:last-child, td:last-child {
-}
 
-thead {
+thead tr {
+  border-bottom: 1px double black;
   //@extend .panel;
   //@extend .concave;
 }
 
 th {
+  //font-weight: normal;
   //padding: 10px;
   //background-color: var(--color-panel-alt);
 }
@@ -275,26 +275,18 @@ th {
 //  }
 //}
 
-tr:nth-child(2n + 0){
-  background-color: rgba(0, 0, 0, 0.2);
+tr:nth-child(2n + 0), thead tr {
+  background-color: rgba(0, 0, 0, 0.15);
 	//background-color: var(--color-panel-alt);
 }
 
-thead > tr > th:first-child {
-	//border-radius: 10px 0px 0px 0px;
+td, th {
+  border-right: 1px solid black;
+  &:last-child {
+    border: none;
+  }
 }
 
-thead > tr > th:last-child {
-	//border-radius: 0px 10px 0px 0px;
-}
-
-tbody > tr:last-child > td:first-child {
-	//border-radius: 0px 0px 0px 10px;
-}
-
-tbody > tr:last-child > td:last-child {
-	//border-radius: 0px 0px 10px 0px;
-}
 
 @mixin stripes($color1, $color2, $angle) {
 	background: repeating-linear-gradient(

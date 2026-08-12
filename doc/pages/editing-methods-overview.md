@@ -30,6 +30,13 @@ Briefly:
 
 ## Rotation
 
+| Method  | Transform | Proxy    | Boundpoint |
+|---------|-----------|----------|------------|
+| protate | ✔         | ✔        |            |
+| crotate | ✔         | ✔        |            |
+| orotate | ✔         | ✔        |            |
+| rotate  | ✔         | ✔        | ✔          |
+
 Rotation takes two inputs: the angle, and the reference point
 (the point "around" -- or, in British English, "about" -- which
 the rotation is happening).
@@ -50,7 +57,9 @@ TODO
 
 TODO
 
-Or none at all to use the origin:
+Or none at all (in which case,
+the origin of the proxy's coordinate grid
+is used as the reference point):
 
 TODO
 
@@ -66,14 +75,18 @@ Rotating around a `BoundPoint` can be done with the `rotate` method.
 Since the `BoundPoint` itself is the reference point,
 `protate`, `crotate`, and `orotate` methods are not defined for it.
 
-| Method  | Transform | Proxy    | Boundpoint |
-|---------|-----------|----------|------------|
-| protate | ✔         | ✔        |            |
-| crotate | ✔         | ✔        |            |
-| orotate | ✔         | ✔        |            |
-| rotate  | ✔         | ✔        | ✔          |
+TODO
+
 
 ## Translation (movement)
+
+| Method  | Transform | Proxy    | Boundpoint |
+|---------|-----------|----------|------------|
+| pmove   | ✔         | ✔        | ✔          |
+| cmove   | ✔         | ✔        | ✔          |
+| movex   | ✔         | ✔        | ✔          |
+| movey   | ✔         | ✔        | ✔          |
+| move    | ✔         | ✔        | ✔          |
 
 Translation takes two arguments:
 x and y offset.
@@ -88,15 +101,16 @@ editing classes.
 Since there is no "reference point" for translation,
 moving a BoundPoint is the same as moving its Proxy.
 
-| Method  | Transform | Proxy    | Boundpoint |
-|---------|-----------|----------|------------|
-| pmove   | ✔         | ✔        | ✔          |
-| cmove   | ✔         | ✔        | ✔          |
-| movex   | ✔         | ✔        | ✔          |
-| movey   | ✔         | ✔        | ✔          |
-| move    | ✔         | ✔        | ✔          |
 
 ## Reflection (flipping)
+
+| Method  | Transform | Proxy    | Boundpoint |
+|---------|-----------|----------|------------|
+| pflip   | ✔         | ✔        |            |
+| cflip   | ✔         | ✔        |            |
+| hflip   | ✔         | ✔        | ✔          |
+| vflip   | ✔         | ✔        | ✔          |
+| flip    | ✔         | ✔        | ✔          |
 
 `hflip` and `vflip` mirror along the horizontal
 and vertical axes, respectively TODO check.
@@ -114,19 +128,8 @@ or both at once with `flip`.
 `pflip` and `cflip` are not defined for `BoundPoint`,
 since the `BoundPoint` itself is the reference.
 
-| Method  | Transform | Proxy    | Boundpoint |
-|---------|-----------|----------|------------|
-| pflip   | ✔         | ✔        |            |
-| cflip   | ✔         | ✔        |            |
-| hflip   | ✔         | ✔        | ✔          |
-| vflip   | ✔         | ✔        | ✔          |
-| flip    | ✔         | ✔        | ✔          |
 
 ## Scaling
-
-Scaling is the most complicated:
-it takes two pairs of two coordinates:
-TODO can't be bothered to type this now.
 
 | Method  | Transform | Proxy    | Boundpoint |
 |---------|-----------|----------|------------|
@@ -136,10 +139,41 @@ TODO can't be bothered to type this now.
 | ccscale | ✔         | ✔        |            |
 | cpscale | ✔         | ✔        |            |
 | pcscale | ✔         | ✔        |            |
-| ascale  | ?         | ?        | ✔          |
-| pscale  | ?         | ?        | ✔          |
-| cscale  | ?         | ?        | ✔          |
+| ascale  |           |          | ✔          |
+| pscale  |           |          | ✔          |
+| cscale  |           |          | ✔          |
 | scale   | ✔         | ✔        | ✔          |
+
+Scaling is the most complicated.
+It takes an X scale factor, a Y scale factor, and a reference point.
+Either can be given as separate coords or a tuple.
+Also, a single number can be used as both the X and Y factor.
+There are methods for each combination:
+
+| Method  | Scale factor  | Reference point |
+|---------|---------------|-----------------|
+| apscale | single number | tuple           |
+| acscale | single number | two args        |
+| ppscale | tuple         | tuple           |
+| ccscale | two args      | two args        |
+| cpscale | two args      | tuple           |
+| pcscale | tuple         | two args        |
+
+`BoundPoint`'s scaling methods take only the factors,
+and use the `BoundPoint` itself as the reference point.
+Again, the factors can be given as two separate numbers,
+a tuple, or a single number for both the X and Y scale.
+
+| Method  |  Reference point |
+|---------|------------------|
+|  ascale |  single number   |
+|  pscale |  tuple           |
+|  cscale |  two args        |
+
+Finally, `scale` just works with whatever you throw at it:
+
+TODO
+
 
 ## Aligning Points
 
