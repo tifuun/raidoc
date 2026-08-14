@@ -12,6 +12,15 @@ Editing operations are methods of
 and [Boundpoint](cls_BoundPoint).
 Complete documentation generated from Python docstrings and method
 signatures is available in the pages linked above.
+
+These two automatic test files in the RAIMAD repo
+may provide additional insight:
+
+- [`test_new_editing.py`](https://github.com/tifuun/raimad/blob/editing-extratest/tests/test_new_editing.py)
+- [`test_new_editing_table.py`](https://github.com/tifuun/raimad/blob/editing-extratest/tests/test_new_editing_table.py)
+
+<!-- TODO point to main branch once editing-extratest is merged-->
+
 Briefly:
 
 - `Transform` objects represent a transformation,
@@ -322,6 +331,13 @@ show(Foo())
 
 
 ## Snapping
+
+| Method      | Transform | Proxy    | Boundpoint |
+|-------------|-----------|----------|------------|
+| snap\_left  |           |  ✔       |            |
+| snap\_right |           |  ✔       |            |
+| snap\_above |           |  ✔       |            |
+| snap\_below |           |  ✔       |            |
 
 Proxies have snapping methods that let you connect them to other
 proxies as if they had magnets.
