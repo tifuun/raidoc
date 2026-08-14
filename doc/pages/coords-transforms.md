@@ -90,6 +90,30 @@ by the `.scale(2)` call above:
 rai.show(square_multiple)
 ```
 
+## Angle aliases
+
+As you've seen before, `.rotate` takes an angle in radians.
+Python's `math.radians` can be used to convert degrees to radians.
+RAIMAD also defines some aliases for common angles:
+
+```python exec
+from math import degrees
+
+print(degrees( rai.fullcircle ))
+print(degrees( rai.halfcircle ))
+print(degrees( rai.quartercircle ))
+print(degrees( rai.eigthcircle ))
+```
+
+British English variants are available too:
+
+```python exec
+print(degrees( rai.fullcircle ))
+print(degrees( rai.semicircle ))
+print(degrees( rai.demisemicircle ))
+print(degrees( rai.hemidemisemicircle ))
+```
+
 ## Orthogonal rotations
 
 The `.orotate` method rotates the Proxy by an integer multiple

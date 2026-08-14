@@ -43,8 +43,6 @@ the rotation is happening).
 
 The angle is given in radians in the counterclockwise
 orientation (mathematicians call this "positive orientation").
-Python's `math.radians` method can be used to convert from degrees,
-and RAIMAD itself provides some aliases TODO not documented!
 
 The reference point can be given as two separate `x` and `y` coordinates
 with the `crotate` method,
