@@ -35,19 +35,24 @@ class LinkMixin(object):
             return super().render_link(element)
 
         # Leave external links to non-markdown content untouched
-        if not element.dest.endswith('.md'):
-            return super().render_link(element)
+        #if not element.dest.endswith('.md'):
+        #    return super().render_link(element)
 
         # Crash if the page does not exist
         # (this is better than allowing dead link in the output)
         try:
-            _page = LinkMixin.builder.page(element.dest)
+            page = LinkMixin.builder.page(element.dest)
         except Exception as e:
             raise Exception(f"While rendering {element}") from e
 
+        webroot = '../' * (len(self.builder.monkeypatch_current_page.path.parts) - 1)  # FIXME ???
+
+        element.dest = f'{webroot}{page.path_html}'
+
         self.links_to.append(element.dest)
+
         return '<a href="{}">{}</a>'.format(
-            self.escape_url(element.dest.rstrip('.md') + '.html'),
+            self.escape_url(element.dest),
             self.render_children(element)
             )
 
@@ -66,6 +71,7 @@ class LinkMixin(object):
 
         href = f'{webroot}{page.path_html}'
         title = page.title
+
         return f'<a href="{href}" class="wikilink">{title}</a>'
 
 

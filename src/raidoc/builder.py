@@ -300,7 +300,7 @@ class Builder:
         for fn in self.autogen_functions:
 
             #FIXME copypasta from render_autogen
-            path_html = f'pages/autogen/fn_{fn.name}.html'
+            path_html = Path(f'pages/autogen/fn_{fn.name}.html')
 
             self.pages.append(
                 Page(
@@ -317,7 +317,7 @@ class Builder:
         for cls in self.autogen_classes:
 
             #FIXME copypasta from render_autogen
-            path_html = f'pages/autogen/cls_{cls.name}.html'
+            path_html = Path(f'pages/autogen/cls_{cls.name}.html')
 
             self.pages.append(
                 Page(
