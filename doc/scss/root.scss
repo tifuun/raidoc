@@ -156,19 +156,18 @@ header {
 }
 
 .raimark-rendered-code {
-	@include flex;
-	gap: 15px;
-	align-items: stretch;
-    flex-wrap: wrap;
+  @include flex;
+  gap: 15px;
+  align-items: stretch;
+  flex-wrap: wrap;
+  & .highlight {
+    // needed to actually stretch the code block
+    height: 100%;
+  }
 }
 
 .raimark-rendered-code>* {
     flex-grow: 1;
-}
-
-.highlight {
-	// needed to actually stretch the code block
-	height: 100%;
 }
 
 .highlight {
