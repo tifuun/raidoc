@@ -124,4 +124,5 @@ build
 doc/pages/autogen
 !doc/img/**/*.svg
 foo.yml
+tmp
 
