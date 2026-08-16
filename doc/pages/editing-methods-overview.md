@@ -1,5 +1,5 @@
 ---
-kind: reference
+kind: deepdive
 ---
 
 # Editing methods overview
